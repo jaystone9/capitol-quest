@@ -461,6 +461,9 @@ button.chip-level:hover{background:var(--surface-2)}
 .howcard{background:var(--surface);border:2px solid var(--line);border-left:6px solid var(--punk);border-radius:16px;padding:12px 14px;margin-bottom:12px;display:grid;gap:4px;font-size:15px;line-height:1.45}
 .howcard b{font-weight:900}
 .sec-head .how{font-weight:800;color:var(--c);font-size:15px}
+
+details.danger{margin-top:14px;border:2px dashed var(--line);border-radius:16px;padding:6px 14px}
+details.danger summary{cursor:pointer;font-weight:800;color:var(--ink-2);padding:6px 0}
 #modal{position:fixed;inset:0;z-index:75;pointer-events:none}#modal>*{pointer-events:auto}</style>
 <div id="app"><aside class="side" id="side"></aside><div class="mainwrap"><header class="topbar" id="top"></header><main class="view" id="view"></main></div><aside class="rail" id="rail"></aside><nav class="tabs" id="tabs"></nav></div>
 <div id="overlay"></div><div id="modal"></div><div id="toast"></div><canvas id="confetti"></canvas>
@@ -1044,7 +1047,7 @@ q:[
 ]},
 
 /* ---------------- SEATTLE & ORGANIZING ---------------- */
-{id:'w1',s:4,title:'Seattle City Government',desc:'The mayor, the council, King County, and how Seattle votes',
+{id:'w1',s:4,region:'wa',title:'Seattle City Government',desc:'The mayor, the council, King County, and how Seattle votes',
 tips:[
  ['How Seattle is run',['Seattle has a **strong mayor–council** government. The **Mayor** runs city departments, proposes the budget, and can veto.','The **City Council** passes laws (**ordinances**) and the budget. It has **9 members**: **7 elected by district** and **2 citywide** (Positions 8 and 9).','Mayor and council serve **4-year terms**. City races are **nonpartisan** and held in **odd-numbered years**.']],
  ['The other local players',['The **City Attorney** is elected separately from the Mayor.','**King County** runs elections, public health, the courts, the jail, and **King County Metro**. It\'s led by an elected **County Executive** and a **9-member County Council**.','The **Port of Seattle** has **5 commissioners** elected countywide. The **Seattle School Board** has 7 directors.']],
@@ -1065,7 +1068,7 @@ q:[
  TF('Washington votes almost entirely by mail.',true)
 ]},
 
-{id:'w2',s:4,title:'Washington State Government',desc:'The Legislature in Olympia, the governor, and direct democracy',
+{id:'w2',s:4,region:'wa',title:'Washington State Government',desc:'The Legislature in Olympia, the governor, and direct democracy',
 tips:[
  ['The Legislature',['Washington has **49 legislative districts**. Each elects **1 senator** (4-year term) and **2 representatives** (2-year terms).','That makes **49 senators** and **98 representatives**, meeting in **Olympia**.','Regular sessions last **105 days** in odd years, when the two-year budget is written, and **60 days** in even years.']],
  ['The executive branch',['The **Governor** serves 4-year terms with no term limit.','**Eight other statewide officials** are elected separately, including the Lieutenant Governor, Secretary of State, Attorney General, and Treasurer. That\'s called a **plural executive**.','The governor can veto **whole sections** of bills, and individual items in budget bills.']],
@@ -1084,7 +1087,7 @@ q:[
  M('Washington doesn\'t tax wages, so it relies heavily on...','Sales and property taxes',['A state income tax','Tariffs','Lottery revenue alone'])
 ]},
 
-{id:'w3',s:4,title:'Running for Local Office',desc:'Filing, money rules, endorsements, and the math of winning',
+{id:'w3',s:4,region:'wa',title:'Running for Local Office',desc:'Filing, money rules, endorsements, and the math of winning',
 tips:[
  ['Getting on the ballot',['Washington candidates file during **filing week in May**.','The filing fee is **1% of the office\'s annual salary**. If you can\'t afford it, you can submit **signatures** instead.','You must be a **registered voter** in the district. Then comes the **August top-two primary** and the **November general election**.']],
  ['Money, rules, and support',['State and local campaigns report contributions and spending to the **Public Disclosure Commission (PDC)**. Contribution limits apply.','Seattle candidates can qualify for **Democracy Vouchers** by collecting enough small contributions and signatures.','**Endorsements** from unions, organizations, and elected officials signal credibility and bring volunteers.']],
@@ -1101,6 +1104,65 @@ q:[
  M('A campaign uses the voter file to...','See who\'s registered and how often they vote, so it can target outreach',['See how people voted','Change voter registrations','Count ballots'],'Ballots are secret. The voter file shows registration and whether someone voted, not their choices.'),
  M('Which is a common first step toward local office?','Serving on a city board, commission, or neighborhood group',['Running for U.S. Senate','Becoming a federal judge','Working as a lobbyist']),
  M('In Washington, Precinct Committee Officers (PCOs) are...','Elected neighborhood-level party representatives',['Police officers','Appointed judges','City staff who count ballots'])
+]},
+
+{id:'n1',s:4,region:'ny',title:'New York City Government',desc:'The mayor, the 51-member Council, citywide watchdogs, and the boroughs',
+tips:[
+ ['Who runs the city',['The **mayor** runs city agencies, writes the budget, and can veto bills.','The **City Council** has **51 members** who pass laws and negotiate the budget.','The council\'s leader is the **Speaker**, elected by the members.']],
+ ['Citywide watchdogs',['The **Public Advocate** is a watchdog and first in line if the mayor can\'t serve.','The **Comptroller** audits city agencies and manages the pension funds.','Both are elected by the whole city.']],
+ ['Boroughs and neighborhoods',['NYC has **5 boroughs**, each with an elected **Borough President**.','**59 community boards** advise on land use and local needs.','Each borough is also a county with its own elected **District Attorney**.']]
+],
+q:[
+ M('How many members are on the New York City Council?','51',['35','9','100']),
+ M('Who leads the New York City Council?','The Speaker, elected by the council members',['The mayor','The Public Advocate','The governor']),
+ M('What does New York City\'s mayor do?','Runs city agencies, proposes the budget, and can veto Council bills',['Writes and passes city laws alone','Runs the subway system','Appoints the governor']),
+ TF('New York City\'s subways and buses are run by the mayor\'s office.',false,'The MTA is controlled by New York State.'),
+ M('New York City\'s Public Advocate is...','A citywide watchdog who is first in line if the mayor can\'t serve',['The head of the police department','The city\'s top judge','A state senator for the city']),
+ M('The New York City Comptroller...','Audits city agencies and manages the city\'s pension funds',['Runs the public schools','Leads the City Council','Prosecutes crimes']),
+ TF('The Public Advocate can introduce bills in the City Council but cannot vote on them.',true),
+ M('How many boroughs does New York City have?','5',['3','7','12']),
+ M('Who appoints community board members?','The Borough President, with half nominated by local Council members',['Voters, in a special election','The mayor alone','The governor']),
+ M('How many community boards does New York City have?','59',['5','51','150']),
+ M('Community boards mainly...','Advise on land use, zoning, and local budget needs',['Pass city laws','Run the public schools','Set tax rates']),
+ M('Each borough elects its own...','District Attorney, who prosecutes crimes',['Police commissioner','Fire chief','Court of Appeals judge'])
+]},
+
+{id:'n2',s:4,region:'ny',title:'New York State Government',desc:'Albany, the governor, the courts, and how the state shapes the city',
+tips:[
+ ['The Legislature in Albany',['**63 senators** and **150 Assembly members**, all on **2-year terms**.','Leaders: Senate Majority Leader **Andrea Stewart-Cousins** and Assembly Speaker **Carl Heastie**.','The state budget is due **April 1**.']],
+ ['Executive and courts',['The **governor** serves **4-year terms**.','Voters also elect the **lieutenant governor, attorney general, and comptroller**.','The top court is the **Court of Appeals**. The "Supreme Court" is a trial court.']],
+ ['Changing the rules',['New York has **no citizen initiatives**.','A constitutional amendment must pass **two separately elected Legislatures**, then voters.','The state controls the **MTA** and much of the city\'s taxing power.']]
+],
+q:[
+ M('How many members are in the New York State Senate?','63',['50','100','150']),
+ M('How many members are in the New York State Assembly?','150',['63','100','435']),
+ M('How long are New York state legislators\' terms?','2 years, for both the Senate and the Assembly',['4 years for both','2 years for the Assembly, 6 for the Senate','6 years for both']),
+ M('Where does the New York State Legislature meet?','Albany',['New York City','Buffalo','Syracuse']),
+ M('When does New York\'s state fiscal year start, the deadline for the budget?','April 1',['January 1','July 1','October 1']),
+ M('How long is a New York governor\'s term?','4 years',['2 years','6 years','8 years']),
+ M('New York\'s highest court is the...','Court of Appeals',['Supreme Court','Appellate Division','Court of Claims']),
+ TF('New York voters can put their own initiatives on the statewide ballot by gathering signatures, as in Washington.',false),
+ M('To amend the New York State Constitution, an amendment must...','Pass two separately elected Legislatures, then win a statewide vote',['Be signed by the governor','Get 1 million signatures','Pass the City Council']),
+ M('Who controls the MTA, which runs New York City\'s subways?','New York State',['The mayor','The City Council','The federal government'])
+]},
+
+{id:'n3',s:4,region:'ny',title:'Running for Office in NYC',desc:'Primaries, ranked-choice voting, matching funds, and first steps',
+tips:[
+ ['Elections and primaries',['NYC elections are **partisan**: candidates run on party lines.','Primaries are **closed**: only enrolled party members vote.','City primaries use **ranked-choice voting**: rank up to **5** candidates.']],
+ ['Money',['NYC matches small donations from city residents **8 to 1**.','For City Council, the first **$175** from each resident is matched.','To qualify, a Council candidate needs **$5,000 from 75 district residents**.']],
+ ['Getting started',['Get on a primary ballot by collecting **petition signatures**.','**Community boards** are a common first step; members are appointed.','**County committee** seats are elected party posts at the neighborhood level.']]
+],
+q:[
+ TF('New York City elections are nonpartisan, like Seattle\'s.',false,'NYC candidates run on party lines.'),
+ M('Who can vote in a New York party primary?','Only voters enrolled in that party',['Any registered voter','Anyone over 16','Only donors to the party']),
+ M('In New York City primaries for city offices, you can rank up to how many candidates?','5',['2','3','10']),
+ M('When did New York City first use ranked-choice voting?','The 2021 primary',['The 2001 primary','The 2016 general election','The 2024 general election']),
+ M('New York City\'s matching funds program matches small donations from city residents at...','$8 for every $1',['$1 for every $1','$2 for every $1','$20 for every $1']),
+ M('For City Council races, how much of each city resident\'s donation gets matched?','The first $175',['The first $25','The first $1,000','All of it']),
+ M('To qualify for matching funds, a City Council candidate must raise...','$5,000 from at least 75 district residents',['$100,000 from anyone','$500 from 5 people','$1 million from 1,000 people']),
+ M('How do candidates get on a party primary ballot in New York?','Collect signatures on designating petitions',['Pay a filing fee only','Win a coin toss','Get the mayor\'s approval']),
+ M('Community board members are...','Appointed by the Borough President',['Elected in November','Hired by the mayor','Chosen by lottery']),
+ M('Which elected party post works at the most local, neighborhood level in New York?','County committee member',['Borough President','State senator','Public Advocate'])
 ]},
 
 {id:'w4',s:4,title:'Organizing & Running Meetings',desc:'Robert\'s Rules, one-on-ones, power mapping, and member democracy',
@@ -1123,7 +1185,7 @@ q:[
 ]},
 
 /* ---------------- LIVE DESK ---------------- */
-{id:'w5',s:4,title:'Know Your Reps',desc:'Who represents Seattle at every level, and what each office controls',
+{id:'w5',s:4,region:'wa',title:'Know Your Reps',desc:'Who represents Seattle at every level, and what each office controls',
 tips:[
  ['City Hall',['**Mayor Katie Wilson** (since Jan. 2026) runs city departments and proposes the budget.','The **9-member City Council** passes laws and the budget. **Joy Hollingsworth** is Council President.','**City Attorney Erika Evans** prosecutes misdemeanors and is the city\'s lawyer.']],
  ['County and state',['**King County Executive Girmay Zahilay** runs Metro buses, public health, and the county jail.','**Gov. Bob Ferguson** runs the state executive branch.','You have **3 state legislators**: 1 senator and 2 representatives.']],
@@ -1142,6 +1204,27 @@ q:[
  TF('Every Seattle voter has three state legislators: one senator and two representatives.',true),
  M('Your state legislators mostly decide...','State laws, the state budget, and state taxes',['City zoning','Federal immigration law','Who runs Metro']),
  M('Most of Seattle is in which congressional district?','WA-7',['WA-9','WA-1','WA-10'])
+]},
+
+{id:'n4',s:4,region:'ny',title:'Know Your Reps: New York',desc:'Who represents New Yorkers at every level, and what each office controls',
+tips:[
+ ['City Hall',['Mayor **Zohran Mamdani** took office in January 2026.','Council Speaker **Julie Menin** was elected by the Council in January 2026.','Public Advocate **Jumaane Williams** and Comptroller **Mark Levine**.']],
+ ['Albany',['Gov. **Kathy Hochul** won a new term in November 2026.','Attorney General **Letitia James** and Comptroller **Tom DiNapoli** also won.','**Adrienne Adams** was elected lieutenant governor and takes office in January 2027.']],
+ ['Washington, D.C.',['Senators **Chuck Schumer** and **Kirsten Gillibrand** represent all of New York.','New York City is split among about a dozen U.S. House districts.','Find yours on the My reps page.']]
+],
+q:[
+ M('Who has been New York City\'s mayor since January 2026?','Zohran Mamdani',['Eric Adams','Bill de Blasio','Andrew Cuomo']),
+ M('Who did the City Council elect as Speaker in January 2026?','Julie Menin',['Adrienne Adams','Corey Johnson','Jumaane Williams']),
+ P('Match each citywide official to their job.',[['Zohran Mamdani','Mayor'],['Julie Menin','Council Speaker'],['Jumaane Williams','Public Advocate'],['Mark Levine','City Comptroller']]),
+ M('Before becoming City Comptroller, Mark Levine was...','Manhattan Borough President',['Mayor','Governor','Police Commissioner']),
+ M('Who won the 2026 race for New York governor?','Kathy Hochul',['Bruce Blakeman','Andrew Cuomo','Letitia James']),
+ M('Who is New York\'s attorney general?','Letitia James',['Kathy Hochul','Tom DiNapoli','Julie Menin']),
+ M('Who was elected lieutenant governor in 2026, taking office in January 2027?','Adrienne Adams',['Antonio Delgado','Jumaane Williams','Mark Levine']),
+ M('Who is New York\'s state comptroller?','Tom DiNapoli',['Mark Levine','Brad Lander','Carl Heastie']),
+ M('Who are New York\'s two U.S. senators?','Chuck Schumer and Kirsten Gillibrand',['Kathy Hochul and Letitia James','Hakeem Jeffries and Chuck Schumer','Kirsten Gillibrand and Alexandria Ocasio-Cortez']),
+ M('Who is the majority leader of the New York State Senate?','Andrea Stewart-Cousins',['Carl Heastie','Kathy Hochul','Julie Menin']),
+ M('Who is Speaker of the New York State Assembly?','Carl Heastie',['Andrea Stewart-Cousins','Julie Menin','Chuck Schumer']),
+ TF('All of New York City is inside one congressional district.',false)
 ]},
 
 {id:'l1',s:5,title:'Laws in the News',desc:'Major federal laws from 2020 to 2025',
@@ -1184,7 +1267,7 @@ q:[
  M('To overturn Citizens United directly, reformers usually propose...','A constitutional amendment',['An executive order','A Senate resolution','A state law'])
 ]},
 
-{id:'l3',s:5,title:'On Your Ballot',desc:'Recent Seattle and Washington ballot measures. Learn them, then cast your own vote.',
+{id:'l3',s:5,region:'wa',title:'On Your Ballot',desc:'Recent Seattle and Washington ballot measures. Learn them, then cast your own vote.',
 tips:[
  ['Levies and the 2025 education levy',['A **levy** is a voter-approved property tax for a set number of years.','In Nov. 2025 Seattle renewed the **Families, Education, Preschool and Promise (FEPP) levy**.','Results here are as of mid-November 2026. Official counts are certified later.']],
  ['The millionaires tax and I-645',['In March 2026 the Legislature passed a **9.9% tax on household income over $1 million**.','It takes effect **Jan. 1, 2028**.','**Initiative 645** asked voters to repeal it in Nov. 2026.']],
@@ -1203,6 +1286,27 @@ q:[
  M('About what share of Seattle voters approved the 2026 transit Prop. 1?','About 73%',['About 51%','About 40%','About 90%']),
  M('Initiative 638 (Nov. 2026), which bars transgender girls from girls\' school sports regulated by the WIAA, was...','Approved by about 56% of voters',['Rejected by about 56% of voters','Struck from the ballot','Withdrawn']),
  V('Seattle Prop. 1 (Nov. 2026): More bus service','Doubles Seattle\'s transit sales tax from 0.15% to 0.3% for 10 years. At least 75% of the money buys extra bus service from King County Metro.',['The city says it adds about 95,000 more bus trips a year and some 24/7 service.','More frequent buses help people get around without a car.'],['Sales taxes take a bigger share of income from people with less money.','Some argue the county or state should fund Metro instead.'],'Passed with about 73% yes.')
+]},
+
+{id:'n5',s:5,region:'ny',title:'On Your Ballot: New York',desc:'Recent New York City and state ballot proposals. Learn them, then cast your own vote.',
+tips:[
+ ['2025: housing and land use',['In Nov. 2025 NYC voters decided **5 charter proposals** from a Charter Revision Commission.','Props **2, 3, and 4** speed up approval of new housing. All three passed.','Prop **6**, moving city elections to even years, **failed**.']],
+ ['2026: making city government work',['Mayor Mamdani\'s **Commission on Government Efficiency** put **5 proposals** on the Nov. 2026 ballot.','They cover sidewalk cafes, buying, permits, and a **rainy day fund**.','All five passed in unofficial results.']],
+ ['Statewide questions',['New York voters only see **amendments the Legislature sends them**.','In 2025, statewide **Prop. 1** let the state use Adirondack land for the **Mount Van Hoevenberg** ski area.','It passed narrowly, with about **52%**.']]
+],
+q:[
+ M('What did New York City\'s Proposals 2, 3, and 4 in November 2025 have in common?','They speed up approval of new housing',['They raise property taxes','They change how police are hired','They expand ranked-choice voting']),
+ M('NYC\'s 2025 Proposal 4 created...','An Affordable Housing Appeals Board that can override a Council rejection of some housing projects',['A new rent control law','A housing lottery for teachers','A ban on new office towers']),
+ TF('In November 2025, NYC voters approved moving city elections to even-numbered years.',false,'Proposal 6 failed, with about 47% yes.'),
+ V('NYC Proposal 3 (Nov. 2025): Fast-track land use review','Creates an expedited review of about 90 days for smaller housing and infrastructure projects, skipping the full 7-month ULURP process and a final City Council vote.',['Gets new homes built faster in a city short on housing.','Cuts the cost and delay that kill smaller projects.'],['Gives community boards and the Council less say over what gets built.','Neighborhoods may lose leverage to win benefits from developers.'],'Passed with about 57% yes.'),
+ M('Who wrote the 5 NYC ballot proposals in November 2026?','The mayor\'s Commission on Government Efficiency',['A citizen petition drive','The State Legislature','The New York Court of Appeals']),
+ M('Which 2026 NYC proposal got the most support, about 72%?','Proposal 5, setting targets for the city\'s rainy day fund',['Proposal 1, sidewalk cafes','Proposal 2, city purchasing','Proposal 3, street safety']),
+ M('NYC\'s 2026 Proposal 4 created...','One central hub for construction permits',['A new borough','A city-run grocery store','A congestion toll']),
+ V('NYC Proposal 1 (Nov. 2026): Public space and sidewalk cafes','Streamlines the rules and approvals for sidewalk cafes, plazas, and other uses of public space, moving decisions to fewer agencies.',['Makes it faster and cheaper for small businesses to open outdoor seating.','Cuts red tape that spans several agencies.'],['Neighbors and community boards may get less say over what goes on their block.','More cafes can mean more crowding on narrow sidewalks.'],'Passed with about 63% yes in unofficial results.'),
+ M('New York\'s statewide Proposal 1 in 2025 was about...','Using Adirondack forest preserve land for the Mount Van Hoevenberg ski and sports area',['Legalizing sports betting','Raising the minimum wage','Ending the MTA']),
+ M('How did statewide Proposal 1 do in 2025?','It passed narrowly, with about 52%',['It failed badly','It passed with 80%','It was struck from the ballot']),
+ TF('In 2026, New Yorkers voted on a statewide initiative put on the ballot by gathering signatures.',false,'New York has no citizen initiatives. Only the Legislature can send questions to voters.'),
+ V('NYC Proposal 5 (Nov. 2026): Rainy day fund targets','Sets targets for how much the city saves in its rainy day fund, so there is money to draw on in a recession or emergency.',['Protects schools and services from deep cuts in a downturn.','Ratings agencies reward cities with healthy reserves.'],['Money set aside can\'t be spent on needs today.','Future leaders may face rules that don\'t fit a new crisis.'],'Passed with about 72% yes in unofficial results.')
 ]}
 ];
 
@@ -1346,6 +1450,64 @@ const TEACH={
 'u8-13':'The **9th Amendment** says **listing some rights doesn\'t deny people other rights**. The list isn\'t the whole story.',
 'u8-14':'The **10th Amendment** says powers not given to the federal government are reserved **to the states or the people**.',
 'u8-15':'Twist: **the Bill of Rights originally limited only the federal government, not the states**. After the 14th Amendment (1868), courts applied most of it to states, a process called **incorporation**.',
+/* n1 New York City Government */
+'n1-0':'The **New York City Council** has **51 members**, one for each Council district. That\'s far bigger than Seattle\'s 9.',
+'n1-1':'The Council is led by the **Speaker**, who is **elected by the council members** themselves. The Speaker controls committees and which bills come up for a vote.',
+'n1-2':'NYC has a **strong mayor**. The mayor **runs city agencies, proposes the budget, and can veto Council bills**. The Council can override a veto with a two-thirds vote.',
+'n1-3':'Surprise: the mayor does **not** run the subway. Subways and buses belong to the **MTA**, which is **controlled by New York State**.',
+'n1-4':'The **Public Advocate** is a **citywide watchdog** who takes complaints about city services. If the mayor can\'t serve, the Public Advocate is **first in line**.',
+'n1-5':'The **Comptroller** is the city\'s money watchdog. They **audit city agencies and manage the city\'s pension funds**.',
+'n1-6':'The Public Advocate sits on the Council in a special way: they **can introduce bills but cannot vote** on them.',
+'n1-7':'NYC has **5 boroughs**: Manhattan, Brooklyn, Queens, the Bronx, and Staten Island. Each elects a **Borough President**.',
+'n1-8':'Community board members are **appointed by the Borough President**. Half of them are **nominated by the local Council members**.',
+'n1-9':'There are **59 community boards** across the city, each covering a few neighborhoods.',
+'n1-10':'Community boards don\'t pass laws. They **advise on land use, zoning, and local budget needs**. Their votes on new buildings carry weight.',
+'n1-11':'Each borough is also a county, and each elects its own **District Attorney**, who **prosecutes crimes**. Manhattan\'s DA is the New York County DA.',
+/* n2 New York State Government */
+'n2-0':'The **New York State Senate** has **63 members**.',
+'n2-1':'The **New York State Assembly** has **150 members**. Together the Senate and Assembly make the **Legislature**.',
+'n2-2':'All New York legislators serve **2-year terms**, in both the Senate and the Assembly. They\'re all on the ballot every even year.',
+'n2-3':'The Legislature meets in **Albany**, the state capital, not in New York City.',
+'n2-4':'New York\'s fiscal year starts **April 1**, so that\'s the deadline for the state budget. It\'s often late.',
+'n2-5':'The **governor** serves **4-year terms**.',
+'n2-6':'Confusing names: New York\'s highest court is the **Court of Appeals**. The "Supreme Court" in New York is actually a **trial court**.',
+'n2-7':'Unlike Washington, New York has **no citizen initiatives**. Voters can\'t gather signatures to put their own laws on the ballot.',
+'n2-8':'To change the state constitution, an amendment must **pass two separately elected Legislatures**, then **win a statewide vote**.',
+'n2-9':'The **MTA**, which runs the subways, is controlled by **New York State**. The governor appoints its leader, so subway fights often happen in Albany.',
+/* n3 Running for Office in NYC */
+'n3-0':'NYC elections are **partisan**. Candidates run on **party lines**, like Democrat or Working Families. Seattle\'s city races are nonpartisan.',
+'n3-1':'New York has **closed primaries**: **only voters enrolled in that party** can vote in its primary. In a Democratic city, the June primary often decides the winner.',
+'n3-2':'In city primaries, voters can **rank up to 5 candidates** in order of preference.',
+'n3-3':'Voters approved ranked-choice voting in 2019, and the city first used it in the **2021 primary**.',
+'n3-4':'NYC\'s matching funds program matches small donations from city residents **$8 for every $1**. A $10 gift becomes $90.',
+'n3-5':'For City Council races, **the first $175** of each city resident\'s donation is matched. That\'s up to $1,400 in public money per donor.',
+'n3-6':'To qualify, a Council candidate must raise **$5,000 from at least 75 residents of their district**. It proves real local support.',
+'n3-7':'To get on a party primary ballot, candidates **collect signatures on designating petitions** from party members in their district.',
+'n3-8':'A common first step into local politics: **community boards**. Members are **appointed by the Borough President**, so you apply rather than run.',
+'n3-9':'The most local elected party post is **county committee member**. Each one represents a small election district, often just a few blocks.',
+/* n4 Know Your Reps: New York */
+'n4-0':'New York City\'s mayor is **Zohran Mamdani**. He took office in **January 2026**.',
+'n4-1':'In January 2026 the City Council elected **Julie Menin** as **Speaker**.',
+'n4-2':'Your citywide team: **Zohran Mamdani** is Mayor, **Julie Menin** is Council Speaker, **Jumaane Williams** is Public Advocate, and **Mark Levine** is City Comptroller.',
+'n4-3':'Before becoming City Comptroller in 2026, **Mark Levine** was **Manhattan Borough President**.',
+'n4-4':'**Kathy Hochul** won the November 2026 race for governor, beating Republican Bruce Blakeman.',
+'n4-5':'New York\'s attorney general is **Letitia James**. She also won a new term in 2026.',
+'n4-6':'**Adrienne Adams**, the former City Council Speaker, was elected **lieutenant governor** in 2026. She takes office in **January 2027**.',
+'n4-7':'New York\'s state comptroller is **Tom DiNapoli**, the state\'s money watchdog.',
+'n4-8':'New York\'s two U.S. senators are **Chuck Schumer** and **Kirsten Gillibrand**.',
+'n4-9':'The **State Senate** is led by Majority Leader **Andrea Stewart-Cousins**.',
+'n4-10':'The **State Assembly** is led by Speaker **Carl Heastie**.',
+'n4-11':'NYC is **not** one congressional district. It\'s split among **about a dozen** U.S. House districts.',
+/* n5 On Your Ballot: New York */
+'n5-0':'In November 2025, NYC Proposals **2, 3, and 4** all aimed to **speed up approval of new housing**. All three passed.',
+'n5-1':'Proposal 4 created an **Affordable Housing Appeals Board**. It can **override a Council rejection** of some affordable housing projects in neighborhoods that build little of it.',
+'n5-2':'Proposal 6 would have moved city elections to **even-numbered years**, alongside state and federal races. It **failed**, with about **47%** yes.',
+'n5-4':'In 2026, Mayor Mamdani\'s **Commission on Government Efficiency** wrote all **5 city ballot proposals**.',
+'n5-5':'The most popular 2026 proposal was **Proposal 5**, setting targets for the city\'s **rainy day fund**. About **72%** voted yes.',
+'n5-6':'2026\'s Proposal 4 created **one central hub for construction permits**, instead of sending builders from agency to agency.',
+'n5-8':'Statewide **Proposal 1** in 2025 let the state use **Adirondack forest preserve land** for the **Mount Van Hoevenberg** ski and sports area.',
+'n5-9':'It **passed narrowly**, with about **52%**. Changes to the "forever wild" Adirondacks always need voter approval.',
+'n5-10':'Remember: New York has **no citizen initiatives**. Every statewide question comes from the **Legislature**.',
 };
 Object.assign(TEACH,{
 /* u9 Federalism */
@@ -1673,6 +1835,12 @@ function rng(seed){let a=seed>>>0;return function(){a|=0;a=a+0x6D2B79F5|0;let t=
 const reduceMotion=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){return false}};
 
 const QMAP={};UNITS.forEach(u=>u.q.forEach(q=>{QMAP[q.id]=q}));
+const ALL_UNITS=UNITS.slice();const SEC4={level:SECTIONS[4].level,blurb:SECTIONS[4].blurb};
+const REGIONS={wa:{name:'Seattle & Washington',short:'Seattle',local:'Seattle & Organizing',blurb:SEC4.blurb},ny:{name:'New York',short:'New York',local:'New York & Organizing',blurb:'New York City and New York State government, how to run for office in NYC, and how to organize and run meetings. Always open.'}};
+function region(){return st.region==='ny'?'ny':'wa'}
+function applyRegion(){const r=region();UNITS.length=0;ALL_UNITS.forEach(u=>{if(!u.region||u.region===r)UNITS.push(u)});SECTIONS[4].level=REGIONS[r].local;SECTIONS[4].blurb=REGIONS[r].blurb}
+function visQ(id){const u=id.slice(0,id.lastIndexOf('-'));return !!QMAP[id]&&UNITS.some(x=>x.id===u)}
+function setRegion(r){st.region=r;save();applyRegion();buildNodes();openNode=-1}
 const PAL=['blue','green','purple','gold','red','teal','punk'];
 const SECCOL=['blue','purple','teal','gold','punk','red'];
 const ucol=u=>{const n=PAL[UNITS.indexOf(u)%PAL.length];return '--c:var(--'+n+');--cd:var(--'+n+'-d)'};
@@ -1764,7 +1932,7 @@ function sfx(n){if(st&&st.sound){try{SFX[n]()}catch(e){}}}
 
 /* ---------- state ---------- */
 const KEY='capitolquest.v1';
-function fresh(){return{created:today(),name:'',onboarded:false,goal:20,xp:0,gems:300,hearts:5,heartsTs:Date.now(),unlimited:false,streak:0,longest:0,lastDay:null,freezes:1,frozen:[],sound:true,prog:{},cp:{},mistakes:[],stats:{lessons:0,perfect:0,correct:0,answered:0,tests:0,bestCombo:0,lightning:0},days:{},daily:{day:null},league:{week:null,tier:0,xp:0},boostUntil:0,achSeen:{},srs:{},votes:{},reps:{}}}
+function fresh(){return{created:today(),name:'',onboarded:false,goal:20,xp:0,gems:300,hearts:5,heartsTs:Date.now(),unlimited:false,streak:0,longest:0,lastDay:null,freezes:1,frozen:[],sound:true,prog:{},cp:{},mistakes:[],stats:{lessons:0,perfect:0,correct:0,answered:0,tests:0,bestCombo:0,lightning:0},days:{},daily:{day:null},league:{week:null,tier:0,xp:0},boostUntil:0,achSeen:{},srs:{},votes:{},reps:{},region:''}}
 let st=fresh();
 function load(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){s=null}
  if(s&&typeof s==='object'){const f=fresh();st=Object.assign(f,s);st.stats=Object.assign(fresh().stats,s.stats||{});st.league=Object.assign(fresh().league,s.league||{});st.prog=s.prog||{};st.cp=s.cp||{};st.days=s.days||{};st.achSeen=s.achSeen||{};st.mistakes=s.mistakes||[];st.frozen=s.frozen||[];st.srs=s.srs||{};st.votes=s.votes||{};st.reps=s.reps||{};st.mistakes.forEach(id=>{if(!st.srs[id])st.srs[id]={b:0,due:today()}})}}
@@ -1780,8 +1948,8 @@ function loseHeart(){if(st.unlimited)return;if(st.hearts>=5)st.heartsTs=Date.now
 function nextHeartIn(){const ms=HEART_MS-(Date.now()-st.heartsTs);return Math.max(1,Math.ceil(ms/60000))}
 function addMistake(id){if(!st.mistakes.includes(id)){st.mistakes.push(id);if(st.mistakes.length>200)st.mistakes.shift()}st.srs[id]={b:0,due:addDays(today(),1)}}
 const SRS_GAP=[1,3,7,14,30];
-function weakDue(){return Object.keys(st.srs).filter(id=>QMAP[id]&&st.srs[id].due<=today())}
-function weakLater(){return Object.keys(st.srs).filter(id=>QMAP[id]&&st.srs[id].due>today()).length}
+function weakDue(){return Object.keys(st.srs).filter(id=>visQ(id)&&st.srs[id].due<=today())}
+function weakLater(){return Object.keys(st.srs).filter(id=>visQ(id)&&st.srs[id].due>today()).length}
 function srsRight(id){const r=st.srs[id];if(!r)return;r.b++;if(r.b>=SRS_GAP.length){delete st.srs[id];removeMistake(id)}else r.due=addDays(today(),SRS_GAP[r.b])}
 function removeMistake(id){st.mistakes=st.mistakes.filter(x=>x!==id);delete st.srs[id]}
 
@@ -1838,7 +2006,7 @@ function railHTML(){
 /* ---------- views ---------- */
 const OFF=[0,46,72,46,0,-46,-72,-46];
 const VIEWS={};
-VIEWS.learn=function(){computeCur();let h='<div class="howcard"><b>How levels work</b><p>Each level covers <b>different topics</b>, and each one builds on the one before. Go in order: <b>8th Grade, then High School, College, and Graduate</b>. Inside a level, do the units top to bottom. <b>Seattle & Organizing</b> and <b>Live Desk</b> are side tracks you can do anytime. Already know the basics? Every level is open, so you can jump ahead.</p></div><div class="lvlchips">'+SECTIONS.map(s=>'<button class="lvlchip" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+'">'+esc(s.level)+'</button>').join('')+'</div>';
+VIEWS.learn=function(){computeCur();let h='<div class="howcard"><b>How levels work</b><p>Each level covers <b>different topics</b>, and each one builds on the one before. Go in order: <b>8th Grade, then High School, College, and Graduate</b>. Inside a level, do the units top to bottom. <b>'+esc(SECTIONS[4].level)+'</b> and <b>Live Desk</b> are side tracks you can do anytime. Already know the basics? Every level is open, so you can jump ahead.</p></div><div class="lvlchips">'+SECTIONS.map(s=>'<button class="lvlchip" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+'">'+esc(s.level)+'</button>').join('')+'</div>';
  if(st.streak>0&&st.lastDay!==today())h+='<div class="banner-risk">'+ruckus('wow',54)+'<div>Your '+st.streak+'-day streak is at risk. One lesson keeps it alive.</div></div>';
  {const d=weakDue().length;if(d)h+='<button class="banner-risk" data-a="prac" data-k="weak" style="--flame:var(--red);width:100%;text-align:left">'+ic('redo',30,'style="color:var(--red)"')+'<div><b>'+d+' weak spot'+(d>1?'s':'')+' due today.</b> A quick review locks them in.</div></button>'}
  SECTIONS.forEach(s=>{const units=UNITS.filter(u=>u.s===s.id);const firstIdx=NODES.findIndex(n=>n.s===s.id);const locked=nodeState(firstIdx)==='lock';
@@ -1887,7 +2055,7 @@ const LDS={11:['Bob Hasegawa',['David Hackney','Steve Bergquist'],'South end of 
  46:['Javier Valdez',['Gerry Pollet','Darya Farivar'],'Northeast Seattle, Lake City, Lake Forest Park','Position 1 was on the 2026 ballot. Check the District Finder for the winner.']};
 function repCard(office,name,what,note,extra){return '<div class="repc"><small class="eyebrow muted">'+office+'</small><h3>'+name+'</h3>'+(extra?'<p class="muted" style="font-weight:700">'+extra+'</p>':'')+'<p>'+what+'</p>'+(note?'<p class="repnote">'+ic('bolt',14)+'<span>'+note+'</span></p>':'')+'</div>'}
 function repSel(k,label,opts){const v=st.reps[k]||'';return '<label class="repsel"><span>'+label+'</span><select data-rep="'+k+'"><option value="">Pick one</option>'+opts.map(o=>'<option value="'+o[0]+'" '+(String(v)===String(o[0])?'selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select></label>'}
-VIEWS.reps=function(){const r=st.reps;const lk=(u,t)=>'<a href="'+u+'" target="_blank" rel="noopener">'+t+'</a>';
+VIEWS.reps=function(){if(region()==='ny')return repsNY();const r=st.reps;const lk=(u,t)=>'<a href="'+u+'" target="_blank" rel="noopener">'+t+'</a>';
  let h='<div class="pagehead">'+ruckus('cheer',72)+'<div><h1>My reps</h1><p class="muted">Who represents you, and what they control. Checked '+REPS_CHECKED+'.</p></div></div>';
  h+='<div class="card" style="display:grid;gap:12px">'+repSel('cd','Seattle City Council district',Object.keys(COUNCIL).map(k=>[k,'District '+k+' ('+COUNCIL[k][1]+')']))+repSel('ld','State legislative district',Object.keys(LDS).map(k=>[k,k+'th ('+LDS[k][2]+')']))+repSel('cong','Congressional district',[['7','WA-7 (most of Seattle)'],['9','WA-9 (parts of southeast Seattle)']])+
   '<p class="muted" style="font-weight:700;font-size:14px">Not sure? Look up your address: '+lk('https://www.seattle.gov/council/meet-the-council/find-your-council-district','council district')+', '+lk('https://app.leg.wa.gov/districtfinder/','legislative and congressional districts')+'.</p></div>';
@@ -1909,8 +2077,8 @@ VIEWS.practice=function(){const mc=st.mistakes.length;
  (()=>{const d=weakDue().length,l=weakLater();return pcard('weak','Weak spots'+(d?' · '+d+' due today':''),d?'Questions you missed, brought back on a schedule: 1, 3, 7, 14, then 30 days later. Get one right each time and it graduates.':(l?'Nothing due today. '+l+' more coming back on schedule.':'Questions you miss land here, then come back after 1, 3, 7, 14, and 30 days until they stick.'),'redo','var(--red)',!d)})()+
  pcard('review','Review mix','10 questions from everything you\'ve studied so far.','dumbbell','var(--blue)')+
  pcard('lightning','Lightning Round','Answer as many as you can in 60 seconds. Best: '+st.stats.lightning+'.','clock','var(--gold)')+
- pcard('reps','My reps','Pick your districts and see exactly who represents you, from City Council to Congress.','user','var(--purple)')+
- pcard('local','Seattle & Organizing','Local government, running for office, and running great meetings.','capitol','var(--teal)')+
+ pcard('reps','My reps',region()==='ny'?'See who represents you in New York, from City Hall to Albany to Congress.':'Pick your districts and see exactly who represents you, from City Council to Congress.','user','var(--purple)')+
+ pcard('local',esc(SECTIONS[4].level),'Local government, running for office, and running great meetings.','capitol','var(--teal)')+
  pcard('livedesk','Live Desk','New laws and amendments to watch, updated over time.','news','var(--punk)')}
 function pcard(k,t,p,icon,c,dis){return '<button class="practice-card tilt" data-a="prac" data-k="'+k+'" '+(dis?'disabled style="opacity:.55"':'')+'><span class="pc-ic" style="background:'+c+'">'+ic(icon,38)+'</span><div><h3>'+t+'</h3><p>'+p+'</p></div></button>'}
 
@@ -1927,9 +2095,35 @@ VIEWS.me=function(){const acc=st.stats.answered?Math.round(100*st.stats.correct/
   '<div class="setrow">Sound effects<button class="switch '+(st.sound?'on':'')+'" data-a="set" data-k="sound" aria-label="Sound effects" aria-pressed="'+st.sound+'"></button></div>'+
   '<div class="setrow"><span>Unlimited hearts<br><small class="muted">Study without losing hearts</small></span><button class="switch '+(st.unlimited?'on':'')+'" data-a="set" data-k="unlimited" aria-label="Unlimited hearts" aria-pressed="'+st.unlimited+'"></button></div>'+
   '<div class="setrow">Daily goal<select id="goalSel" data-in="goal" aria-label="Daily goal">'+[[10,'Casual · 10 XP'],[20,'Regular · 20 XP'],[30,'Serious · 30 XP'],[50,'Intense · 50 XP']].map(g=>'<option value="'+g[0]+'" '+(st.goal===g[0]?'selected':'')+'>'+g[1]+'</option>').join('')+'</select></div>'+
-  '<div class="setrow">Reset all progress<button class="btn red sm" data-a="reset">Reset</button></div></div>';
+  '<div class="setrow"><span>Home region<br><small class="muted">Picks your local units, reps, and ballot measures</small></span><select data-in="region" aria-label="Home region">'+Object.keys(REGIONS).map(k=>'<option value="'+k+'" '+(region()===k?'selected':'')+'>'+REGIONS[k].name+'</option>').join('')+'</select></div></div>'+
+  '<details class="danger"><summary>Danger zone</summary><div class="setrow"><span>Reset all progress<br><small class="muted">Deletes everything on this device</small></span><button class="btn ghost sm" data-a="reset">Reset…</button></div></details>';
  return h};
 function sbox(icon,col,v,l){return '<div class="statbox"><span style="color:'+col+'">'+ic(icon,28)+'</span><div style="min-width:0"><b class="num">'+esc(v)+'</b><small>'+l+'</small></div></div>'}
+
+const BORO={mn:['Manhattan','Brad Hoylman-Sigal','Alvin Bragg'],bk:['Brooklyn','Antonio Reynoso','Eric Gonzalez'],qn:['Queens','Donovan Richards','Melinda Katz'],bx:['The Bronx','Vanessa Gibson','Darcel Clark'],si:['Staten Island','Vito Fossella','Michael McMahon']};
+function repsNY(){const r=st.reps;const lk=(u,t)=>'<a href="'+u+'" target="_blank" rel="noopener">'+t+'</a>';const B=BORO[r.boro];
+ let h='<div class="pagehead">'+ruckus('cheer',72)+'<div><h1>My reps</h1><p class="muted">Who represents you in New York, and what they control. Checked '+REPS_CHECKED+'.</p></div></div>';
+ h+='<div class="card" style="display:grid;gap:12px">'+repSel('boro','Your borough',Object.keys(BORO).map(k=>[k,BORO[k][0]]))+
+  '<p class="muted" style="font-weight:700;font-size:14px">New York has 51 Council districts, 63 State Senate districts, 150 Assembly districts, and about a dozen House districts in the city, so the fastest way to find yours is by address: '+lk('https://www.mygovnyc.org/','MyGovNYC')+' shows all of them at once.</p></div>';
+ h+='<h3 style="margin:22px 0 10px">New York City</h3><div class="reps">'+
+  repCard('Mayor','Zohran Mamdani','Runs city agencies like police, schools, and sanitation. Proposes the budget and can veto Council bills.')+
+  repCard('City Council Speaker','Julie Menin','Leads the 51-member Council, which passes city laws and negotiates the budget.')+
+  repCard('City Council, your district','Look it up by address','Your Council member votes on city laws, the budget, and land use in your neighborhood.','Find yours with '+lk('https://council.nyc.gov/districts/','the Council district finder')+'.')+
+  repCard('Public Advocate','Jumaane Williams','Citywide watchdog. Can introduce Council bills and is first in line if the mayor can\'t serve.')+
+  repCard('City Comptroller','Mark Levine','Audits city agencies and manages the city\'s pension funds.')+
+  (B?repCard('Borough President, '+B[0],B[1],'Appoints community board members and weighs in on land use and the budget for your borough.')+repCard('District Attorney, '+B[0],B[2],'Prosecutes crimes in your borough.'):repCard('Borough President and DA','Pick your borough above','Each borough elects a Borough President and a District Attorney.'))+'</div>';
+ h+='<h3 style="margin:22px 0 10px">New York State</h3><div class="reps">'+
+  repCard('Governor','Kathy Hochul','Signs or vetoes state bills, proposes the state budget, and controls the MTA. Re-elected in November 2026.')+
+  repCard('Lieutenant Governor','Antonio Delgado','Presides over the State Senate and is next in line for governor.','Adrienne Adams takes over in January 2027.')+
+  repCard('Attorney General','Letitia James','The state\'s top lawyer. Sues to protect consumers, tenants, and workers.')+
+  repCard('State Comptroller','Tom DiNapoli','Audits state agencies and manages the state pension fund.')+
+  repCard('Your State Senator','Look it up by address','One of 63 senators who pass state laws and the budget. Serves 2-year terms.','Find yours with '+lk('https://www.nysenate.gov/find-my-senator','the Senate finder')+'. Senate Majority Leader: Andrea Stewart-Cousins.')+
+  repCard('Your Assembly Member','Look it up by address','One of 150 Assembly members who pass state laws and the budget. Serves 2-year terms.','Find yours with '+lk('https://nyassembly.gov/mem/search/','the Assembly finder')+'. Assembly Speaker: Carl Heastie.')+'</div>';
+ h+='<h3 style="margin:22px 0 10px">Congress</h3><div class="reps">'+repCard('U.S. Senators','Chuck Schumer and Kirsten Gillibrand','Vote on federal laws, confirm judges and Cabinet members, and approve treaties.')+
+  repCard('U.S. House, your district','Look it up by address','Votes on federal laws and spending. Serves 2-year terms.','Find yours with '+lk('https://www.house.gov/representatives/find-your-representative','the House finder')+'.')+'</div>';
+ return h+'<p class="muted" style="margin-top:16px;font-weight:700;font-size:14px">Officeholders change after elections. New state officials take office in January 2027.</p>'}
+function regionPicker(sel,act){return '<div class="opts">'+[['wa','Seattle & Washington','Seattle, King County, and Washington State'],['ny','New York','New York City and New York State']].map(g=>'<button class="opt goalopt '+(sel===g[0]?'sel':'')+'" data-a="'+act+'" data-r="'+g[0]+'"><span><b>'+g[1]+'</b><br><small class="muted">'+g[2]+'</small></span></button>').join('')+'</div>'}
+function regionModal(){modal(ruckus('wow',100)+'<h2>Where do you live?</h2><p class="muted" style="font-weight:700">Capitol Quest now covers two places. Pick yours, and you\'ll only see that region\'s local government, reps, and ballot measures. Your progress stays the same. You can change this in Profile.</p>'+regionPicker('', 'region-pick'))}
 
 /* ---------- modals & toasts ---------- */
 function modal(html,cls){$('#modal').innerHTML='<div class="modal-bg" data-a="modal-bg"><div class="modal '+(cls||'')+'" role="dialog" aria-modal="true">'+html+'</div></div>'}
@@ -1942,7 +2136,7 @@ function weekRow(ws,days){return '<div class="week">'+days.map((d,i)=>{const ds=
 function heartsModal(fromLesson){heartsTick();
  modal('<div style="color:var(--red)">'+ic('heart',72)+'</div><h2>'+(st.unlimited?'Unlimited hearts are on':st.hearts+' of 5 hearts')+'</h2><p class="muted" style="font-weight:700">'+(st.unlimited?'You won\'t lose hearts for mistakes.':st.hearts>=5?'You\'re full. Every wrong answer in a lesson costs a heart.':'Next heart in '+nextHeartIn()+' minutes. Practice sessions also earn hearts back.')+'</p>'+
  '<div class="row">'+(!st.unlimited&&st.hearts<5?'<button class="btn ghost" data-a="prac" data-k="review">Practice to earn hearts</button>':'')+'<button class="btn '+(st.unlimited||st.hearts>=5?'':'ghost')+'" data-a="close">Close</button></div>')}
-function levelsModal(){modal(ruckus('cheer',90)+'<h2>Pick a level</h2><p class="muted" style="font-weight:700">Each level covers different topics and builds on the one before, so the best path is top to bottom. Seattle & Organizing and Live Desk are side tracks for anytime. Progress in each is saved separately.</p><div class="row">'+SECTIONS.map(s=>{const us=UNITS.filter(u=>u.s===s.id);const d=us.filter(unitDone).length;return '<button class="btn wide" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+';--cd:color-mix(in srgb,var(--c) 70%,#000);justify-content:space-between"><span>'+esc(s.level)+'</span><small class="num" style="opacity:.85">'+d+' / '+us.length+' units</small></button>'}).join('')+'</div>')}
+function levelsModal(){modal(ruckus('cheer',90)+'<h2>Pick a level</h2><p class="muted" style="font-weight:700">Each level covers different topics and builds on the one before, so the best path is top to bottom. '+esc(SECTIONS[4].level)+' and Live Desk are side tracks for anytime. Progress in each is saved separately.</p><div class="row">'+SECTIONS.map(s=>{const us=UNITS.filter(u=>u.s===s.id);const d=us.filter(unitDone).length;return '<button class="btn wide" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+';--cd:color-mix(in srgb,var(--c) 70%,#000);justify-content:space-between"><span>'+esc(s.level)+'</span><small class="num" style="opacity:.85">'+d+' / '+us.length+' units</small></button>'}).join('')+'</div>')}
 function guideModal(u){modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('smirk',64)+'<div style="text-align:left"><small class="eyebrow muted">Guidebook</small><h2>'+esc(u.title)+'</h2></div></div>'+u.tips.map((t,k)=>learnCard(t)+'<details class="gfacts"><summary>'+ic('book',16)+'Every fact in lesson '+(k+1)+'</summary>'+graded(u.q.slice(k*chunkSize(u),(k+1)*chunkSize(u))).map(q=>'<div class="tcard">'+teachBody(q)+'</div>').join('')+'</details>').join('')+'<div class="row"><button class="btn wide" data-a="close">Close</button></div>','guidebook')}
 function learnCard(t){return '<div class="learn"><h3>'+md(t[0])+'</h3><ul>'+t[1].map(b=>'<li><span>'+md(b)+'</span></li>').join('')+'</ul></div>'}
 function showNotices(){const n=notices.shift();if(!n)return;
@@ -2102,15 +2296,16 @@ function confetti(){if(reduceMotion())return;const c=$('#confetti');const ctx=c.
 
 /* ---------- onboarding ---------- */
 let OB=null;
-function onboarding(){OB={step:0,name:'',goal:20};$('#overlay').classList.add('on');renderOB()}
+function onboarding(){OB={step:0,name:'',goal:20,region:st.region||'wa'};$('#overlay').classList.add('on');renderOB()}
 function renderOB(){const ov=$('#overlay');let body,btn;
  if(OB.step===0){body=ruckus('smirk',170)+'<h1>Hey. I\'m Ruckus.</h1><p class="muted" style="font-weight:700;font-size:18px">I question authority. To question it well, you have to know exactly how it works. I\'ll take you from 8th-grade civics to graduate political science, one short lesson a day.</p>';btn='Let\'s go'}
  else if(OB.step===1){body=ruckus('wow',120)+'<h1>What should I call you?</h1><input class="textin" id="obName" data-in="obname" maxlength="24" placeholder="Your name" value="'+esc(OB.name)+'" style="width:100%;font-size:20px;padding:14px" aria-label="Your name">';btn='Continue'}
  else if(OB.step===2){body=ruckus('smirk',110)+'<h1>Pick a daily goal</h1><div class="opts">'+[[10,'Casual','About 1 lesson a day'],[20,'Regular','About 2 lessons a day'],[30,'Serious','About 3 lessons a day'],[50,'Intense','For future senators']].map(g=>'<button class="opt goalopt '+(OB.goal===g[0]?'sel':'')+'" data-a="ob-goal" data-g="'+g[0]+'"><span><b>'+g[1]+'</b><br><small class="muted">'+g[2]+'</small></span><span class="num">'+g[0]+' XP / day</span></button>').join('')+'</div>';btn='Continue'}
+ else if(OB.step===3){body=ruckus('wow',110)+'<h1>Where do you live?</h1><p class="muted" style="font-weight:700">You\'ll get that place\'s local government, reps, and ballot measures. You can change it later in Profile.</p>'+regionPicker(OB.region,'ob-region');btn='Continue'}
  else{body=ruckus('cheer',140)+'<h1>Where do you want to start?</h1><div class="opts"><button class="opt" data-a="ob-start" data-m="scratch"><span class="k">1</span><span><b>Start from the beginning</b><br><small class="muted">8th grade civics, the founding, the three branches</small></span></button><button class="opt" data-a="ob-start" data-m="pick"><span class="k">2</span><span><b>Pick my level</b><br><small class="muted">Every level is open: 8th grade, high school, college, or graduate</small></span></button></div>';btn=null}
  ov.innerHTML='<div class="screen"><div class="onb">'+body+'</div>'+(btn?'<div class="rfoot"><div class="in"><button class="btn wide" data-a="ob-next">'+btn+'</button></div></div>':'')+'</div>';
  const n=$('#obName');if(n)n.focus()}
-function finishOB(mode){st.name=(OB.name||'').trim().slice(0,24);st.goal=OB.goal;st.onboarded=true;save();OB=null;$('#overlay').classList.remove('on');$('#overlay').innerHTML='';render();
+function finishOB(mode){st.name=(OB.name||'').trim().slice(0,24);st.goal=OB.goal;st.onboarded=true;setRegion(OB.region||'wa');save();OB=null;$('#overlay').classList.remove('on');$('#overlay').innerHTML='';render();
  computeCur();openNode=CUR.s0;render();if(mode==='pick')levelsModal()}
 
 /* ---------- actions ---------- */
@@ -2149,8 +2344,10 @@ const A={
  'res-next':()=>{R.i++;if(R.i>=R.screens.length){const d=R.d;closeSession();scrollPending=true;if(tab!=='learn'&&(d.k==='lesson'||d.k==='test'||d.k==='cp'))setTab('learn');else render()}else renderResult()},
  'res-guide':()=>{const d=R.d;const u=d.unitId?UNITS.find(x=>x.id===d.unitId):UNITS.find(x=>x.s===d.s);closeSession();if(u)guideModal(u)},
  set:el=>{const k=el.dataset.k;st[k]=!st[k];save();if(k==='sound'&&st.sound)sfx('ok');render()},
- reset:()=>modal(ruckus('wow',100)+'<h2>Reset everything?</h2><p class="muted" style="font-weight:700">This deletes your streak, XP, and all lesson progress on this device. It can\'t be undone.</p><div class="row"><button class="btn red wide" data-a="reset-yes">Yes, reset</button><button class="btn ghost wide" data-a="close">Cancel</button></div>'),
- 'reset-yes':()=>{st=fresh();save();closeModal();buildNodes();onboarding()},
+ reset:()=>modal(ruckus('wow',100)+'<h2>Reset everything?</h2><p class="muted" style="font-weight:700">This deletes your '+st.streak+'-day streak, '+st.xp+' XP, and all lesson progress on this device. It can\'t be undone.</p><label class="repsel" style="width:100%"><span>Type RESET to confirm</span><input class="textin" id="resetIn" data-in="resetconf" autocomplete="off" autocapitalize="characters" placeholder="RESET" aria-label="Type RESET to confirm"></label><div class="row"><button class="btn ghost wide" data-a="close">Cancel, keep my progress</button><button class="btn red wide" data-a="reset-yes" id="resetGo" disabled>Delete everything</button></div>'),
+ 'reset-yes':()=>{const i=$('#resetIn');if(!i||i.value.trim().toUpperCase()!=='RESET')return;st=fresh();save();closeModal();applyRegion();buildNodes();onboarding()},
+ 'region-pick':el=>{setRegion(el.dataset.r);closeModal();render();showNotices()},
+ 'ob-region':el=>{OB.region=el.dataset.r;sfx('tap');renderOB()},
  prac:el=>{const k=el.dataset.k;closeModal();if(k==='reps'){setTab('reps');return}if(k==='local'){setTab('learn');setTimeout(()=>{const s=$('#sec4');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}
  if(k==='livedesk'){setTab('learn');setTimeout(()=>{const s=$('#sec5');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}startSession({kind:k})},
  'ob-next':()=>{if(OB.step===1){const n=$('#obName');OB.name=n?n.value:''}OB.step++;sfx('tap');renderOB()},
@@ -2175,8 +2372,9 @@ document.addEventListener('input',e=>{const el=e.target;const k=el.dataset&&el.d
  if(k==='type'&&S){S.v.text=el.value;const b=document.querySelector('[data-a="check"]');if(b)b.disabled=!canCheck(S.queue[S.idx],S.v)}
  if(k==='name'){st.name=el.value.slice(0,24);save()}
  if(k==='why'&&S&&S.v){S.v.why=el.value;const b=document.querySelector('[data-a="vsave"]');if(b)b.disabled=!(S.v.vote&&S.v.why.trim().length>=10)}
- if(k==='obname'&&OB)OB.name=el.value});
-document.addEventListener('change',e=>{const el=e.target;if(el.dataset&&el.dataset.rep){st.reps[el.dataset.rep]=el.value;save();render();return}if(el.dataset&&el.dataset.in==='goal'){st.goal=+el.value;save();render()}});
+ if(k==='obname'&&OB)OB.name=el.value;
+ if(k==='resetconf'){const b=$('#resetGo');if(b)b.disabled=el.value.trim().toUpperCase()!=='RESET'}});
+document.addEventListener('change',e=>{const el=e.target;if(el.dataset&&el.dataset.rep){st.reps[el.dataset.rep]=el.value;save();render();return}if(el.dataset&&el.dataset.in==='goal'){st.goal=+el.value;save();render()}if(el.dataset&&el.dataset.in==='region'){setRegion(el.value);render();toast('<b>Home region: '+REGIONS[region()].name+'</b>')}});
 document.addEventListener('keydown',e=>{
  if($('#modal').children.length){if(e.key==='Escape')closeModal();return}
  if(OB){if(e.key==='Enter'){const b=document.querySelector('[data-a="ob-next"]');if(b){e.preventDefault();b.click()}}return}
@@ -2197,10 +2395,10 @@ setInterval(()=>{if(S||OB||R)return;const a=document.activeElement;if(a&&(a.tagN
 document.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse'||reduceMotion())return;const el=e.target.closest('.tilt');document.querySelectorAll('.tilt[data-tilted]').forEach(o=>{if(o!==el){o.style.transform='';delete o.dataset.tilted}});if(!el)return;const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform='perspective(700px) rotateX('+(-y*9).toFixed(2)+'deg) rotateY('+(x*11).toFixed(2)+'deg) translateY(-3px)';el.dataset.tilted='1'});
 
 /* ---------- boot ---------- */
-load();buildNodes();ensureDaily();checkStreak();heartsTick();newAchievements();save();
+load();applyRegion();buildNodes();ensureDaily();checkStreak();heartsTick();newAchievements();save();
 const h0=location.hash.slice(1);if(VIEWS[h0])tab=h0;
 render();
-if(!st.onboarded)onboarding();else showNotices();
+if(!st.onboarded)onboarding();else if(!st.region)regionModal();else showNotices();
 })();
 </script>
 <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){})</script>
