@@ -2171,7 +2171,7 @@ VIEWS.friends=function(){
  return h};
 
 /* ---------- play reminders (Web Push; settings stored in Firestore, sent by a scheduled GitHub job) ---------- */
-const VAPID_PUBLIC='BI6u9EW61fiIMJMBJHL-uJ5YlLT00LQO6cM6rOYi5nxiFwEUyB9Rwch1FXIjHx86KWDiDZmaZhwkLGGouBMFSGg';
+const VAPID_PUBLIC='BJca0iJ51ZF6xK3AfRbWeQd1vCqhCZQayF1tfo-lZv_wG-C3y8zpmz25UjFWECmQphHUjbds8CR6lDJI9NQ4NdI';
 const REM_FREQ=[['off','Off'],['daily','Daily'],['every2','Every 2 days'],['weekly','Weekly']];
 function remSupported(){return !!VAPID_PUBLIC&&lbOn()&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window&&window.isSecureContext}
 function isIOS(){return /iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)}
