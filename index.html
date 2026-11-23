@@ -464,6 +464,20 @@ button.chip-level:hover{background:var(--surface-2)}
 
 details.danger{margin-top:14px;border:2px dashed var(--line);border-radius:16px;padding:6px 14px}
 details.danger summary{cursor:pointer;font-weight:800;color:var(--ink-2);padding:6px 0}
+
+.seg{display:flex;gap:6px;background:var(--surface-2);border-radius:14px;padding:4px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;font:inherit;font-weight:900;padding:10px;border-radius:10px;color:var(--ink-2);cursor:pointer}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 2px 0 var(--line)}
+.lbjoin{display:grid;gap:12px}
+.lbtable{display:grid;gap:4px;padding:8px}
+.lbrow{display:grid;grid-template-columns:28px 40px 1fr auto;gap:10px;align-items:center;padding:8px;border-radius:12px}
+.lbrow.me{background:color-mix(in srgb,var(--punk) 12%,transparent)}
+.lbrow .rank{font-weight:900;text-align:center;color:var(--ink-2)}
+.lbrow .av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900}
+.lbrow .who{display:grid;min-width:0}.lbrow .who b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lbrow .who>small{display:block;line-height:1.35}.lbrow .who>small svg{vertical-align:-2px}.lbrow .who b small{display:inline}
+.lbrow .pts{font-weight:900;font-size:20px;text-align:right}.lbrow .pts small{font-size:12px;margin-left:3px;color:var(--ink-2)}
+.linkbtn{border:0;background:none;color:var(--blue);font:inherit;font-weight:800;text-decoration:underline;cursor:pointer;padding:0}
 #modal{position:fixed;inset:0;z-index:75;pointer-events:none}#modal>*{pointer-events:auto}</style>
 <div id="app"><aside class="side" id="side"></aside><div class="mainwrap"><header class="topbar" id="top"></header><main class="view" id="view"></main></div><aside class="rail" id="rail"></aside><nav class="tabs" id="tabs"></nav></div>
 <div id="overlay"></div><div id="modal"></div><div id="toast"></div><canvas id="confetti"></canvas>
@@ -1932,11 +1946,11 @@ function sfx(n){if(st&&st.sound){try{SFX[n]()}catch(e){}}}
 
 /* ---------- state ---------- */
 const KEY='capitolquest.v1';
-function fresh(){return{created:today(),name:'',onboarded:false,goal:20,xp:0,gems:300,hearts:5,heartsTs:Date.now(),unlimited:false,streak:0,longest:0,lastDay:null,freezes:1,frozen:[],sound:true,prog:{},cp:{},mistakes:[],stats:{lessons:0,perfect:0,correct:0,answered:0,tests:0,bestCombo:0,lightning:0},days:{},daily:{day:null},league:{week:null,tier:0,xp:0},boostUntil:0,achSeen:{},srs:{},votes:{},reps:{},region:''}}
+function fresh(){return{created:today(),name:'',onboarded:false,goal:20,xp:0,gems:300,hearts:5,heartsTs:Date.now(),unlimited:false,streak:0,longest:0,lastDay:null,freezes:1,frozen:[],sound:true,prog:{},cp:{},mistakes:[],stats:{lessons:0,perfect:0,correct:0,answered:0,tests:0,bestCombo:0,lightning:0},days:{},daily:{day:null},league:{week:null,tier:0,xp:0},boostUntil:0,achSeen:{},srs:{},votes:{},reps:{},region:'',lb:{id:'',name:'',joined:false},rem:{id:'',on:false,freq:'off',hour:19}}}
 let st=fresh();
 function load(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){s=null}
- if(s&&typeof s==='object'){const f=fresh();st=Object.assign(f,s);st.stats=Object.assign(fresh().stats,s.stats||{});st.league=Object.assign(fresh().league,s.league||{});st.prog=s.prog||{};st.cp=s.cp||{};st.days=s.days||{};st.achSeen=s.achSeen||{};st.mistakes=s.mistakes||[];st.frozen=s.frozen||[];st.srs=s.srs||{};st.votes=s.votes||{};st.reps=s.reps||{};st.mistakes.forEach(id=>{if(!st.srs[id])st.srs[id]={b:0,due:today()}})}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+ if(s&&typeof s==='object'){const f=fresh();st=Object.assign(f,s);st.stats=Object.assign(fresh().stats,s.stats||{});st.league=Object.assign(fresh().league,s.league||{});st.prog=s.prog||{};st.cp=s.cp||{};st.days=s.days||{};st.achSeen=s.achSeen||{};st.mistakes=s.mistakes||[];st.frozen=s.frozen||[];st.srs=s.srs||{};st.votes=s.votes||{};st.reps=s.reps||{};st.lb=Object.assign({id:'',name:'',joined:false},s.lb||{});st.rem=Object.assign({id:'',on:false,freq:'off',hour:19},s.rem||{});st.mistakes.forEach(id=>{if(!st.srs[id])st.srs[id]={b:0,due:today()}})}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}if(typeof lbPush==='function'){lbPush();remPush()}}
 function ensureDaily(){const t=today();if(st.daily.day!==t)st.daily={day:t,xp:0,lessons:0,perfect:0,combo:0,correct:0,claimed:[]}}
 let notices=[];
 function checkStreak(){if(!st.lastDay||st.streak===0)return;const gap=dayDiff(st.lastDay,today());if(gap<=1)return;const missed=gap-1;
@@ -1984,7 +1998,7 @@ function newAchievements(){const out=[];ACH.forEach(a=>{const l=achLevel(a);if(l
 
 /* ---------- UI chrome ---------- */
 let tab='learn',openNode=-1,scrollPending=true,enterAnim=true;
-const TABS=[['learn','Learn','capitol'],['practice','Practice','dumbbell'],['me','Profile','user']];
+const TABS=[['learn','Learn','capitol'],['practice','Practice','dumbbell'],['friends','Friends','trophy'],['me','Profile','user']];
 function statsHTML(){heartsTick();const done=st.lastDay===today();
  return '<button class="stat flame '+(done?'':'cold')+'" data-a="streak" aria-label="Streak">'+ic('flame',24)+'<span class="num">'+st.streak+'</span></button>'+
  '<button class="stat heart" data-a="hearts" aria-label="Hearts">'+ic('heart',24)+'<span class="num">'+(st.unlimited?'∞':st.hearts)+'</span></button>'}
@@ -2094,7 +2108,7 @@ VIEWS.me=function(){const acc=st.stats.answered?Math.round(100*st.stats.correct/
  h+='<h3 style="margin:22px 0 10px">Settings</h3><div class="card">'+
   '<div class="setrow">Sound effects<button class="switch '+(st.sound?'on':'')+'" data-a="set" data-k="sound" aria-label="Sound effects" aria-pressed="'+st.sound+'"></button></div>'+
   '<div class="setrow"><span>Unlimited hearts<br><small class="muted">Study without losing hearts</small></span><button class="switch '+(st.unlimited?'on':'')+'" data-a="set" data-k="unlimited" aria-label="Unlimited hearts" aria-pressed="'+st.unlimited+'"></button></div>'+
-  '<div class="setrow">Daily goal<select id="goalSel" data-in="goal" aria-label="Daily goal">'+[[10,'Casual · 10 XP'],[20,'Regular · 20 XP'],[30,'Serious · 30 XP'],[50,'Intense · 50 XP']].map(g=>'<option value="'+g[0]+'" '+(st.goal===g[0]?'selected':'')+'>'+g[1]+'</option>').join('')+'</select></div>'+
+  '<div class="setrow">Daily goal<select id="goalSel" data-in="goal" aria-label="Daily goal">'+[[10,'Casual · 10 XP'],[20,'Regular · 20 XP'],[30,'Serious · 30 XP'],[50,'Intense · 50 XP']].map(g=>'<option value="'+g[0]+'" '+(st.goal===g[0]?'selected':'')+'>'+g[1]+'</option>').join('')+'</select></div>'+remRow()+
   '<div class="setrow"><span>Home region<br><small class="muted">Picks your local units, reps, and ballot measures</small></span><select data-in="region" aria-label="Home region">'+Object.keys(REGIONS).map(k=>'<option value="'+k+'" '+(region()===k?'selected':'')+'>'+REGIONS[k].name+'</option>').join('')+'</select></div></div>'+
   '<details class="danger"><summary>Danger zone</summary><div class="setrow"><span>Reset all progress<br><small class="muted">Deletes everything on this device</small></span><button class="btn ghost sm" data-a="reset">Reset…</button></div></details>';
  return h};
@@ -2124,6 +2138,71 @@ function repsNY(){const r=st.reps;const lk=(u,t)=>'<a href="'+u+'" target="_blan
  return h+'<p class="muted" style="margin-top:16px;font-weight:700;font-size:14px">Officeholders change after elections. New state officials take office in January 2027.</p>'}
 function regionPicker(sel,act){return '<div class="opts">'+[['wa','Seattle & Washington','Seattle, King County, and Washington State'],['ny','New York','New York City and New York State']].map(g=>'<button class="opt goalopt '+(sel===g[0]?'sel':'')+'" data-a="'+act+'" data-r="'+g[0]+'"><span><b>'+g[1]+'</b><br><small class="muted">'+g[2]+'</small></span></button>').join('')+'</div>'}
 function regionModal(){modal(ruckus('wow',100)+'<h2>Where do you live?</h2><p class="muted" style="font-weight:700">Capitol Quest now covers two places. Pick yours, and you\'ll only see that region\'s local government, reps, and ballot measures. Your progress stays the same. You can change this in Profile.</p>'+regionPicker('', 'region-pick'))}
+
+/* ---------- friends leaderboard (Firestore REST; shares a display name and game stats only) ---------- */
+const LB_CFG={projectId:'capitol-quest-f793e',apiKey:'AIzaSyAsQBMCIDIzfIZ7JxFvfOQaKqYv2RQjPWo'};
+function lbOn(){return !!(LB_CFG.projectId&&LB_CFG.apiKey)}
+function lbURL(id){return 'https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(LB_CFG.projectId)+'/databases/(default)/documents/players'+(id?'/'+encodeURIComponent(id):'')+'?key='+encodeURIComponent(LB_CFG.apiKey)}
+function weekXP(){const ws=weekStart();let t=0;for(let i=0;i<7;i++)t+=st.days[addDays(ws,i)]||0;return t}
+function liveStreak(){return (st.lastDay===today()||st.lastDay===addDays(today(),-1))?st.streak:0}
+function myRow(){return {name:st.lb.name,xp:st.xp,weekXp:weekXP(),week:weekStart(),streak:liveStreak(),units:ALL_UNITS.filter(unitDone).length,region:region(),updated:new Date().toISOString()}}
+function fsEnc(o){const f={};Object.keys(o).forEach(k=>{const v=o[k];f[k]=typeof v==='number'?{integerValue:String(Math.max(0,Math.round(v)))}:{stringValue:String(v)}});return {fields:f}}
+function fsDec(d){const o={};const F=d.fields||{};Object.keys(F).forEach(k=>{const v=F[k];o[k]=v.integerValue!=null?+v.integerValue:v.doubleValue!=null?+v.doubleValue:v.stringValue!=null?v.stringValue:null});o.id=String(d.name||'').split('/').pop();return o}
+const LB={rows:null,err:null,loading:false,at:0,mode:'week'};let lbTimer=null;
+function lbPush(){if(!lbOn()||!st.lb.joined||!st.lb.id)return;clearTimeout(lbTimer);lbTimer=setTimeout(()=>{try{fetch(lbURL(st.lb.id),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(fsEnc(myRow()))}).catch(()=>{})}catch(e){}},900)}
+function lbLoad(){if(!lbOn()||LB.loading)return;LB.loading=true;LB.at=Date.now();
+ fetch(lbURL()+'&pageSize=300').then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(j=>{LB.rows=(j.documents||[]).map(fsDec).filter(p=>p.name);LB.err=null})
+ .catch(()=>{LB.err='Couldn\'t reach the leaderboard. Check your connection and try again.'}).then(()=>{LB.loading=false;if(tab==='friends'&&!S&&!R&&!OB)render()})}
+function newId(){try{if(crypto.randomUUID)return crypto.randomUUID().replace(/-/g,'')}catch(e){}return Date.now().toString(36)+Math.random().toString(36).slice(2,12)}
+VIEWS.friends=function(){
+ let h='<div class="pagehead">'+ruckus('cheer',72)+'<div><h1>Friends</h1><p class="muted">Real stats from real players. XP comes from lessons, tests, and practice.</p></div></div>';
+ if(!lbOn())return h+'<div class="card"><p style="font-weight:700">The friends leaderboard isn\'t switched on in this copy of the app. Open the installed app at jaystone9.github.io/capitol-quest to see it.</p></div>';
+ if(!st.lb.joined)return h+'<div class="card lbjoin"><h3>Join the leaderboard</h3><p class="muted" style="font-weight:700">Pick the name your friends will see. The only things shared are that name and your game stats: XP, streak, units done, and home region. Nothing else leaves this device.</p><input class="textin" id="lbName" maxlength="24" placeholder="Display name" value="'+esc(st.lb.name||st.name||'')+'" aria-label="Display name"><button class="btn wide" data-a="lb-join">Join</button></div>';
+ if(Date.now()-LB.at>30000)setTimeout(lbLoad,0);
+ const wk=weekStart();const rows=(LB.rows||[]).slice();
+ if(!rows.some(r=>r.id===st.lb.id))rows.push(Object.assign({id:st.lb.id},myRow()));
+ rows.forEach(r=>{if(r.id===st.lb.id)Object.assign(r,myRow());r.wk=r.week===wk?(r.weekXp||0):0});
+ const key=LB.mode==='week'?'wk':'xp';rows.sort((a,b)=>(b[key]||0)-(a[key]||0)||(b.xp||0)-(a.xp||0));
+ h+='<div class="seg" role="tablist"><button class="'+(LB.mode==='week'?'on':'')+'" data-a="lb-mode" data-m="week">This week</button><button class="'+(LB.mode==='all'?'on':'')+'" data-a="lb-mode" data-m="all">All time</button></div>';
+ h+='<div class="card lbtable">'+rows.map((r,i)=>{const me=r.id===st.lb.id;const n=String(r.name||'Player');
+  return '<div class="lbrow'+(me?' me':'')+'"><span class="rank num">'+(i+1)+'</span><span class="av" style="background:'+['var(--punk)','var(--blue)','var(--green)','var(--purple)','var(--teal)','var(--gold)'][i%6]+'">'+esc(n[0].toUpperCase())+'</span><div class="who"><b>'+esc(n)+(me?' <small class="muted">(you)</small>':'')+'</b><small class="muted">'+ic('flame',14)+' '+(+r.streak||0)+'-day streak · '+(+r.units||0)+((+r.units===1)?' unit done':' units done')+(r.region==='ny'?' · New York':r.region==='wa'?' · Seattle':'')+'</small></div><span class="pts num">'+(+r[key]||0)+'<small>XP</small></span></div>'}).join('')+'</div>';
+ h+='<p class="muted" style="font-weight:700;font-size:14px;margin-top:10px">'+(LB.loading?'Updating…':LB.err?esc(LB.err):'Weekly XP starts over every Monday.')+' <button class="linkbtn" data-a="lb-refresh">Refresh</button></p>';
+ h+='<details class="danger"><summary>Leaderboard settings</summary><div class="setrow"><span>Display name</span><input class="textin" data-in="lbname" maxlength="24" value="'+esc(st.lb.name)+'" aria-label="Display name" style="max-width:180px"></div><div class="setrow"><span>Leave the leaderboard<br><small class="muted">Removes your name and stats for everyone</small></span><button class="btn ghost sm" data-a="lb-leave">Leave</button></div></details>';
+ return h};
+
+/* ---------- play reminders (Web Push; settings stored in Firestore, sent by a scheduled GitHub job) ---------- */
+const VAPID_PUBLIC='BF_ZmKgbN1gBU0BTPqeA7oMTM_-keEtT1MMgHRi35Og2Itl5qhlORBZR5LOMce7N_3ncqQc9fMVy4i9ytiwI03I';
+const REM_FREQ=[['off','Off'],['daily','Daily'],['every2','Every 2 days'],['weekly','Weekly']];
+function remSupported(){return lbOn()&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window&&window.isSecureContext}
+function isIOS(){return /iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)}
+function isStandalone(){return (window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true}
+function remURL(id){return 'https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(LB_CFG.projectId)+'/databases/(default)/documents/reminders/'+encodeURIComponent(id)+'?key='+encodeURIComponent(LB_CFG.apiKey)}
+function lastPlayedDay(){const ds=Object.keys(st.days).filter(d=>st.days[d]>0).sort();return ds.length?ds[ds.length-1]:''}
+let remTimer=null,remSub=null;
+function remPush(){if(!lbOn()||!st.rem.on||!remSub)return;clearTimeout(remTimer);remTimer=setTimeout(()=>{try{
+ const body={endpoint:remSub.endpoint,p256dh:remSub.keys.p256dh,auth:remSub.keys.auth,freq:st.rem.freq,hour:st.rem.hour,tz:Intl.DateTimeFormat().resolvedOptions().timeZone||'America/Los_Angeles',lastPlayed:lastPlayedDay(),updated:new Date().toISOString()};
+ const mask=Object.keys(body).map(k=>'updateMask.fieldPaths='+k).join('&');
+ fetch(remURL(st.rem.id)+'&'+mask,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(fsEnc(body))}).catch(()=>{})}catch(e){}},1200)}
+function b64u(s){const p='='.repeat((4-s.length%4)%4);const b=atob((s+p).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(b,c=>c.charCodeAt(0))}
+async function remSubscribe(){const reg=await navigator.serviceWorker.ready;let sub=await reg.pushManager.getSubscription();
+ if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID_PUBLIC)});remSub=sub.toJSON();return remSub}
+async function remEnable(freq){if(!remSupported())return;
+ if(isIOS()&&!isStandalone()){toast('<b>On iPhone, add Capitol Quest to your Home Screen first</b>');render();return}
+ let perm=Notification.permission;if(perm==='default'){try{perm=await Notification.requestPermission()}catch(e){perm='denied'}}
+ if(perm!=='granted'){st.rem.on=false;save();toast('<b>Notifications are blocked. Turn them on in your settings to get reminders.</b>');render();return}
+ try{await remSubscribe()}catch(e){toast('<b>Couldn\'t turn on reminders on this device</b>');render();return}
+ if(!st.rem.id)st.rem.id=newId();st.rem.freq=freq;st.rem.on=true;save();remPush();render();toast('<b>Reminders on</b>')}
+function remDisable(){st.rem.on=false;st.rem.freq='off';save();if(lbOn()&&st.rem.id){try{fetch(remURL(st.rem.id),{method:'DELETE'}).catch(()=>{})}catch(e){}}
+ navigator.serviceWorker&&navigator.serviceWorker.ready.then(r=>r.pushManager.getSubscription()).then(s=>s&&s.unsubscribe()).catch(()=>{});render()}
+function remInit(){if(!remSupported()||!st.rem.on)return;navigator.serviceWorker.ready.then(r=>r.pushManager.getSubscription()).then(s=>{if(s){remSub=s.toJSON();remPush()}else{st.rem.on=false;save();render()}}).catch(()=>{})}
+function hourLabel(h){return (h%12||12)+':00 '+(h<12?'AM':'PM')}
+function remRow(){
+ if(!remSupported())return '<div class="setrow"><span>Play reminders<br><small class="muted">Available in the installed app at jaystone9.github.io/capitol-quest</small></span></div>';
+ const iosTip=isIOS()&&!isStandalone()?'<br><small class="muted">On iPhone: tap Share, then Add to Home Screen, and open it from there.</small>':'';
+ const blocked=Notification.permission==='denied'?'<br><small class="muted">Notifications are blocked for this app in your device settings.</small>':'';
+ return '<div class="setrow"><span>Play reminders<br><small class="muted">Only if you haven\'t played yet that day</small>'+iosTip+blocked+'</span><select data-in="remfreq" aria-label="Play reminders">'+REM_FREQ.map(f=>'<option value="'+f[0]+'" '+(st.rem.freq===f[0]?'selected':'')+'>'+f[1]+'</option>').join('')+'</select></div>'+
+ (!st.rem.on&&st.rem.freq!=='off'?'<div class="setrow"><span><small class="muted">Your device will ask permission to send notifications.</small></span><button class="btn sm" data-a="rem-allow">Turn on</button></div>':'')+
+ (st.rem.on?'<div class="setrow">Remind me at<select data-in="remhour" aria-label="Reminder time">'+Array.from({length:16},(_,i)=>i+7).map(h=>'<option value="'+h+'" '+(st.rem.hour===h?'selected':'')+'>'+hourLabel(h)+'</option>').join('')+'</select></div>':'')}
 
 /* ---------- modals & toasts ---------- */
 function modal(html,cls){$('#modal').innerHTML='<div class="modal-bg" data-a="modal-bg"><div class="modal '+(cls||'')+'" role="dialog" aria-modal="true">'+html+'</div></div>'}
@@ -2346,6 +2425,12 @@ const A={
  set:el=>{const k=el.dataset.k;st[k]=!st[k];save();if(k==='sound'&&st.sound)sfx('ok');render()},
  reset:()=>modal(ruckus('wow',100)+'<h2>Reset everything?</h2><p class="muted" style="font-weight:700">This deletes your '+st.streak+'-day streak, '+st.xp+' XP, and all lesson progress on this device. It can\'t be undone.</p><label class="repsel" style="width:100%"><span>Type RESET to confirm</span><input class="textin" id="resetIn" data-in="resetconf" autocomplete="off" autocapitalize="characters" placeholder="RESET" aria-label="Type RESET to confirm"></label><div class="row"><button class="btn ghost wide" data-a="close">Cancel, keep my progress</button><button class="btn red wide" data-a="reset-yes" id="resetGo" disabled>Delete everything</button></div>'),
  'reset-yes':()=>{const i=$('#resetIn');if(!i||i.value.trim().toUpperCase()!=='RESET')return;st=fresh();save();closeModal();applyRegion();buildNodes();onboarding()},
+ 'lb-join':()=>{const i=$('#lbName');const n=(i?i.value:'').trim().slice(0,24);if(n.length<2){toast('<b>Pick a name with at least 2 characters</b>');return}st.lb.name=n;if(!st.lb.id)st.lb.id=newId();st.lb.joined=true;save();LB.at=0;render()},
+ 'lb-mode':el=>{LB.mode=el.dataset.m==='all'?'all':'week';render()},
+ 'lb-refresh':()=>{LB.at=0;lbLoad();render()},
+ 'lb-leave':()=>modal(ruckus('sad',90)+'<h2>Leave the leaderboard?</h2><p class="muted" style="font-weight:700">Your name and stats disappear for everyone. Your own progress stays on this device, and you can join again anytime.</p><div class="row"><button class="btn ghost wide" data-a="close">Stay</button><button class="btn red wide" data-a="lb-leave-yes">Leave</button></div>'),
+ 'lb-leave-yes':()=>{const id=st.lb.id;st.lb.joined=false;save();closeModal();if(lbOn()&&id){try{fetch(lbURL(id),{method:'DELETE'}).catch(()=>{})}catch(e){}}if(LB.rows)LB.rows=LB.rows.filter(r=>r.id!==id);render()},
+ 'rem-allow':()=>{remEnable(st.rem.freq)},
  'region-pick':el=>{setRegion(el.dataset.r);closeModal();render();showNotices()},
  'ob-region':el=>{OB.region=el.dataset.r;sfx('tap');renderOB()},
  prac:el=>{const k=el.dataset.k;closeModal();if(k==='reps'){setTab('reps');return}if(k==='local'){setTab('learn');setTimeout(()=>{const s=$('#sec4');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}
@@ -2374,7 +2459,7 @@ document.addEventListener('input',e=>{const el=e.target;const k=el.dataset&&el.d
  if(k==='why'&&S&&S.v){S.v.why=el.value;const b=document.querySelector('[data-a="vsave"]');if(b)b.disabled=!(S.v.vote&&S.v.why.trim().length>=10)}
  if(k==='obname'&&OB)OB.name=el.value;
  if(k==='resetconf'){const b=$('#resetGo');if(b)b.disabled=el.value.trim().toUpperCase()!=='RESET'}});
-document.addEventListener('change',e=>{const el=e.target;if(el.dataset&&el.dataset.rep){st.reps[el.dataset.rep]=el.value;save();render();return}if(el.dataset&&el.dataset.in==='goal'){st.goal=+el.value;save();render()}if(el.dataset&&el.dataset.in==='region'){setRegion(el.value);render();toast('<b>Home region: '+REGIONS[region()].name+'</b>')}});
+document.addEventListener('change',e=>{const el=e.target;if(el.dataset&&el.dataset.rep){st.reps[el.dataset.rep]=el.value;save();render();return}if(el.dataset&&el.dataset.in==='goal'){st.goal=+el.value;save();render()}if(el.dataset&&el.dataset.in==='remfreq'){const v=el.value;if(v==='off')remDisable();else{st.rem.freq=v;save();if(st.rem.on)remPush();else if(window.Notification&&Notification.permission==='granted')remEnable(v);render()}}if(el.dataset&&el.dataset.in==='remhour'){st.rem.hour=+el.value;save();render()}if(el.dataset&&el.dataset.in==='lbname'){const n=el.value.trim().slice(0,24);if(n.length>=2){st.lb.name=n;save();render()}}if(el.dataset&&el.dataset.in==='region'){setRegion(el.value);render();toast('<b>Home region: '+REGIONS[region()].name+'</b>')}});
 document.addEventListener('keydown',e=>{
  if($('#modal').children.length){if(e.key==='Escape')closeModal();return}
  if(OB){if(e.key==='Enter'){const b=document.querySelector('[data-a="ob-next"]');if(b){e.preventDefault();b.click()}}return}
@@ -2395,7 +2480,7 @@ setInterval(()=>{if(S||OB||R)return;const a=document.activeElement;if(a&&(a.tagN
 document.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse'||reduceMotion())return;const el=e.target.closest('.tilt');document.querySelectorAll('.tilt[data-tilted]').forEach(o=>{if(o!==el){o.style.transform='';delete o.dataset.tilted}});if(!el)return;const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform='perspective(700px) rotateX('+(-y*9).toFixed(2)+'deg) rotateY('+(x*11).toFixed(2)+'deg) translateY(-3px)';el.dataset.tilted='1'});
 
 /* ---------- boot ---------- */
-load();applyRegion();buildNodes();ensureDaily();checkStreak();heartsTick();newAchievements();save();
+load();applyRegion();buildNodes();ensureDaily();checkStreak();heartsTick();newAchievements();save();lbPush();remInit();
 const h0=location.hash.slice(1);if(VIEWS[h0])tab=h0;
 render();
 if(!st.onboarded)onboarding();else if(!st.region)regionModal();else showNotices();
