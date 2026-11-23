@@ -432,6 +432,31 @@ body{background-image:radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--
 .lvlchip:active{transform:translateY(3px);box-shadow:0 1px 0 color-mix(in srgb,var(--c) 65%,#000)}
 button.chip-level{cursor:pointer}
 button.chip-level:hover{background:var(--surface-2)}
+/* vote prompts */
+.vcard h3{font-size:20px}
+.vsides{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.vsides{grid-template-columns:1fr}}
+.vsides>div{background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:12px}
+.vsides ul{margin:6px 0 0;padding-left:18px;display:grid;gap:6px;font-weight:600;font-size:15px}
+.vsides .yes{color:var(--green-d)} .vsides .no{color:var(--red-d)}
+.vwhy{display:grid;gap:8px;font-weight:800}
+.vwhy .typein{min-height:110px;font-size:16px}
+.pos{padding:12px 0;border-bottom:2px solid var(--line);display:grid;gap:6px}
+.pos:last-child{border-bottom:0}
+.pos p{font-weight:600;color:var(--ink-2)}
+.vtag{flex:none;font-weight:900;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;color:#fff}
+.vtag.yes{background:var(--green)} .vtag.no{background:var(--red)}
+/* my reps */
+.reps{display:grid;gap:12px}
+@media (min-width:700px){.reps{grid-template-columns:1fr 1fr}}
+.repc{background:var(--surface);border:2px solid var(--line);border-bottom-width:5px;border-radius:18px;padding:14px 16px;display:grid;gap:4px;align-content:start}
+.repc h3{font-size:20px;color:var(--punk)}
+.repc p{font-size:15px;font-weight:600}
+.repnote{display:flex;gap:6px;align-items:flex-start;color:var(--gold-d);font-size:14px!important;margin-top:4px}
+.repnote svg{flex:none;margin-top:3px}
+.repsel{display:grid;gap:6px;font-weight:800}
+.repsel select{width:100%}
+.view a{color:var(--blue);font-weight:800}
 #modal{position:fixed;inset:0;z-index:75;pointer-events:none}#modal>*{pointer-events:auto}</style>
 <div id="app"><aside class="side" id="side"></aside><div class="mainwrap"><header class="topbar" id="top"></header><main class="view" id="view"></main></div><aside class="rail" id="rail"></aside><nav class="tabs" id="tabs"></nav></div>
 <div id="overlay"></div><div id="modal"></div><div id="toast"></div><canvas id="confetti"></canvas>
@@ -451,14 +476,15 @@ function F(p,a,w,ex){return {t:'fill',p,a,o:[a].concat(w),ex}}
 function O(p,steps,ex){return {t:'order',p,a:steps,ex}}
 function P(p,pairs,ex){return {t:'match',p,pairs,ex}}
 function T(p,acc,ex){return {t:'type',p,acc,a:acc[0],ex}}
+function V(p,what,pro,con,result){return {t:'vote',p,what,pro,con,result,a:''}}   // how would you vote? (not graded)
 
 const SECTIONS=[
  {id:0,level:'8th Grade',title:'Civics Foundations',blurb:'The founding, the Constitution, the three branches, and how a bill becomes a law.'},
  {id:1,level:'High School',title:'American Government',blurb:'Federalism, the House and Senate up close, amendments, elections, and landmark cases.'},
  {id:2,level:'College',title:'Political Science',blurb:'Political theory, congressional procedure, the bureaucracy, voting behavior, and comparative politics.'},
  {id:3,level:'Graduate',title:'Mastery Seminar',blurb:'Game theory, institutions, constitutional interpretation, and research methods.'},
- {id:4,level:'Seattle & Organizing',title:'Lead Locally',blurb:'Seattle, King County, and Washington government, how to run for local office, and how to organize and run meetings. Always open.',open:true,updated:'Current through 2025'},
- {id:5,level:'Live Desk',title:'New Laws & Amendments',blurb:'Recent laws and the proposals to watch. Always open, and updated as new laws pass.',live:true,updated:'Current through 2025'}
+ {id:4,level:'Seattle & Organizing',title:'Lead Locally',blurb:'Seattle, King County, and Washington government, how to run for local office, and how to organize and run meetings. Always open.',open:true,updated:'Officeholders checked November 2026'},
+ {id:5,level:'Live Desk',title:'New Laws & Amendments',blurb:'Recent laws and the proposals to watch. Always open, and updated as new laws pass.',live:true,updated:'Current through November 2026'}
 ];
 
 const UNITS=[
@@ -1093,6 +1119,27 @@ q:[
 ]},
 
 /* ---------------- LIVE DESK ---------------- */
+{id:'w5',s:4,title:'Know Your Reps',desc:'Who represents Seattle at every level, and what each office controls',
+tips:[
+ ['City Hall',['**Mayor Katie Wilson** (since Jan. 2026) runs city departments and proposes the budget.','The **9-member City Council** passes laws and the budget. **Joy Hollingsworth** is Council President.','**City Attorney Erika Evans** prosecutes misdemeanors and is the city\'s lawyer.']],
+ ['County and state',['**King County Executive Girmay Zahilay** runs Metro buses, public health, and the county jail.','**Gov. Bob Ferguson** runs the state executive branch.','You have **3 state legislators**: 1 senator and 2 representatives.']],
+ ['Washington, D.C.',['Senators **Patty Murray** and **Maria Cantwell** represent all of Washington.','**Pramila Jayapal** (WA-7) represents most of Seattle.','**Adam Smith** (WA-9) represents parts of southeast Seattle and the south suburbs.']]
+],
+q:[
+ M('Who has been Seattle\'s mayor since January 2026?','Katie Wilson',['Bruce Harrell','Jenny Durkan','Sara Nelson']),
+ M('What does Seattle\'s mayor control?','City departments, the proposed budget, and the power to veto ordinances',['Writing and passing city laws alone','Metro bus routes','State tax rates']),
+ M('Who was chosen Seattle City Council President in January 2026?','Joy Hollingsworth',['Sara Nelson','Alexis Mercedes Rinck','Dan Strauss']),
+ P('Match each citywide official to their job.',[['Katie Wilson','Mayor'],['Erika Evans','City Attorney'],['Alexis Mercedes Rinck','Council Position 8'],['Dionne Foster','Council Position 9']]),
+ M('What does the Seattle City Attorney\'s office do?','Prosecutes misdemeanors and represents the city in civil cases',['Writes city laws','Runs the police department','Sets the city budget']),
+ M('Who is King County Executive?','Girmay Zahilay',['Dow Constantine','Shannon Braddock','Ron Sims']),
+ M('Which of these does King County run, not the City of Seattle?','Metro buses, public health, and the county jail',['Seattle City Light','Seattle parks','The Seattle Police Department']),
+ M('Who is Washington\'s governor?','Bob Ferguson',['Jay Inslee','Denny Heck','Christine Gregoire']),
+ P('Match each member of Congress to the seat they hold.',[['Patty Murray','U.S. Senator'],['Pramila Jayapal','U.S. House, WA-7'],['Adam Smith','U.S. House, WA-9']]),
+ TF('Every Seattle voter has three state legislators: one senator and two representatives.',true),
+ M('Your state legislators mostly decide...','State laws, the state budget, and state taxes',['City zoning','Federal immigration law','Who runs Metro']),
+ M('Most of Seattle is in which congressional district?','WA-7',['WA-9','WA-1','WA-10'])
+]},
+
 {id:'l1',s:5,title:'Laws in the News',desc:'Major federal laws from 2020 to 2025',
 tips:[
  ['Big laws, 2020–2022',['**CARES Act (2020)**: about $2 trillion in pandemic relief.','**Infrastructure Investment and Jobs Act (2021)**: roads, bridges, broadband, and water, passed with bipartisan votes.','**CHIPS and Science Act (2022)**: money for U.S. computer-chip manufacturing and research. **Inflation Reduction Act (2022)**: energy, climate, and Medicare drug price negotiation, passed by **reconciliation**.']],
@@ -1131,6 +1178,27 @@ q:[
  M('Ending the Senate filibuster would require...','Changing Senate rules, not amending the Constitution',['A constitutional amendment','A Supreme Court ruling','A presidential order']),
  M('A Balanced Budget Amendment would require...','The federal government not to spend more than it takes in, with some exceptions',['Equal funding for every state','A balanced number of judges per party','Two budgets per year']),
  M('To overturn Citizens United directly, reformers usually propose...','A constitutional amendment',['An executive order','A Senate resolution','A state law'])
+]},
+
+{id:'l3',s:5,title:'On Your Ballot',desc:'Recent Seattle and Washington ballot measures. Learn them, then cast your own vote.',
+tips:[
+ ['Levies and the 2025 education levy',['A **levy** is a voter-approved property tax for a set number of years.','In Nov. 2025 Seattle renewed the **Families, Education, Preschool and Promise (FEPP) levy**.','Results here are as of mid-November 2026. Official counts are certified later.']],
+ ['The millionaires tax and I-645',['In March 2026 the Legislature passed a **9.9% tax on household income over $1 million**.','It takes effect **Jan. 1, 2028**.','**Initiative 645** asked voters to repeal it in Nov. 2026.']],
+ ['November 2026: transit and initiatives',['Seattle **Prop. 1** raises the city transit sales tax to buy more bus service.','Statewide, voters decided three initiatives, including **I-645** and **I-638**.','After each topic, you\'ll cast your own vote and explain why.']]
+],
+q:[
+ M('What is a levy?','A voter-approved property tax for a set number of years and a specific purpose',['A one-time fine','A federal grant','A tax on income']),
+ M('What does Seattle\'s Families, Education, Preschool and Promise (FEPP) levy fund?','Preschool, support for K-12 students, and free community college through Seattle Promise',['Road repair','Police overtime','Light rail']),
+ TF('Seattle voters renewed the FEPP levy in November 2025 with about 77% voting yes on election night.',true),
+ V('Seattle Prop. 1 (Nov. 2025): Renew the Families, Education, Preschool and Promise levy','Renews and expands a six-year property tax levy for preschool, childcare help, K-12 student supports, and Seattle Promise college.',['Pays for 600 new preschool seats and 800 childcare assistance slots.','Seattle Promise gives local graduates free community college.'],['Raises property taxes, which landlords often pass on to renters.','Some argue the state, not the city, should fund education.'],'Passed with about 77% yes on election night.'),
+ M('Washington\'s 2026 "millionaires tax" taxes...','Household income over $1 million at 9.9%',['All income at 9.9%','Wages over $100,000 at 5%','Home sales over $1 million']),
+ M('When does the millionaires tax take effect?','January 1, 2028',['Immediately in 2026','January 1, 2027','January 1, 2030']),
+ M('In November 2026, what happened to Initiative 645, the repeal of the millionaires tax?','Voters rejected it, so the tax stays',['Voters approved it, so the tax was repealed','A court blocked the vote','It didn\'t make the ballot']),
+ V('Initiative 645 (Nov. 2026): Repeal the millionaires tax','A Yes vote repeals the 9.9% tax on household income over $1 million. A No vote keeps it.',['Washington has long had no income tax, and voters have rejected income taxes before.','They fear the tax could later expand to more people, or push high earners to leave.'],['Washington relies on sales and property taxes, which take a bigger share from low-income people.','The money funds public defense, the Working Families Tax Credit, and small business tax relief.'],'Rejected: over 57% voted No, so the tax stays.'),
+ M('What does Seattle\'s November 2026 Prop. 1 do?','Raises the city transit sales tax from 0.15% to 0.3% for 10 years to buy more bus service',['Builds a new light rail line','Lowers bus fares to zero','Funds new bike lanes only']),
+ M('About what share of Seattle voters approved the 2026 transit Prop. 1?','About 73%',['About 51%','About 40%','About 90%']),
+ M('Initiative 638 (Nov. 2026), which bars transgender girls from girls\' school sports regulated by the WIAA, was...','Approved by about 56% of voters',['Rejected by about 56% of voters','Struck from the ballot','Withdrawn']),
+ V('Seattle Prop. 1 (Nov. 2026): More bus service','Doubles Seattle\'s transit sales tax from 0.15% to 0.3% for 10 years. At least 75% of the money buys extra bus service from King County Metro.',['The city says it adds about 95,000 more bus trips a year and some 24/7 service.','More frequent buses help people get around without a car.'],['Sales taxes take a bigger share of income from people with less money.','Some argue the county or state should fund Metro instead.'],'Passed with about 73% yes.')
 ]}
 ];
 
@@ -1555,6 +1623,31 @@ Object.assign(TEACH,{
 'l2-8':'A **Balanced Budget Amendment** would require **the federal government not to spend more than it takes in**, with some exceptions like war.',
 'l2-9':'Citizens United was a constitutional ruling, so reformers usually propose **a constitutional amendment** to overturn it directly.',
 });
+Object.assign(TEACH,{
+/* w5 Know Your Reps (officeholders checked Nov. 2026) */
+'w5-0':'Seattle\'s mayor is **Katie Wilson**. She beat incumbent Bruce Harrell in November 2025 by less than one point and took office in **January 2026**.',
+'w5-1':'The mayor runs **city departments** (police, transportation, utilities), proposes **the budget**, and can **veto ordinances**. The council can override a veto with 6 of 9 votes.',
+'w5-2':'In January 2026 the council unanimously chose **Joy Hollingsworth** (District 3) as **Council President**. The president runs council meetings and assigns committees, for a two-year term.',
+'w5-3':'Four officials are elected by the whole city:',
+'w5-4':'The **City Attorney**, now **Erika Evans**, **prosecutes misdemeanors** (like theft and DUI) and **represents the city in civil cases**. Felonies go to the King County Prosecutor.',
+'w5-5':'The **King County Executive** is **Girmay Zahilay**, elected in November 2025. The executive runs the county the way the mayor runs the city.',
+'w5-6':'Some things Seattleites care about are county jobs, not city jobs: **Metro buses, public health, and the county jail** are run by King County.',
+'w5-7':'Washington\'s governor is **Bob Ferguson**, in office since January 2025. He signs or vetoes state bills and runs state agencies.',
+'w5-8':'Your members of Congress:',
+'w5-9':'Each of Washington\'s 49 legislative districts elects **one state senator and two state representatives**. So **every Seattle voter has three state legislators**.',
+'w5-10':'Your state legislators decide **state laws, the state budget, and state taxes**, like the sales tax and the new millionaires tax. They also set rules cities must follow.',
+'w5-11':'**Most of Seattle is in WA-7**, represented by Pramila Jayapal. Parts of southeast Seattle are in WA-9 with Adam Smith.',
+/* l3 On Your Ballot */
+'l3-0':'A **levy** is **a voter-approved property tax for a set number of years and a specific purpose**. When it expires, voters must renew it.',
+'l3-1':'Seattle\'s **FEPP levy** funds **preschool, support for K-12 students, and free community college through Seattle Promise**. The 2025 renewal adds 600 preschool seats and 800 childcare assistance slots.',
+'l3-2':'In **November 2025**, Seattle voters **renewed the FEPP levy** with about **77%** voting yes on election night.',
+'l3-4':'In March 2026 the Legislature passed, and Gov. Ferguson signed, a **9.9% tax on household income over $1 million**. Washington had no income tax before.',
+'l3-5':'The millionaires tax takes effect **January 1, 2028**, with the first payments due in 2029. The money goes to public defense, the Working Families Tax Credit, and small business tax relief.',
+'l3-6':'In November 2026, **Initiative 645** asked voters to repeal the tax. **Voters rejected it** (over 57% No), **so the tax stays**.',
+'l3-8':'Seattle\'s November 2026 **Prop. 1** **raises the city transit sales tax from 0.15% to 0.3% for 10 years** to **buy more bus service** from King County Metro.',
+'l3-9':'Prop. 1 passed easily, with **about 73%** voting yes.',
+'l3-10':'Statewide, **Initiative 638** bars transgender girls from girls\' school sports regulated by the WIAA. It was **approved by about 56% of voters**.',
+});
 (function(){
 'use strict';
 /* ---------- helpers ---------- */
@@ -1667,10 +1760,10 @@ function sfx(n){if(st&&st.sound){try{SFX[n]()}catch(e){}}}
 
 /* ---------- state ---------- */
 const KEY='capitolquest.v1';
-function fresh(){return{created:today(),name:'',onboarded:false,goal:20,xp:0,gems:300,hearts:5,heartsTs:Date.now(),unlimited:false,streak:0,longest:0,lastDay:null,freezes:1,frozen:[],sound:true,prog:{},cp:{},mistakes:[],stats:{lessons:0,perfect:0,correct:0,answered:0,tests:0,bestCombo:0,lightning:0},days:{},daily:{day:null},league:{week:null,tier:0,xp:0},boostUntil:0,achSeen:{}}}
+function fresh(){return{created:today(),name:'',onboarded:false,goal:20,xp:0,gems:300,hearts:5,heartsTs:Date.now(),unlimited:false,streak:0,longest:0,lastDay:null,freezes:1,frozen:[],sound:true,prog:{},cp:{},mistakes:[],stats:{lessons:0,perfect:0,correct:0,answered:0,tests:0,bestCombo:0,lightning:0},days:{},daily:{day:null},league:{week:null,tier:0,xp:0},boostUntil:0,achSeen:{},srs:{},votes:{},reps:{}}}
 let st=fresh();
 function load(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){s=null}
- if(s&&typeof s==='object'){const f=fresh();st=Object.assign(f,s);st.stats=Object.assign(fresh().stats,s.stats||{});st.league=Object.assign(fresh().league,s.league||{});st.prog=s.prog||{};st.cp=s.cp||{};st.days=s.days||{};st.achSeen=s.achSeen||{};st.mistakes=s.mistakes||[];st.frozen=s.frozen||[]}}
+ if(s&&typeof s==='object'){const f=fresh();st=Object.assign(f,s);st.stats=Object.assign(fresh().stats,s.stats||{});st.league=Object.assign(fresh().league,s.league||{});st.prog=s.prog||{};st.cp=s.cp||{};st.days=s.days||{};st.achSeen=s.achSeen||{};st.mistakes=s.mistakes||[];st.frozen=s.frozen||[];st.srs=s.srs||{};st.votes=s.votes||{};st.reps=s.reps||{};st.mistakes.forEach(id=>{if(!st.srs[id])st.srs[id]={b:0,due:today()}})}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
 function ensureDaily(){const t=today();if(st.daily.day!==t)st.daily={day:t,xp:0,lessons:0,perfect:0,combo:0,correct:0,claimed:[]}}
 let notices=[];
@@ -1681,8 +1774,12 @@ const HEART_MS=30*60*1000;
 function heartsTick(){if(st.hearts>=5){st.heartsTs=Date.now();return}const g=Math.floor((Date.now()-st.heartsTs)/HEART_MS);if(g>0){st.hearts=Math.min(5,st.hearts+g);st.heartsTs+=g*HEART_MS;if(st.hearts>=5)st.heartsTs=Date.now();save()}}
 function loseHeart(){if(st.unlimited)return;if(st.hearts>=5)st.heartsTs=Date.now();st.hearts=Math.max(0,st.hearts-1)}
 function nextHeartIn(){const ms=HEART_MS-(Date.now()-st.heartsTs);return Math.max(1,Math.ceil(ms/60000))}
-function addMistake(id){if(!st.mistakes.includes(id)){st.mistakes.push(id);if(st.mistakes.length>60)st.mistakes.shift()}}
-function removeMistake(id){st.mistakes=st.mistakes.filter(x=>x!==id)}
+function addMistake(id){if(!st.mistakes.includes(id)){st.mistakes.push(id);if(st.mistakes.length>200)st.mistakes.shift()}st.srs[id]={b:0,due:addDays(today(),1)}}
+const SRS_GAP=[1,3,7,14,30];
+function weakDue(){return Object.keys(st.srs).filter(id=>QMAP[id]&&st.srs[id].due<=today())}
+function weakLater(){return Object.keys(st.srs).filter(id=>QMAP[id]&&st.srs[id].due>today()).length}
+function srsRight(id){const r=st.srs[id];if(!r)return;r.b++;if(r.b>=SRS_GAP.length){delete st.srs[id];removeMistake(id)}else r.due=addDays(today(),SRS_GAP[r.b])}
+function removeMistake(id){st.mistakes=st.mistakes.filter(x=>x!==id);delete st.srs[id]}
 
 /* ---------- course structure ---------- */
 let NODES=[];
@@ -1691,7 +1788,7 @@ const pr=u=>st.prog[u.id]||{d:0,t:false};
 function nodeDone(n){if(n.type==='lesson')return pr(n.u).d>n.k;if(n.type==='test')return !!pr(n.u).t;return !!st.cp[n.s]}
 const isLive=n=>!!SECTIONS[n.s].live;
 const openSec=id=>!!(SECTIONS[id].live||SECTIONS[id].open);
-const trackOf=n=>'s'+n.s;
+const trackOf=n=>openSec(n.s)&&n.u?'s'+n.s+':'+n.u.id:'s'+n.s;
 let CUR={main:-1};
 function computeCur(){CUR={};for(let j=0;j<NODES.length;j++){const n=NODES[j];const tr=trackOf(n);if(CUR[tr]===undefined)CUR[tr]=-1;if(CUR[tr]===-1&&!nodeDone(n))CUR[tr]=j}}
 function nodeState(i){const n=NODES[i];if(nodeDone(n))return 'done';const c=CUR[trackOf(n)];return c===i?'cur':'lock'}
@@ -1739,11 +1836,12 @@ const OFF=[0,46,72,46,0,-46,-72,-46];
 const VIEWS={};
 VIEWS.learn=function(){computeCur();let h='<div class="lvlchips">'+SECTIONS.map(s=>'<button class="lvlchip" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+'">'+esc(s.level)+'</button>').join('')+'</div>';
  if(st.streak>0&&st.lastDay!==today())h+='<div class="banner-risk">'+ruckus('wow',54)+'<div>Your '+st.streak+'-day streak is at risk. One lesson keeps it alive.</div></div>';
+ {const d=weakDue().length;if(d)h+='<button class="banner-risk" data-a="prac" data-k="weak" style="--flame:var(--red);width:100%;text-align:left">'+ic('redo',30,'style="color:var(--red)"')+'<div><b>'+d+' weak spot'+(d>1?'s':'')+' due today.</b> A quick review locks them in.</div></button>'}
  SECTIONS.forEach(s=>{const units=UNITS.filter(u=>u.s===s.id);const firstIdx=NODES.findIndex(n=>n.s===s.id);const locked=nodeState(firstIdx)==='lock';
   const doneU=units.filter(unitDone).length;
   h+='<section class="sec" id="sec'+s.id+'"><div class="sec-head '+(locked?'locked':'')+'" style="'+scol(s.id)+'">'+
    '<span class="lvl">'+(s.live?'<span class="live-dot" style="background:#fff"></span>':'')+esc(s.level)+'</span><h2>'+esc(s.title)+'</h2><p class="muted">'+esc(s.blurb)+'</p>'+
-   (s.live?'<span class="live-tag"><span class="live-dot"></span>'+esc(s.updated)+'</span>':s.open?'<span class="live-tag" style="color:var(--c)">Always open · '+esc(s.updated)+'</span>':'')+
+   (s.live?'<span class="live-tag"><span class="live-dot"></span>'+esc(s.updated)+'</span>':s.open?'<span class="live-tag" style="color:var(--c)">'+esc(s.updated)+'</span><button class="btn sm" data-a="prac" data-k="reps" style="justify-self:start;'+scol(s.id)+'">'+ic('user',18)+'See my reps</button>':'')+
    '<div class="bar" style="'+scol(s.id)+'"><i style="width:'+(doneU/units.length*100)+'%"></i></div><small class="muted num" style="font-weight:800">'+doneU+' of '+units.length+' units complete</small>'+
    '</div>';
   units.forEach((u,ui)=>{const uIdx=NODES.findIndex(n=>n.u===u);const ulock=nodeState(uIdx)==='lock';const flip=UNITS.indexOf(u)%2===1;
@@ -1774,11 +1872,40 @@ function popHTML(i,stt,col){const n=NODES[i];let t,sub,btn;
  if(stt==='lock')return '<div class="pop lock" style="'+col+'"><h4>'+esc(t)+'</h4><p>Finish everything above to unlock this.</p></div>';
  return '<div class="pop" style="'+col+'"><h4>'+esc(t)+'</h4><p>'+esc(sub)+'</p><button class="btn wide" data-a="start" data-i="'+i+'">'+btn+'</button></div>'}
 
+const REPS_CHECKED='November 23, 2026';
+const COUNCIL={1:['Rob Saka','West Seattle, South Park'],2:['Eddie Lin','Rainier Valley, Beacon Hill, Georgetown'],3:['Joy Hollingsworth','Capitol Hill, Central District'],4:['Maritza Rivera','U District, Wallingford, Laurelhurst'],5:['Debora Juarez','Northgate, Lake City, Bitter Lake','Nilu Jenks won the November 2026 special election for this seat (about 58% in the latest count) and takes over once results are certified.'],6:['Dan Strauss','Ballard, Fremont, Green Lake'],7:['Bob Kettle','Downtown, Queen Anne, Magnolia']};
+const LDS={11:['Bob Hasegawa',['David Hackney','Steve Bergquist'],'South end of Seattle, plus Tukwila and Renton','Names last confirmed in 2025. Double-check with the District Finder.'],
+ 32:['Jesse Salomon',['Cindy Ryu','Lauren Davis'],'Far north Seattle, plus Shoreline and Lynnwood','House names last confirmed in 2025. Rep. Ryu challenged Sen. Salomon in 2026; the latest count had them about 120 votes apart.'],
+ 34:['Emily Alvarado',['Brianna Thomas','Joe Fitzgibbon'],'West Seattle, White Center, Burien, Vashon',''],
+ 36:['Noel Frame',['Julia Reed','Liz Berry'],'Ballard, Queen Anne, Magnolia, Fremont',''],
+ 37:['Rebecca Saldaña',['Sharon Tomiko Santos','Chipalo Street'],'Rainier Valley, Central District, Beacon Hill','Sen. Saldaña did not run again. Rep. Chipalo Street ran for her Senate seat, and Kelabe Tewolde led Rep. Santos in the latest count. Winners take office in January 2027.'],
+ 43:['Jamie Pedersen',['Nicole Macri','Shaun Scott'],'Capitol Hill, U District, Wallingford, downtown','Sen. Pedersen is the Senate Majority Leader.'],
+ 46:['Javier Valdez',['Gerry Pollet','Darya Farivar'],'Northeast Seattle, Lake City, Lake Forest Park','Position 1 was on the 2026 ballot. Check the District Finder for the winner.']};
+function repCard(office,name,what,note,extra){return '<div class="repc"><small class="eyebrow muted">'+office+'</small><h3>'+name+'</h3>'+(extra?'<p class="muted" style="font-weight:700">'+extra+'</p>':'')+'<p>'+what+'</p>'+(note?'<p class="repnote">'+ic('bolt',14)+'<span>'+note+'</span></p>':'')+'</div>'}
+function repSel(k,label,opts){const v=st.reps[k]||'';return '<label class="repsel"><span>'+label+'</span><select data-rep="'+k+'"><option value="">Pick one</option>'+opts.map(o=>'<option value="'+o[0]+'" '+(String(v)===String(o[0])?'selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select></label>'}
+VIEWS.reps=function(){const r=st.reps;const lk=(u,t)=>'<a href="'+u+'" target="_blank" rel="noopener">'+t+'</a>';
+ let h='<div class="pagehead">'+ruckus('cheer',72)+'<div><h1>My reps</h1><p class="muted">Who represents you, and what they control. Checked '+REPS_CHECKED+'.</p></div></div>';
+ h+='<div class="card" style="display:grid;gap:12px">'+repSel('cd','Seattle City Council district',Object.keys(COUNCIL).map(k=>[k,'District '+k+' ('+COUNCIL[k][1]+')']))+repSel('ld','State legislative district',Object.keys(LDS).map(k=>[k,k+'th ('+LDS[k][2]+')']))+repSel('cong','Congressional district',[['7','WA-7 (most of Seattle)'],['9','WA-9 (parts of southeast Seattle)']])+
+  '<p class="muted" style="font-weight:700;font-size:14px">Not sure? Look up your address: '+lk('https://www.seattle.gov/council/meet-the-council/find-your-council-district','council district')+', '+lk('https://app.leg.wa.gov/districtfinder/','legislative and congressional districts')+'.</p></div>';
+ h+='<h3 style="margin:22px 0 10px">City of Seattle</h3><div class="reps">'+
+  repCard('Mayor','Katie Wilson','Runs city departments like police, transportation, and utilities. Proposes the budget and can veto ordinances.')+
+  (r.cd?repCard('City Council, District '+r.cd,COUNCIL[r.cd][0],'Your district\'s vote on city laws, the budget, zoning, and taxes.',COUNCIL[r.cd][2]||'',COUNCIL[r.cd][1]):repCard('City Council, your district','Pick your district above','Your district\'s vote on city laws, the budget, zoning, and taxes.'))+
+  repCard('City Council, Position 8 (citywide)','Alexis Mercedes Rinck','Represents the whole city on the council.')+
+  repCard('City Council, Position 9 (citywide)','Dionne Foster','Represents the whole city on the council.')+
+  repCard('City Attorney','Erika Evans','Prosecutes misdemeanors and is the city\'s lawyer in civil cases.')+'</div>';
+ h+='<h3 style="margin:22px 0 10px">King County</h3><div class="reps">'+repCard('County Executive','Girmay Zahilay','Runs Metro buses, public health, the county jail, and elections.')+'</div>';
+ const L=LDS[r.ld];
+ h+='<h3 style="margin:22px 0 10px">State of Washington</h3><div class="reps">'+repCard('Governor','Bob Ferguson','Signs or vetoes state bills, proposes the state budget, and runs state agencies.')+
+  (L?repCard('State Senator, '+r.ld+'th District',L[0],'Votes on state laws, the state budget, and taxes. Serves 4-year terms.',L[3])+repCard('State Representatives, '+r.ld+'th District',L[1].join(' and '),'Vote on state laws, the budget, and taxes. Serve 2-year terms.'):repCard('State Legislature, your district','Pick your district above','One senator and two representatives make state laws, the budget, and taxes.'))+'</div>';
+ h+='<h3 style="margin:22px 0 10px">Congress</h3><div class="reps">'+repCard('U.S. Senators','Patty Murray and Maria Cantwell','Vote on federal laws, confirm judges and Cabinet members, and approve treaties.')+
+  (r.cong?repCard('U.S. House, WA-'+r.cong,r.cong==='7'?'Pramila Jayapal':'Adam Smith','Votes on federal laws and spending. Serves 2-year terms.'):repCard('U.S. House, your district','Pick your district above','Votes on federal laws and spending.'))+'</div>';
+ return h+'<p class="muted" style="margin-top:16px;font-weight:700;font-size:14px">Officeholders change after elections. New legislators take office in January 2027.</p>'};
 VIEWS.practice=function(){const mc=st.mistakes.length;
  return '<div class="pagehead">'+ruckus('smirk',72)+'<div><h1>Practice</h1><p class="muted">Each practice session earns back 1 heart.</p></div></div>'+
- pcard('mistakes','Fix your mistakes',mc?mc+' question'+(mc>1?'s':'')+' you missed are waiting for a rematch.':'No mistakes saved yet. Nice.','redo','var(--red)',!mc)+
+ (()=>{const d=weakDue().length,l=weakLater();return pcard('weak','Weak spots'+(d?' · '+d+' due today':''),d?'Questions you missed, brought back on a schedule: 1, 3, 7, 14, then 30 days later. Get one right each time and it graduates.':(l?'Nothing due today. '+l+' more coming back on schedule.':'Questions you miss land here, then come back after 1, 3, 7, 14, and 30 days until they stick.'),'redo','var(--red)',!d)})()+
  pcard('review','Review mix','10 questions from everything you\'ve studied so far.','dumbbell','var(--blue)')+
  pcard('lightning','Lightning Round','Answer as many as you can in 60 seconds. Best: '+st.stats.lightning+'.','clock','var(--gold)')+
+ pcard('reps','My reps','Pick your districts and see exactly who represents you, from City Council to Congress.','user','var(--purple)')+
  pcard('local','Seattle & Organizing','Local government, running for office, and running great meetings.','capitol','var(--teal)')+
  pcard('livedesk','Live Desk','New laws and amendments to watch, updated over time.','news','var(--punk)')}
 function pcard(k,t,p,icon,c,dis){return '<button class="practice-card tilt" data-a="prac" data-k="'+k+'" '+(dis?'disabled style="opacity:.55"':'')+'><span class="pc-ic" style="background:'+c+'">'+ic(icon,38)+'</span><div><h3>'+t+'</h3><p>'+p+'</p></div></button>'}
@@ -1791,6 +1918,7 @@ VIEWS.me=function(){const acc=st.stats.answered?Math.round(100*st.stats.correct/
   sbox('target','var(--blue)',acc+'%','Accuracy')+sbox('flame','var(--teal)',st.longest,'Longest streak')+'</div>';
  h+='<h3 style="margin:22px 0 10px">Achievements</h3><div class="card">'+ACH.map(a=>{const l=achLevel(a);const nx=a.lv[Math.min(l,a.lv.length-1)];const v=a.v();const max=l>=a.lv.length;
    return '<div class="ach"><span class="pc-ic" style="width:62px;height:62px;background:'+(l?a.col:'var(--surface-2)')+';color:'+(l?'#fff':'var(--ink-2)')+';position:relative">'+ic(a.icon,32)+'<small style="position:absolute;bottom:-6px;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:8px;font-size:11px;font-weight:900;padding:0 5px">LV '+l+'</small></span><div><h4>'+a.name+'<span class="muted num" style="font-size:13px">'+(max?'Maxed':Math.min(v,nx)+' / '+nx)+'</span></h4><p>'+a.d.replace('{n}',nx)+'</p><div class="bar" style="--c:'+a.col+'"><i style="width:'+(max?100:Math.min(100,v/nx*100))+'%"></i></div></div></div>'}).join('')+'</div>';
+ {const vs=Object.keys(st.votes).filter(id=>QMAP[id]);h+='<h3 style="margin:22px 0 10px">My positions</h3><div class="card">'+(vs.length?vs.map(id=>{const q=QMAP[id],x=st.votes[id];return '<div class="pos"><div class="hd" style="margin:0"><b>'+esc(q.p)+'</b><span class="vtag '+(x.v==='Yes'?'yes':'no')+'">'+x.v+'</span></div><p>'+esc(x.why)+'</p></div>'}).join(''):'<p class="muted" style="font-weight:700">When you finish a lesson in On Your Ballot (Live Desk), your votes and reasons are saved here. Handy prep for candidate forums.</p>')+'</div>'}
  h+='<h3 style="margin:22px 0 10px">Settings</h3><div class="card">'+
   '<div class="setrow">Sound effects<button class="switch '+(st.sound?'on':'')+'" data-a="set" data-k="sound" aria-label="Sound effects" aria-pressed="'+st.sound+'"></button></div>'+
   '<div class="setrow"><span>Unlimited hearts<br><small class="muted">Study without losing hearts</small></span><button class="switch '+(st.unlimited?'on':'')+'" data-a="set" data-k="unlimited" aria-label="Unlimited hearts" aria-pressed="'+st.unlimited+'"></button></div>'+
@@ -1811,7 +1939,7 @@ function heartsModal(fromLesson){heartsTick();
  modal('<div style="color:var(--red)">'+ic('heart',72)+'</div><h2>'+(st.unlimited?'Unlimited hearts are on':st.hearts+' of 5 hearts')+'</h2><p class="muted" style="font-weight:700">'+(st.unlimited?'You won\'t lose hearts for mistakes.':st.hearts>=5?'You\'re full. Every wrong answer in a lesson costs a heart.':'Next heart in '+nextHeartIn()+' minutes. Practice sessions also earn hearts back.')+'</p>'+
  '<div class="row">'+(!st.unlimited&&st.hearts<5?'<button class="btn ghost" data-a="prac" data-k="review">Practice to earn hearts</button>':'')+'<button class="btn '+(st.unlimited||st.hearts>=5?'':'ghost')+'" data-a="close">Close</button></div>')}
 function levelsModal(){modal(ruckus('cheer',90)+'<h2>Pick a level</h2><p class="muted" style="font-weight:700">Every level is open. Your progress in each one is saved separately, so you can switch any time.</p><div class="row">'+SECTIONS.map(s=>{const us=UNITS.filter(u=>u.s===s.id);const d=us.filter(unitDone).length;return '<button class="btn wide" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+';--cd:color-mix(in srgb,var(--c) 70%,#000);justify-content:space-between"><span>'+esc(s.level)+'</span><small class="num" style="opacity:.85">'+d+' / '+us.length+' units</small></button>'}).join('')+'</div>')}
-function guideModal(u){modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('smirk',64)+'<div style="text-align:left"><small class="eyebrow muted">Guidebook</small><h2>'+esc(u.title)+'</h2></div></div>'+u.tips.map((t,k)=>learnCard(t)+'<details class="gfacts"><summary>'+ic('book',16)+'Every fact in lesson '+(k+1)+'</summary>'+u.q.slice(k*chunkSize(u),(k+1)*chunkSize(u)).map(q=>'<div class="tcard">'+teachBody(q)+'</div>').join('')+'</details>').join('')+'<div class="row"><button class="btn wide" data-a="close">Close</button></div>','guidebook')}
+function guideModal(u){modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('smirk',64)+'<div style="text-align:left"><small class="eyebrow muted">Guidebook</small><h2>'+esc(u.title)+'</h2></div></div>'+u.tips.map((t,k)=>learnCard(t)+'<details class="gfacts"><summary>'+ic('book',16)+'Every fact in lesson '+(k+1)+'</summary>'+graded(u.q.slice(k*chunkSize(u),(k+1)*chunkSize(u))).map(q=>'<div class="tcard">'+teachBody(q)+'</div>').join('')+'</details>').join('')+'<div class="row"><button class="btn wide" data-a="close">Close</button></div>','guidebook')}
 function learnCard(t){return '<div class="learn"><h3>'+md(t[0])+'</h3><ul>'+t[1].map(b=>'<li><span>'+md(b)+'</span></li>').join('')+'</ul></div>'}
 function showNotices(){const n=notices.shift();if(!n)return;
  if(n.type==='freeze')modal('<div style="color:var(--teal)">'+ic('snow',80)+'</div><h2>Streak Freeze used</h2><p class="muted" style="font-weight:700">You missed '+n.n+' day'+(n.n>1?'s':'')+', but your '+st.streak+'-day streak survived.</p><div class="row"><button class="btn wide" data-a="close-next">Phew</button></div>');
@@ -1821,11 +1949,12 @@ function showNotices(){const n=notices.shift();if(!n)return;
 let S=null,R=null,lightTimer=null;
 const LABEL={mc:'Select the correct answer',tf:'True or false?',fill:'Fill in the blank',order:'Put these in order',match:'Tap the matching pairs',type:'Type your answer'};
 function chunkSize(u){return Math.ceil(u.q.length/u.L)}
-function taughtQs(u){const p=pr(u);if(p.t||p.d>=u.L)return u.q;return u.q.slice(0,Math.min(u.q.length,p.d*chunkSize(u)))}
-function lessonQs(u,k,teach){const size=chunkSize(u);const chunk=u.q.slice(k*size,(k+1)*size);const earlier=u.q.slice(0,k*size);const rev=shuffle(earlier).slice(0,k?3:0);
- if(!teach)return shuffle(chunk).concat(shuffle(rev));
+function graded(qs){return qs.filter(q=>q.t!=='vote')}
+function taughtQs(u){const p=pr(u);if(p.t||p.d>=u.L)return graded(u.q);return graded(u.q.slice(0,Math.min(u.q.length,p.d*chunkSize(u))))}
+function lessonQs(u,k,teach){const size=chunkSize(u);const all=u.q.slice(k*size,(k+1)*size);const votes=all.filter(q=>q.t==='vote');const chunk=graded(all);const earlier=graded(u.q.slice(0,k*size));const rev=shuffle(earlier).slice(0,k?3:0);
+ if(!teach)return shuffle(chunk).concat(votes,shuffle(rev));
  let out=[];for(let i=0;i<chunk.length;i+=2){const g=chunk.slice(i,i+2);g.forEach((q,j)=>out.push({t:'teach',q,n:i+j+1,of:chunk.length}));out=out.concat(shuffle(g))}
- return out.concat(shuffle(rev))}
+ return out.concat(votes,shuffle(rev))}
 function newInfo(ex,t){const w=s=>s.toLowerCase().replace(/[^a-z0-9 ]/g,' ').split(/ +/).filter(x=>x.length>3);const T=new Set(w(t));const e=w(ex);return e.filter(x=>!T.has(x)).length/Math.max(1,e.length)>.5}
 function teachBody(q){let h='<p class="tfact">'+md(TEACH[q.id]||q.ex||answerText(q))+'</p>';
  if(q.t==='order')h+='<ol class="tlist">'+q.a.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>';
@@ -1837,15 +1966,16 @@ function startSession(o){closeModal();
  S=Object.assign({queue:[],idx:0,base:0,done:0,correct:0,wrong:0,combo:0,maxCombo:0,start:Date.now(),checked:false,learn:null,v:null},o);
  const k=o.kind;
  if(k==='lesson'){S.queue=lessonQs(o.u,o.k,!o.replay);if(!o.replay)S.learn=o.u.tips[o.k]}
- else if(k==='test')S.queue=shuffle(o.u.q).slice(0,10);
- else if(k==='cp'){const us=UNITS.filter(u=>u.s===o.s);const per=Math.max(2,Math.ceil(16/us.length));let qs=[];us.forEach(u=>{qs=qs.concat(shuffle(u.q).slice(0,per))});S.queue=shuffle(qs).slice(0,16)}
+ else if(k==='test')S.queue=shuffle(graded(o.u.q)).slice(0,10);
+ else if(k==='cp'){const us=UNITS.filter(u=>u.s===o.s);const per=Math.max(2,Math.ceil(16/us.length));let qs=[];us.forEach(u=>{qs=qs.concat(shuffle(graded(u.q)).slice(0,per))});S.queue=shuffle(qs).slice(0,16)}
  else if(k==='review'){let pool=[];UNITS.forEach(u=>{pool=pool.concat(taughtQs(u))});S.queue=shuffle(pool).slice(0,10)}
- else if(k==='mistakes')S.queue=shuffle(st.mistakes.map(id=>QMAP[id]).filter(Boolean)).slice(0,10);
+ else if(k==='weak'){S.queue=shuffle(weakDue().map(id=>QMAP[id])).slice(0,12);S.missed={}}
  else if(k==='lightning'){let pool=[];UNITS.forEach(u=>{pool=pool.concat(taughtQs(u).filter(q=>q.t==='mc'||q.t==='tf'||q.t==='fill'))});S.pool=pool;S.queue=shuffle(pool);S.endAt=Date.now()+60000;S.learn=null}
  if(!S.queue.length){S=null;toast('Finish a lesson first. I only quiz you on what I\'ve taught you.');return}
  S.base=S.queue.length;newView();$('#overlay').classList.add('on');document.body.style.overflow='hidden';sfx('tap');renderSession();
  if(k==='lightning')startLightTimer()}
 function newView(){const q=S.queue[S.idx];if(!q){S.v=null;return}const v={sel:null};if(q.t==='teach'){S.v=v;S.checked=false;S.result=null;S.fresh=true;return}
+ if(q.t==='vote'){const pv=st.votes[q.id]||{};v.vote=pv.v||null;v.why=pv.why||'';S.v=v;S.checked=false;S.fresh=true;return}
  if(q.t==='mc'||q.t==='fill')v.opts=shuffle(q.o);
  if(q.t==='tf')v.opts=q.o.slice();
  if(q.t==='order'){let b=shuffle(q.a.map((s,i)=>i));if(b.every((x,i)=>x===i))b=b.reverse();v.bank=b;v.picked=[]}
@@ -1866,13 +1996,19 @@ function renderSession(){if(!S)return;const ov=$('#overlay');let body,foot;
  else if(S.queue[S.idx]&&S.queue[S.idx].t==='teach'){const it=S.queue[S.idx],q=it.q,r=hash(q.id);
   body='<div class="lin'+(S.fresh?'':' still')+'"><span class="qtype newword">'+ic('book',18)+'New fact '+it.n+' of '+it.of+'</span><div class="speak"><div class="mascot-react idle">'+ruckus(TEACH_MOOD[r%4],84)+'</div><div class="bubble">'+TEACH_LEAD[r%TEACH_LEAD.length]+'</div></div><div class="tcard">'+teachBody(q)+'</div></div>';
   foot='<div class="lfoot"><div class="in"><p class="muted" style="font-weight:800;margin:0">'+(it.n%2===0||it.n===it.of?'Quiz on this next.':'One more fact, then a quick check.')+'</p><button class="btn green" data-a="taught" style="min-width:200px">Got it</button></div></div>'}
+ else if(S.queue[S.idx]&&S.queue[S.idx].t==='vote'){const q=S.queue[S.idx],v=S.v;
+  body='<div class="lin'+(S.fresh?'':' still')+'"><span class="qtype newword">'+ic('news',18)+'Your vote</span><div class="speak"><div class="mascot-react idle">'+ruckus('wow',84)+'</div><div class="bubble">No right answer here. How would <i>you</i> vote, and why?</div></div><div class="tcard vcard"><h3>'+esc(q.p)+'</h3><p class="tfact" style="font-size:17px">'+esc(q.what)+'</p><div class="vsides"><div><b class="yes">Supporters say</b><ul>'+q.pro.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div><b class="no">Opponents say</b><ul>'+q.con.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div><p class="tmore">'+ic('check',16)+'<span>Result: '+esc(q.result)+'</span></p></div>'+
+  '<div class="opts tf">'+['Yes','No'].map(o=>'<button class="opt '+(v.vote===o?'sel':'')+'" data-a="vopt" data-v="'+o+'">'+(o==='Yes'?ic('check',26):ic('x',22))+'<span>I\'d vote '+o+'</span></button>').join('')+'</div>'+
+  '<label class="vwhy"><span>Why? Make your case in a sentence or two, like you would at a candidate forum.</span><textarea class="typein" id="whyin" data-in="why" maxlength="600" placeholder="I\'d vote '+(v.vote||'...')+' because...">'+esc(v.why)+'</textarea></label></div>';
+  const okv=v.vote&&v.why.trim().length>=10;
+  foot='<div class="lfoot"><div class="in"><p class="muted" style="font-weight:800;margin:0">Saved to My positions in your Profile.</p><button class="btn green" data-a="vsave" style="min-width:200px" '+(okv?'':'disabled')+'>Save my vote</button></div></div>'}
  else{const q=S.queue[S.idx];body='<div class="lin'+(S.fresh?'':' still')+'">'+qHTML(q)+'</div>';foot=footHTML(q)}
  const sc=ov.querySelector('.lbody');const keep=sc?sc.scrollTop:0;
  ov.innerHTML='<div class="screen">'+headHTML()+'<div class="lbody">'+body+'</div>'+foot+'</div>';
  const nb=ov.querySelector('.lbody');if(nb&&S.checked)nb.scrollTop=keep;
  const ti=$('#typein');if(ti&&!S.checked){ti.focus();ti.setSelectionRange(ti.value.length,ti.value.length)}
  S.fresh=S.justChecked=S.hurt=S.bump=false}
-function qHTML(q){const v=S.v,ch=S.checked;let h='<span class="qtype">'+LABEL[q.t]+(st.mistakes.includes(q.id)&&S.kind!=='mistakes'&&!ch?' <span style="color:var(--red)">· Past mistake</span>':'')+'</span>';
+function qHTML(q){const v=S.v,ch=S.checked;let h='<span class="qtype">'+LABEL[q.t]+(st.mistakes.includes(q.id)&&S.kind!=='weak'&&!ch?' <span style="color:var(--red)">· Weak spot</span>':'')+'</span>';
  const optCls=o=>{if(!ch)return v.sel===o?'sel':'';if(o===q.a)return 'right';if(o===v.sel)return 'wrong';return ''};
  if(q.t==='mc'){h+='<div class="speak"><div class="mascot-react '+(ch?(S.justChecked?(S.result?'hop':'droop'):''):'idle')+'">'+ruckus(ch?(S.result?'cheer':'sad'):'smirk',84)+'</div><div class="bubble">'+esc(q.p)+'</div></div><div class="opts">'+v.opts.map((o,i)=>'<button class="opt '+optCls(o)+'" data-a="opt" data-i="'+i+'" '+(ch?'disabled':'')+'><span class="k">'+(i+1)+'</span><span>'+esc(o)+'</span></button>').join('')+'</div>'}
  else if(q.t==='tf'){h+='<h2 class="prompt">'+esc(q.p)+'</h2><div class="opts tf">'+v.opts.map((o,i)=>'<button class="opt '+optCls(o)+'" data-a="opt" data-i="'+i+'" '+(ch?'disabled':'')+'>'+(o==='True'?ic('check',26):ic('x',22))+'<span>'+o+'</span></button>').join('')+'</div>'}
@@ -1885,8 +2021,8 @@ function qHTML(q){const v=S.v,ch=S.checked;let h='<span class="qtype">'+LABEL[q.
 const PRAISE=['Nice!','Correct!','Great job!','Excellent!','Nailed it!','Sharp!','Rebel scholar!'];
 function answerText(q){if(q.t==='order')return q.a.map((s,i)=>(i+1)+'. '+s).join('   ');if(q.t==='match')return q.pairs.map(p=>p[0]+' = '+p[1]).join('; ');return q.a}
 function footHTML(q){if(S.kind==='lightning')return '<div class="lfoot '+(S.checked?(S.result?'ok':'bad'):'')+'"><div class="in"><p class="muted" style="font-weight:800">'+(S.checked?(S.result?'Correct!':'Answer: '+esc(q.a)):'Tap an answer. Speed counts.')+'</p></div></div>';
- if(!S.checked){if(q.t==='match')return '<div class="lfoot"><div class="in"><p class="muted" style="font-weight:800">Tap a card on the left, then its match on the right.</p>'+((S.kind==='lesson'||S.kind==='review'||S.kind==='mistakes')?'<button class="btn ghost hintbtn" data-a="hint">'+ic('book',18)+'Hint</button>':'')+'</div></div>';
-  const hint=(S.kind==='lesson'||S.kind==='review'||S.kind==='mistakes')&&TEACH[q.id]?'<button class="btn ghost hintbtn" data-a="hint">'+ic('book',18)+'Hint</button>':'';
+ if(!S.checked){if(q.t==='match')return '<div class="lfoot"><div class="in"><p class="muted" style="font-weight:800">Tap a card on the left, then its match on the right.</p>'+((S.kind==='lesson'||S.kind==='review'||S.kind==='weak')?'<button class="btn ghost hintbtn" data-a="hint">'+ic('book',18)+'Hint</button>':'')+'</div></div>';
+  const hint=(S.kind==='lesson'||S.kind==='review'||S.kind==='weak')&&TEACH[q.id]?'<button class="btn ghost hintbtn" data-a="hint">'+ic('book',18)+'Hint</button>':'';
   return '<div class="lfoot"><div class="in" style="justify-content:'+(hint?'space-between':'flex-end')+'">'+hint+'<button class="btn green" data-a="check" style="min-width:200px" '+(canCheck(q,S.v)?'':'disabled')+'>Check</button></div></div>'}
  const ok=S.result;const why=q.ex?'<p class="why">'+esc(q.ex)+'</p>':(TEACH[q.id]&&q.t!=='match'&&q.t!=='order'?'<p class="why">'+md(TEACH[q.id])+'</p>':'');
  return '<div class="lfoot '+(ok?'ok':'bad')+'"><div class="in"><div class="fb"><span class="badge" style="color:'+(ok?'var(--green)':'var(--red)')+'">'+ic(ok?'check':'x',30)+'</span><div><h3>'+(ok?PRAISE[Math.floor(Math.random()*PRAISE.length)]:(q.t==='match'?'Close. Watch those pairs.':'Correct answer:'))+'</h3>'+(ok?'':(q.t==='match'?'':'<p>'+esc(answerText(q))+'</p>'))+why+'</div></div><button class="btn '+(ok?'green':'red')+'" data-a="cont" style="min-width:200px">Continue</button></div></div>'}
@@ -1896,9 +2032,9 @@ function check(){const q=S.queue[S.idx],v=S.v;let ok;
  else ok=v.sel===q.a;
  grade(ok)}
 function grade(ok){const q=S.queue[S.idx];S.checked=true;S.result=ok;S.justChecked=true;if(ok)S.bump=true;else if(S.kind==='lesson'&&!st.unlimited)S.hurt=true;st.stats.answered++;
- if(ok){S.correct++;S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);S.done++;st.stats.correct++;st.daily.correct++;st.daily.combo=Math.max(st.daily.combo,S.combo);st.stats.bestCombo=Math.max(st.stats.bestCombo,S.combo);sfx('ok');if([3,5,10,15,20].includes(S.combo))comboToast(S.combo);if(S.kind==='mistakes'||S.kind==='review')removeMistake(q.id)}
- else{S.wrong++;S.combo=0;addMistake(q.id);sfx('bad');if(S.kind==='lesson'){loseHeart()}
-  if(S.kind==='lesson'||S.kind==='mistakes'||S.kind==='review')S.queue.push(q);else if(S.kind!=='lightning')S.done++}
+ if(ok){S.correct++;S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);S.done++;st.stats.correct++;st.daily.correct++;st.daily.combo=Math.max(st.daily.combo,S.combo);st.stats.bestCombo=Math.max(st.stats.bestCombo,S.combo);sfx('ok');if([3,5,10,15,20].includes(S.combo))comboToast(S.combo);if(S.kind==='weak'&&!S.missed[q.id])srsRight(q.id)}
+ else{S.wrong++;S.combo=0;addMistake(q.id);if(S.kind==='weak')S.missed[q.id]=1;sfx('bad');if(S.kind==='lesson'){loseHeart()}
+  if(S.kind==='lesson'||S.kind==='weak'||S.kind==='review')S.queue.push(q);else if(S.kind!=='lightning')S.done++}
  save();renderSession()}
 function comboToast(n){const d=document.createElement('div');d.className='combo';d.innerHTML=ic('flame',20)+n+' in a row!';document.body.appendChild(d);setTimeout(()=>d.remove(),1500);if(n>=5)sfx('fire')}
 function cont(){if(S.kind==='lesson'&&!st.unlimited&&st.hearts<=0){outOfHearts();return}S.idx++;
@@ -1924,7 +2060,7 @@ function finish(){clearInterval(lightTimer);const k=S.kind;const answered=S.corr
   else xp=5}
  else if(k==='lightning'){xp=S.correct;gems=Math.floor(S.correct/3);st.stats.lightning=Math.max(st.stats.lightning,S.correct);st.daily.lessons++}
  else{xp=10;gems=3;st.daily.lessons++}
- if(k==='review'||k==='mistakes'||k==='lightning'){if(!st.unlimited&&st.hearts<5){st.hearts++;heart=true}}
+ if(k==='review'||k==='weak'||k==='lightning'){if(!st.unlimited&&st.hearts<5){st.hearts++;heart=true}}
  xp*=boost;
  const before=st.daily.xp;st.xp+=xp;st.daily.xp+=xp;st.days[today()]=(st.days[today()]||0)+xp;
  let ext=false;if(xp>0&&st.lastDay!==today()){st.streak=(st.lastDay===addDays(today(),-1))?st.streak+1:1;st.lastDay=today();st.longest=Math.max(st.longest,st.streak);ext=true;if(st.streak%7===0&&st.freezes<2){st.freezes++;setTimeout(()=>toast(ic('snow',20)+'7-day streak! You earned a Streak Freeze.'),1500)}}
@@ -1996,6 +2132,9 @@ const A={
  mr:el=>matchTap('R',+el.dataset.x),
  check:()=>{if(S&&!S.checked&&canCheck(S.queue[S.idx],S.v))check()},
  cont:()=>{if(S&&S.checked)cont()},
+ vopt:el=>{if(!S||!S.v)return;const ta=$('#whyin');if(ta)S.v.why=ta.value;S.v.vote=el.dataset.v;sfx('tap');renderSession()},
+ vsave:()=>{if(!S||!S.v)return;const q=S.queue[S.idx];const ta=$('#whyin');if(ta)S.v.why=ta.value;if(!(S.v.vote&&S.v.why.trim().length>=10))return;st.votes[q.id]={v:S.v.vote,why:S.v.why.trim(),at:today()};save();sfx('ok');S.done++;S.bump=true;S.idx++;if(S.idx>=S.queue.length){finish();return}newView();renderSession()},
+ setrep:el=>{st.reps[el.dataset.k]=el.value;save();render()},
  taught:()=>{if(!S)return;S.done++;S.bump=true;sfx('tap');S.idx++;if(S.idx>=S.queue.length){finish();return}newView();renderSession()},
  hint:()=>{if(!S)return;const q=S.queue[S.idx];if(!q||q.t==='teach')return;sfx('tap');modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('wow',64)+'<div style="text-align:left"><small class="eyebrow muted">Hint</small><h2>Here\'s what I taught you</h2></div></div><div class="tcard" style="text-align:left;width:100%">'+teachBody(q)+'</div><div class="row"><button class="btn wide" data-a="close">Back to the question</button></div>','guidebook')},
  quit:()=>modal(ruckus('sad',100)+'<h2>Wait, don\'t bail!</h2><p class="muted" style="font-weight:700">If you quit now, you\'ll lose your progress in this session.</p><div class="row"><button class="btn wide" data-a="close">Keep learning</button><button class="linkbtn" data-a="quit-yes" style="color:var(--red)">End session</button></div>'),
@@ -2008,7 +2147,7 @@ const A={
  set:el=>{const k=el.dataset.k;st[k]=!st[k];save();if(k==='sound'&&st.sound)sfx('ok');render()},
  reset:()=>modal(ruckus('wow',100)+'<h2>Reset everything?</h2><p class="muted" style="font-weight:700">This deletes your streak, XP, and all lesson progress on this device. It can\'t be undone.</p><div class="row"><button class="btn red wide" data-a="reset-yes">Yes, reset</button><button class="btn ghost wide" data-a="close">Cancel</button></div>'),
  'reset-yes':()=>{st=fresh();save();closeModal();buildNodes();onboarding()},
- prac:el=>{const k=el.dataset.k;closeModal();if(k==='local'){setTab('learn');setTimeout(()=>{const s=$('#sec4');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}
+ prac:el=>{const k=el.dataset.k;closeModal();if(k==='reps'){setTab('reps');return}if(k==='local'){setTab('learn');setTimeout(()=>{const s=$('#sec4');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}
  if(k==='livedesk'){setTab('learn');setTimeout(()=>{const s=$('#sec5');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}startSession({kind:k})},
  'ob-next':()=>{if(OB.step===1){const n=$('#obName');OB.name=n?n.value:''}OB.step++;sfx('tap');renderOB()},
  'ob-goal':el=>{OB.goal=+el.dataset.g;sfx('tap');renderOB()},
@@ -2031,8 +2170,9 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!
 document.addEventListener('input',e=>{const el=e.target;const k=el.dataset&&el.dataset.in;if(!k)return;
  if(k==='type'&&S){S.v.text=el.value;const b=document.querySelector('[data-a="check"]');if(b)b.disabled=!canCheck(S.queue[S.idx],S.v)}
  if(k==='name'){st.name=el.value.slice(0,24);save()}
+ if(k==='why'&&S&&S.v){S.v.why=el.value;const b=document.querySelector('[data-a="vsave"]');if(b)b.disabled=!(S.v.vote&&S.v.why.trim().length>=10)}
  if(k==='obname'&&OB)OB.name=el.value});
-document.addEventListener('change',e=>{const el=e.target;if(el.dataset&&el.dataset.in==='goal'){st.goal=+el.value;save();render()}});
+document.addEventListener('change',e=>{const el=e.target;if(el.dataset&&el.dataset.rep){st.reps[el.dataset.rep]=el.value;save();render();return}if(el.dataset&&el.dataset.in==='goal'){st.goal=+el.value;save();render()}});
 document.addEventListener('keydown',e=>{
  if($('#modal').children.length){if(e.key==='Escape')closeModal();return}
  if(OB){if(e.key==='Enter'){const b=document.querySelector('[data-a="ob-next"]');if(b){e.preventDefault();b.click()}}return}
@@ -2042,6 +2182,7 @@ document.addEventListener('keydown',e=>{
  if(S.learn){if(e.key==='Enter'){e.preventDefault();A['learn-go']()}return}
  const q=S.queue[S.idx];
  if(q&&q.t==='teach'){if(e.key==='Enter'||e.key===' '){e.preventDefault();A.taught()}return}
+ if(q&&q.t==='vote')return;
  if(e.key==='Enter'){if(q.t==='type'&&!e.shiftKey)e.preventDefault();if(S.checked)A.cont();else if(canCheck(q,S.v))check();return}
  if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;
  const n=parseInt(e.key,10);if(n>=1&&n<=9){if((q.t==='mc'||q.t==='tf'||q.t==='fill')&&S.v.opts[n-1]!=null){if(S.kind==='lightning'){lightAnswer(n-1);return}if(!S.checked){S.v.sel=S.v.opts[n-1];sfx('tap');renderSession()}}}});
