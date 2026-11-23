@@ -457,6 +457,10 @@ button.chip-level:hover{background:var(--surface-2)}
 .repsel{display:grid;gap:6px;font-weight:800}
 .repsel select{width:100%}
 .view a{color:var(--blue);font-weight:800}
+
+.howcard{background:var(--surface);border:2px solid var(--line);border-left:6px solid var(--punk);border-radius:16px;padding:12px 14px;margin-bottom:12px;display:grid;gap:4px;font-size:15px;line-height:1.45}
+.howcard b{font-weight:900}
+.sec-head .how{font-weight:800;color:var(--c);font-size:15px}
 #modal{position:fixed;inset:0;z-index:75;pointer-events:none}#modal>*{pointer-events:auto}</style>
 <div id="app"><aside class="side" id="side"></aside><div class="mainwrap"><header class="topbar" id="top"></header><main class="view" id="view"></main></div><aside class="rail" id="rail"></aside><nav class="tabs" id="tabs"></nav></div>
 <div id="overlay"></div><div id="modal"></div><div id="toast"></div><canvas id="confetti"></canvas>
@@ -479,12 +483,12 @@ function T(p,acc,ex){return {t:'type',p,acc,a:acc[0],ex}}
 function V(p,what,pro,con,result){return {t:'vote',p,what,pro,con,result,a:''}}   // how would you vote? (not graded)
 
 const SECTIONS=[
- {id:0,level:'8th Grade',title:'Civics Foundations',blurb:'The founding, the Constitution, the three branches, and how a bill becomes a law.'},
- {id:1,level:'High School',title:'American Government',blurb:'Federalism, the House and Senate up close, amendments, elections, and landmark cases.'},
- {id:2,level:'College',title:'Political Science',blurb:'Political theory, congressional procedure, the bureaucracy, voting behavior, and comparative politics.'},
- {id:3,level:'Graduate',title:'Mastery Seminar',blurb:'Game theory, institutions, constitutional interpretation, and research methods.'},
- {id:4,level:'Seattle & Organizing',title:'Lead Locally',blurb:'Seattle, King County, and Washington government, how to run for local office, and how to organize and run meetings. Always open.',open:true,updated:'Officeholders checked November 2026'},
- {id:5,level:'Live Desk',title:'New Laws & Amendments',blurb:'Recent laws and the proposals to watch. Always open, and updated as new laws pass.',live:true,updated:'Current through November 2026'}
+ {id:0,how:'Step 1 of 4 · Start here',level:'8th Grade',title:'Civics Foundations',blurb:'The founding, the Constitution, the three branches, and how a bill becomes a law.'},
+ {id:1,how:'Step 2 of 4 · New topics that build on 8th grade',level:'High School',title:'American Government',blurb:'Federalism, the House and Senate up close, amendments, elections, and landmark cases.'},
+ {id:2,how:'Step 3 of 4 · New topics that build on High School',level:'College',title:'Political Science',blurb:'Political theory, congressional procedure, the bureaucracy, voting behavior, and comparative politics.'},
+ {id:3,how:'Step 4 of 4 · New topics that build on College',level:'Graduate',title:'Mastery Seminar',blurb:'Game theory, institutions, constitutional interpretation, and research methods.'},
+ {id:4,how:'Side track · Do anytime, alongside any level',level:'Seattle & Organizing',title:'Lead Locally',blurb:'Seattle, King County, and Washington government, how to run for local office, and how to organize and run meetings. Always open.',open:true,updated:'Officeholders checked November 2026'},
+ {id:5,how:'Side track · Do anytime · New unit added monthly',level:'Live Desk',title:'New Laws & Amendments',blurb:'Recent laws and the proposals to watch. Always open, and updated as new laws pass.',live:true,updated:'Current through November 2026'}
 ];
 
 const UNITS=[
@@ -1834,13 +1838,13 @@ function railHTML(){
 /* ---------- views ---------- */
 const OFF=[0,46,72,46,0,-46,-72,-46];
 const VIEWS={};
-VIEWS.learn=function(){computeCur();let h='<div class="lvlchips">'+SECTIONS.map(s=>'<button class="lvlchip" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+'">'+esc(s.level)+'</button>').join('')+'</div>';
+VIEWS.learn=function(){computeCur();let h='<div class="howcard"><b>How levels work</b><p>Each level covers <b>different topics</b>, and each one builds on the one before. Go in order: <b>8th Grade, then High School, College, and Graduate</b>. Inside a level, do the units top to bottom. <b>Seattle & Organizing</b> and <b>Live Desk</b> are side tracks you can do anytime. Already know the basics? Every level is open, so you can jump ahead.</p></div><div class="lvlchips">'+SECTIONS.map(s=>'<button class="lvlchip" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+'">'+esc(s.level)+'</button>').join('')+'</div>';
  if(st.streak>0&&st.lastDay!==today())h+='<div class="banner-risk">'+ruckus('wow',54)+'<div>Your '+st.streak+'-day streak is at risk. One lesson keeps it alive.</div></div>';
  {const d=weakDue().length;if(d)h+='<button class="banner-risk" data-a="prac" data-k="weak" style="--flame:var(--red);width:100%;text-align:left">'+ic('redo',30,'style="color:var(--red)"')+'<div><b>'+d+' weak spot'+(d>1?'s':'')+' due today.</b> A quick review locks them in.</div></button>'}
  SECTIONS.forEach(s=>{const units=UNITS.filter(u=>u.s===s.id);const firstIdx=NODES.findIndex(n=>n.s===s.id);const locked=nodeState(firstIdx)==='lock';
   const doneU=units.filter(unitDone).length;
   h+='<section class="sec" id="sec'+s.id+'"><div class="sec-head '+(locked?'locked':'')+'" style="'+scol(s.id)+'">'+
-   '<span class="lvl">'+(s.live?'<span class="live-dot" style="background:#fff"></span>':'')+esc(s.level)+'</span><h2>'+esc(s.title)+'</h2><p class="muted">'+esc(s.blurb)+'</p>'+
+   '<span class="lvl">'+(s.live?'<span class="live-dot" style="background:#fff"></span>':'')+esc(s.level)+'</span><h2>'+esc(s.title)+'</h2>'+(s.how?'<p class="how">'+esc(s.how)+'</p>':'')+'<p class="muted">'+esc(s.blurb)+'</p>'+
    (s.live?'<span class="live-tag"><span class="live-dot"></span>'+esc(s.updated)+'</span>':s.open?'<span class="live-tag" style="color:var(--c)">'+esc(s.updated)+'</span><button class="btn sm" data-a="prac" data-k="reps" style="justify-self:start;'+scol(s.id)+'">'+ic('user',18)+'See my reps</button>':'')+
    '<div class="bar" style="'+scol(s.id)+'"><i style="width:'+(doneU/units.length*100)+'%"></i></div><small class="muted num" style="font-weight:800">'+doneU+' of '+units.length+' units complete</small>'+
    '</div>';
@@ -1938,7 +1942,7 @@ function weekRow(ws,days){return '<div class="week">'+days.map((d,i)=>{const ds=
 function heartsModal(fromLesson){heartsTick();
  modal('<div style="color:var(--red)">'+ic('heart',72)+'</div><h2>'+(st.unlimited?'Unlimited hearts are on':st.hearts+' of 5 hearts')+'</h2><p class="muted" style="font-weight:700">'+(st.unlimited?'You won\'t lose hearts for mistakes.':st.hearts>=5?'You\'re full. Every wrong answer in a lesson costs a heart.':'Next heart in '+nextHeartIn()+' minutes. Practice sessions also earn hearts back.')+'</p>'+
  '<div class="row">'+(!st.unlimited&&st.hearts<5?'<button class="btn ghost" data-a="prac" data-k="review">Practice to earn hearts</button>':'')+'<button class="btn '+(st.unlimited||st.hearts>=5?'':'ghost')+'" data-a="close">Close</button></div>')}
-function levelsModal(){modal(ruckus('cheer',90)+'<h2>Pick a level</h2><p class="muted" style="font-weight:700">Every level is open. Your progress in each one is saved separately, so you can switch any time.</p><div class="row">'+SECTIONS.map(s=>{const us=UNITS.filter(u=>u.s===s.id);const d=us.filter(unitDone).length;return '<button class="btn wide" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+';--cd:color-mix(in srgb,var(--c) 70%,#000);justify-content:space-between"><span>'+esc(s.level)+'</span><small class="num" style="opacity:.85">'+d+' / '+us.length+' units</small></button>'}).join('')+'</div>')}
+function levelsModal(){modal(ruckus('cheer',90)+'<h2>Pick a level</h2><p class="muted" style="font-weight:700">Each level covers different topics and builds on the one before, so the best path is top to bottom. Seattle & Organizing and Live Desk are side tracks for anytime. Progress in each is saved separately.</p><div class="row">'+SECTIONS.map(s=>{const us=UNITS.filter(u=>u.s===s.id);const d=us.filter(unitDone).length;return '<button class="btn wide" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+';--cd:color-mix(in srgb,var(--c) 70%,#000);justify-content:space-between"><span>'+esc(s.level)+'</span><small class="num" style="opacity:.85">'+d+' / '+us.length+' units</small></button>'}).join('')+'</div>')}
 function guideModal(u){modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('smirk',64)+'<div style="text-align:left"><small class="eyebrow muted">Guidebook</small><h2>'+esc(u.title)+'</h2></div></div>'+u.tips.map((t,k)=>learnCard(t)+'<details class="gfacts"><summary>'+ic('book',16)+'Every fact in lesson '+(k+1)+'</summary>'+graded(u.q.slice(k*chunkSize(u),(k+1)*chunkSize(u))).map(q=>'<div class="tcard">'+teachBody(q)+'</div>').join('')+'</details>').join('')+'<div class="row"><button class="btn wide" data-a="close">Close</button></div>','guidebook')}
 function learnCard(t){return '<div class="learn"><h3>'+md(t[0])+'</h3><ul>'+t[1].map(b=>'<li><span>'+md(b)+'</span></li>').join('')+'</ul></div>'}
 function showNotices(){const n=notices.shift();if(!n)return;
