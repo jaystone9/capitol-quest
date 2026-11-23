@@ -2141,7 +2141,7 @@ function regionModal(){modal(ruckus('wow',100)+'<h2>Where do you live?</h2><p cl
 
 /* ---------- friends leaderboard (Firestore REST; shares a display name and game stats only) ---------- */
 const LB_CFG={projectId:'capitol-quest-f793e',apiKey:'AIzaSyAsQBMCIDIzfIZ7JxFvfOQaKqYv2RQjPWo'};
-function lbOn(){return !!(LB_CFG.projectId&&LB_CFG.apiKey)}
+function lbOn(){return !!(LB_CFG.projectId&&LB_CFG.apiKey)&&/github\.io$|^localhost$|^127\./.test(location.hostname)}
 function lbURL(id){return 'https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(LB_CFG.projectId)+'/databases/(default)/documents/players'+(id?'/'+encodeURIComponent(id):'')+'?key='+encodeURIComponent(LB_CFG.apiKey)}
 function weekXP(){const ws=weekStart();let t=0;for(let i=0;i<7;i++)t+=st.days[addDays(ws,i)]||0;return t}
 function liveStreak(){return (st.lastDay===today()||st.lastDay===addDays(today(),-1))?st.streak:0}
