@@ -403,6 +403,27 @@ body{background-image:radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--
 .onb h1{animation:titlepop .6s cubic-bezier(.2,1.6,.4,1) .15s both;text-shadow:0 3px 0 color-mix(in srgb,var(--punk) 35%,transparent)}
 .brand svg{animation:mbob 2.6s ease-in-out infinite}
 .path{gap:44px}
+/* ---- teaching cards ---- */
+.tcard{position:relative;background:var(--surface);border:2px solid var(--line);border-bottom-width:6px;border-radius:22px;padding:22px 20px 20px;display:grid;gap:14px;overflow:hidden}
+.tcard::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:linear-gradient(90deg,var(--punk),var(--gold),var(--teal))}
+.lin:not(.still) .tcard{animation:cardflip .55s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes cardflip{from{transform:perspective(900px) rotateY(-70deg) translateX(40px) scale(.9);opacity:0}}
+.tfact{margin:0;font-size:19px;line-height:1.5;font-weight:700}
+.tfact b{color:var(--punk);background:linear-gradient(transparent 60%,color-mix(in srgb,var(--gold) 40%,transparent) 60%);padding:0 2px;border-radius:3px}
+.tlist{margin:0;padding:0;list-style:none;counter-reset:t;display:grid;gap:8px}
+.tlist li{counter-increment:t;display:flex;gap:10px;align-items:center;font-weight:800;background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:10px 12px}
+.tlist li::before{content:counter(t);flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--punk);color:#fff;font-family:var(--display)}
+.tpairs{display:grid;gap:8px}
+.tpairs div{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:10px 12px;font-weight:800}
+.tpairs b{color:var(--punk)}
+.tmore{margin:0;display:flex;gap:8px;align-items:flex-start;font-weight:700;opacity:.85;font-size:15px;color:var(--gold-d)}
+.tmore svg{flex:none;margin-top:2px}
+.hintbtn{display:inline-flex;gap:6px;align-items:center}
+.gfacts{width:100%;text-align:left;margin:-4px 0 6px}
+.gfacts summary{cursor:pointer;font-weight:800;color:var(--punk);display:flex;gap:6px;align-items:center;padding:8px 2px}
+.gfacts .tcard{margin-top:10px;padding:16px}
+.gfacts .tfact{font-size:16px}
+@media (prefers-reduced-motion:reduce){.lin:not(.still) .tcard{animation:none}}
 #modal{position:fixed;inset:0;z-index:75;pointer-events:none}#modal>*{pointer-events:auto}</style>
 <div id="app"><aside class="side" id="side"></aside><div class="mainwrap"><header class="topbar" id="top"></header><main class="view" id="view"></main></div><aside class="rail" id="rail"></aside><nav class="tabs" id="tabs"></nav></div>
 <div id="overlay"></div><div id="modal"></div><div id="toast"></div><canvas id="confetti"></canvas>
@@ -1106,6 +1127,426 @@ q:[
 ];
 
 UNITS.forEach(u=>{u.q.forEach((q,i)=>{q.id=u.id+'-'+i});u.L=u.tips.length});
+/* ===== Teaching cards: one per question, shown before that question is asked =====
+   Keyed by question id (unit id + index). Order/match questions also show their list or pairs. */
+const TEACH={
+/* u1 Why Government? */
+'u1-0':'The U.S. is a **representative democracy**, also called a **republic**. You don\'t vote on every law yourself. You elect representatives who make laws for you.',
+'u1-1':'**Popular sovereignty** is a big phrase with a simple meaning: **government\'s power comes from the people**. No king owns it. We lend it out through elections.',
+'u1-2':'Compare that with a **direct democracy**, where citizens **vote on laws themselves** instead of electing representatives. Ancient Athens worked this way, and Washington State ballot initiatives are a small taste of it.',
+'u1-3':'What\'s government actually for? One main job: **making and enforcing rules that protect people\'s rights and safety**. Roads, courts, and police all trace back to that.',
+'u1-4':'In 1776 the colonies needed a breakup letter to Britain. **Thomas Jefferson** wrote most of it: the **Declaration of Independence**.',
+'u1-5':'The Declaration was adopted on **July 4, 1776**. That\'s why fireworks happen on the Fourth.',
+'u1-6':'The Declaration\'s most famous line: everyone has **unalienable rights**, including **life, liberty, and the pursuit of happiness**. "Unalienable" means no one can take them away.',
+'u1-7':'Myth alert: the Declaration did **not** create the three branches. It just announced independence and explained why. The branches came later, in the **Constitution (1787)**.',
+'u1-8':'America\'s first government ran under the **Articles of Confederation** (1781). Its fatal flaw: **Congress could not collect taxes**. It had to beg the states for money. There was also no President and no national courts.',
+'u1-9':'Under the Articles, every state got exactly **one vote** in Congress, big or small. Changing the Articles needed every single state to agree.',
+'u1-10':'In 1786–87, broke Massachusetts farmers led by Daniel Shays rose up in **Shays\' Rebellion**. The national government had no army to respond, and leaders panicked: the Articles were too weak.',
+'u1-11':'So in 1787 delegates met in **Philadelphia** for the **Constitutional Convention**. George Washington ran the meeting. (Washington, D.C. didn\'t exist yet.)',
+'u1-12':'**James Madison** planned so much of the Constitution that he\'s called the **"Father of the Constitution."** Jefferson wasn\'t even there; he was in France.',
+'u1-13':'Big states wanted power by population; small states wanted equal votes. The **Great Compromise** gave both: **a House based on population and a Senate with equal votes per state**.',
+'u1-14':'Here\'s the founding timeline. Memorize the years: 1776, 1781, 1787, 1791.',
+'u1-15':'Four founding documents, four jobs. Lock these in:',
+/* u2 The Constitution, Article by Article */
+'u2-0':'The original Constitution is short: just **7 articles**. Everything else was added later as amendments.',
+'u2-1':'The **Preamble** opens with "We the People" and lists six goals, in this order:',
+'u2-2':'Notice what the Preamble\'s six goals don\'t include: things like **guaranteeing everyone a job**. Its goals are union, justice, tranquility, defense, welfare, and liberty.',
+'u2-3':'The first three articles set up the three branches. Article V is the "how to change this" article.',
+'u2-4':'**Article I**, about **Congress**, is the **longest article**. The Framers saw Congress as the heart of the government, so they wrote the most about it.',
+'u2-5':'Inside Article I, **Section 8** is the famous one: it **lists the powers of Congress**, like taxing, borrowing, and declaring war.',
+'u2-6':'Article III names only **one court: the Supreme Court**. Every lower federal court was created later by Congress passing a law.',
+'u2-7':'Fun fact: **treason** is the **only crime the Constitution defines**. Article III says it means waging war against the U.S. or giving its enemies aid and comfort.',
+'u2-8':'Article IV\'s **Full Faith and Credit Clause** means states must **respect each other\'s public records and court rulings**. A marriage or court judgment in Washington counts in Texas too.',
+'u2-9':'Article VI says **no religious test** can ever be required to **hold a federal office**. It also makes the Constitution the **supreme law of the land**.',
+'u2-10':'Article VII set the launch rule: the Constitution took effect once **9** of the 13 states ratified it.',
+'u2-11':'**Habeas corpus** can be suspended **only during rebellion or invasion, when public safety requires it**. Lincoln famously did it during the Civil War.',
+'u2-12':'A **writ of habeas corpus** protects you from **being held in jail without going before a judge**. The government has to show a legal reason for locking you up.',
+'u2-13':'The Constitution bans **ex post facto laws**: laws that **punish an act that was legal when it was done**. They can\'t change the rules after the game.',
+'u2-14':'The **Commerce Clause** lets Congress regulate trade **with foreign nations, among the states, and with Native American tribes**. It\'s become one of Congress\'s biggest powers.',
+'u2-15':'Surprise: the word **"democracy" never appears** in the Constitution or the Declaration. The Framers talked about a "republic" instead.',
+/* u3 Three Branches */
+'u3-0':'Three branches, three jobs. This is the core of the whole system:',
+'u3-1':'**Congress** is the **legislative branch**. "Legislate" means to make laws.',
+'u3-2':'The **executive branch** is led by **the President**. It carries out (executes) the laws.',
+'u3-3':'Why three branches? **So no single person or group gets too much power.** The Framers had just escaped a king and didn\'t want another.',
+'u3-4':'Only **Congress** can **declare war**. The President commands the military, but the formal declaration belongs to Congress.',
+'u3-5':'Congress also controls money: taxing and spending. That\'s called the **"power of the purse,"** and it belongs to **Congress**.',
+'u3-6':'When the President rejects a bill Congress passed, that\'s a **veto**. It\'s Latin for "I forbid."',
+'u3-7':'But Congress can fight back: it can **override a veto** with a **two-thirds** vote in **both** the House and the Senate.',
+'u3-8':'Courts check the others with **judicial review**: ruling that a law **violates the Constitution** and striking it down.',
+'u3-9':'The President picks Supreme Court justices, but **the Senate must confirm them**. It\'s another check.',
+'u3-10':'The Constitution changes **through amendments**. There\'s no national vote of the people to change it.',
+'u3-11':'There are **27 amendments** so far. The first one passed in 1791 and the newest, the 27th, in 1992.',
+'u3-12':'Amending is hard on purpose. **Three-fourths of the states (38 of 50)** must ratify an amendment after Congress proposes it.',
+'u3-13':'The **first ten amendments** have a special name: the **Bill of Rights**.',
+'u3-14':'Checks and balances means each branch can block the others. Who holds which check:',
+'u3-15':'When a written constitution caps what government can do, that\'s a **limited government**. The opposite is unlimited rule, like an absolute monarchy.',
+/* u4 Congress 101 */
+'u4-0':'Congress is **bicameral**, which means **it has two chambers**: the House of Representatives and the Senate.',
+'u4-1':'The four numbers every civics student knows:',
+'u4-2':'Every state gets exactly **2 senators**, whether it\'s California or Wyoming.',
+'u4-3':'House seats are divided **by population**. Bigger states get more representatives. Washington has 10.',
+'u4-4':'House members serve short **2-year terms**, so they\'re always running for reelection.',
+'u4-5':'Senators serve long **6-year terms**.',
+'u4-6':'To serve in the House you must be at least **25** years old.',
+'u4-7':'To be a senator you must be at least **30** years old.',
+'u4-8':'The House is led by the **Speaker of the House**, elected by the members and usually from the majority party.',
+'u4-9':'The official **President of the Senate** is **the Vice President of the United States**.',
+'u4-10':'The Vice President rarely shows up, though: the **VP votes in the Senate only to break a tie**.',
+'u4-11':'Because of 2-year terms, **the entire House is up for election every 2 years**.',
+'u4-12':'Senate terms are staggered, so only about **one-third** of the Senate is up for election every 2 years.',
+'u4-13':'Every 10 years the **census** counts everyone. Then House seats get redivided, so a state can gain or lose seats.',
+'u4-14':'Bottom line: **every American living in a state has two senators and one House member**. You can look yours up and call them.',
+'u4-15':'Why do senators get 6 years? **So they can focus on long-term issues with less election pressure.** Madison wanted the Senate steady and the House close to public opinion.',
+/* u5 How a Bill Becomes a Law */
+'u5-0':'Here\'s the journey of a bill, start to finish:',
+'u5-1':'Anyone can suggest a law, even the President, but **only a member of Congress** can officially **introduce a bill**.',
+'u5-2':'In the House, a new bill literally gets dropped into a wooden box called the **hopper**.',
+'u5-3':'Bills get labels. **"H.R."** means it started in **the House of Representatives**. Senate bills start with **"S."**',
+'u5-4':'The Constitution (Article I, Section 7) says **bills that raise taxes (revenue bills) must start in the House**, the chamber closest to the voters.',
+'u5-5':'After it\'s introduced, a bill usually goes **to a committee** first: a small group of members who specialize in that topic.',
+'u5-6':'When a committee edits a bill line by line, that\'s called a **markup**.',
+'u5-7':'Reality check: **most bills never become law**. The large majority die, usually in committee. Only a few percent are enacted.',
+'u5-8':'In the House, the powerful **Rules Committee** decides **how long a bill is debated and whether it can be amended**.',
+'u5-9':'If the House and Senate pass different versions, they can form a **conference committee** to work out one compromise version.',
+'u5-10':'Before it goes to the President, a bill must pass both chambers in **identical** form, word for word.',
+'u5-11':'**When the President signs a bill, it becomes law.**',
+'u5-12':'If the President vetoes it, Congress can still win with a two-thirds vote of **both the House and the Senate**.',
+'u5-13':'Sneaky move: if **Congress adjourns** and the President doesn\'t sign within 10 days, the bill dies. That\'s a **pocket veto**.',
+'u5-14':'But if **Congress is still in session** and the President ignores a bill for 10 days (not counting Sundays), **it becomes law without the President\'s signature**.',
+'u5-15':'Four key terms from the lawmaking process:',
+/* u6 The President */
+'u6-0':'To be President you must be at least **35** years old.',
+'u6-1':'The President must be a **"natural born Citizen."** So a **naturalized citizen** (born abroad, became a citizen later) **cannot** be President. You also need 14 years living in the U.S.',
+'u6-2':'A presidential term is **4 years**.',
+'u6-3':'After FDR won four elections, the country passed the **22nd Amendment** (1951), limiting Presidents to **two elected terms**.',
+'u6-4':'As **Commander in Chief**, the President **leads the armed forces**. But only Congress can formally declare war.',
+'u6-5':'The President negotiates treaties, but **two-thirds of the Senate** must approve them.',
+'u6-6':'The **pardon power** lets the President **forgive someone for a federal crime**. It doesn\'t cover state crimes.',
+'u6-7':'Every year the President reports to Congress in the **State of the Union** address.',
+'u6-8':'The **Cabinet** is the President\'s top team: **the heads of the executive departments, plus the Vice President**.',
+'u6-9':'There are **15 executive departments**, from State and Treasury to Veterans Affairs and Homeland Security.',
+'u6-10':'The big four Cabinet jobs and what they handle:',
+'u6-11':'If the President dies, resigns, or is removed, **the Vice President** becomes President.',
+'u6-12':'After the VP, next in line is **the Speaker of the House**, then the Senate\'s president pro tempore.',
+'u6-13':'An **executive order** is **a directive from the President on how to run the executive branch**. It has force, but only within the law.',
+'u6-14':'Key limit: **an executive order can never override the Constitution** or a valid law. Courts can strike orders down.',
+'u6-15':'Voters don\'t elect the President directly. **The Electoral College** formally does: you vote for electors, and they cast the official votes.',
+/* u7 The Judicial Branch */
+'u7-0':'The federal court ladder, bottom to top:',
+'u7-1':'The Supreme Court has **9 justices**: one Chief Justice and eight associate justices.',
+'u7-2':'That number isn\'t in the Constitution. **Congress decides by law** how many justices there are. It\'s been 9 since 1869.',
+'u7-3':'Federal judges serve **for life, during good behavior**, so they can rule without worrying about reelection.',
+'u7-4':'**The President nominates federal judges**, and the Senate confirms them.',
+'u7-5':'The Supreme Court picks its cases. To take one, it grants a **writ of certiorari** ("cert" for short).',
+'u7-6':'The **rule of four**: **four** of the nine justices must agree to hear a case.',
+'u7-7':'Federal courts only decide **real cases** between real parties. **No advisory opinions**: the Supreme Court can\'t give advice on a law before someone brings a case.',
+'u7-8':'Justices who disagree with the majority can write a **dissenting opinion**. Some old dissents later became the law.',
+'u7-9':'A justice who **agrees with the outcome but for different reasons** writes a **concurring opinion**.',
+'u7-10':'**Original jurisdiction** means a court **hears the case first**, like a trial.',
+'u7-11':'**Appellate jurisdiction** means reviewing a lower court\'s decision. **Most** Supreme Court cases arrive this way.',
+'u7-12':'Two kinds of cases: criminal (the government prosecutes a crime) and **civil**, like **one person suing another over a broken contract**.',
+'u7-13':'Federal courts get the headlines, but **most court cases in the U.S. are heard in state courts**.',
+'u7-14':'Outsiders can weigh in too. A brief from a group that isn\'t a party to the case is an **amicus curiae** ("friend of the court") **brief**.',
+'u7-15':'The Supreme Court\'s leader is the **Chief Justice of the United States**.',
+/* u8 The Bill of Rights */
+'u8-0':'Why add a Bill of Rights? **To win over Anti-Federalists who feared a too-powerful national government.** Several states agreed to ratify only if rights were added.',
+'u8-1':'**James Madison** again! He **drafted the amendments** that became the Bill of Rights.',
+'u8-2':'The Bill of Rights was ratified in **1791**.',
+'u8-3':'The First Amendment protects five freedoms. Remember **RAPPS**: **Religion, Assembly, Press, Petition, Speech**.',
+'u8-4':'Four amendments you\'ll hear about constantly:',
+'u8-5':'The **3rd Amendment** protects you from **being forced to house soldiers in your home**. The British used to do this.',
+'u8-6':'"I plead the Fifth" means using your **5th Amendment** right to **not be a witness against yourself**.',
+'u8-7':'The 5th Amendment also bans **double jeopardy**: once you\'re **acquitted**, you **can\'t be tried again** for the same crime.',
+'u8-8':'Government can take private property for public use (like a highway), but the 5th Amendment says it must pay **just compensation**.',
+'u8-9':'The **6th Amendment** guarantees criminal defendants **a lawyer and a speedy, public trial** by jury.',
+'u8-10':'Police generally need a **warrant** to search your home because of the **4th Amendment**: no unreasonable searches and seizures.',
+'u8-11':'The **7th Amendment** guarantees a jury trial in **many civil cases** (lawsuits over money).',
+'u8-12':'The **8th Amendment** bans **excessive bail**, excessive fines, and cruel and unusual punishment.',
+'u8-13':'The **9th Amendment** says **listing some rights doesn\'t deny people other rights**. The list isn\'t the whole story.',
+'u8-14':'The **10th Amendment** says powers not given to the federal government are reserved **to the states or the people**.',
+'u8-15':'Twist: **the Bill of Rights originally limited only the federal government, not the states**. After the 14th Amendment (1868), courts applied most of it to states, a process called **incorporation**.',
+};
+Object.assign(TEACH,{
+/* u9 Federalism */
+'u9-0':'**Federalism** means **power is divided between the national and state governments**. (Splitting power among the three branches is a different idea: separation of powers.)',
+'u9-1':'Three ways to arrange national and local power:',
+'u9-2':'Powers the Constitution gives the federal government are **enumerated (delegated) powers**. Example: **coining money**. States can\'t print their own dollars.',
+'u9-3':'Powers kept by the states are **reserved powers**, like **running elections and creating local governments** (cities, counties, school districts).',
+'u9-4':'Some powers belong to both levels, like taxing and building roads. Those are **concurrent powers**.',
+'u9-5':'Sorting practice: who holds each power?',
+'u9-6':'The **Supremacy Clause** lives in **Article VI**: the Constitution and federal laws are the supreme law of the land.',
+'u9-7':'So **when a valid federal law conflicts with a state law, the federal law wins**. Key word: valid. It has to be within Congress\'s powers.',
+'u9-8':'The **Necessary and Proper Clause** lets Congress make laws needed to carry out its listed powers. It stretches, so it\'s nicknamed the **Elastic Clause**.',
+'u9-9':'Landmark: **McCulloch v. Maryland (1819)** decided that **Congress could create a national bank and states couldn\'t tax it**. "The power to tax involves the power to destroy."',
+'u9-10':'In **cooperative federalism**, levels of government mix together on programs like highways and Medicaid. It\'s nicknamed **"marble cake"** federalism, versus the separate layers of "layer cake."',
+'u9-11':'Federal money comes with strings. A grant with **strict rules on how the money must be spent** is a **categorical grant**. (A looser one is a block grant.)',
+'u9-12':'When Washington D.C. orders states to do something but sends no money, that\'s an **unfunded mandate**.',
+'u9-13':'**U.S. v. Lopez (1995)** **limited Congress\'s use of the Commerce Clause** for the first time in decades. Carrying a gun near a school wasn\'t economic activity, so Congress couldn\'t ban it that way.',
+/* u10 The House Up Close */
+'u10-0':'The **Speaker of the House** is **elected by the members of the House**, which in practice means the majority party picks.',
+'u10-1':'Odd fact: **the Constitution doesn\'t require the Speaker to be a House member**. Every Speaker so far has been one, though.',
+'u10-2':'Each party has a **whip** who **counts votes and makes sure members show up**. The name comes from the "whipper-in" in fox hunting who kept the hounds together.',
+'u10-3':'The House **Ways and Means** Committee **writes tax laws**. It\'s one of the most powerful committees.',
+'u10-4':'**Appropriations** Committees in each chamber decide **how federal money is spent**.',
+'u10-5':'The Rules Committee can give a bill a **closed rule**, meaning **no amendments can be offered on the floor**. An open rule allows them.',
+'u10-6':'Members can force a stuck bill out of committee with a **discharge petition**. It needs **218** signatures, a majority of the 435-member House.',
+'u10-7':'In impeachment, **the House brings charges (impeaches) by majority vote**. Think of it as the indictment. The Senate holds the trial.',
+'u10-8':'If no one gets 270 electoral votes, the House picks the President, but **each state delegation casts one vote**. Wyoming counts the same as California.',
+'u10-9':'After each census, the 435 seats are redivided among states. That\'s **reapportionment**.',
+'u10-10':'Drawing district lines to give one party an unfair advantage is **gerrymandering**, named after Gov. Elbridge Gerry and a salamander-shaped district.',
+'u10-11':'Two gerrymandering tricks:',
+'u10-12':'**One person, one vote** requires districts to have **roughly equal populations**, so every vote weighs about the same. It comes from 1960s cases like Baker v. Carr and Reynolds v. Sims.',
+'u10-13':'The House has **435** voting members (plus non-voting delegates from D.C. and the territories).',
+/* u11 The Senate Up Close */
+'u11-0':'The **President pro tempore** runs the Senate when the VP is away. By tradition, it\'s **the longest-serving senator of the majority party**.',
+'u11-1':'The real power in the Senate is the **Senate Majority Leader**, who controls **which bills reach the floor**.',
+'u11-2':'**"Advice and consent"** is the Senate\'s power to **confirm appointments and approve treaties**.',
+'u11-3':'Treaties need approval from **two-thirds** of senators present.',
+'u11-4':'After the House impeaches, the Senate needs **a two-thirds vote** to **convict and remove** the official. That\'s why removal is so rare.',
+'u11-5':'When a President is impeached, **the Chief Justice of the United States** presides over the Senate trial.',
+'u11-6':'A **filibuster** is **using extended debate to delay or block a vote**. Today a senator rarely has to keep talking; just threatening one works.',
+'u11-7':'To end a filibuster, the Senate votes for **cloture**, which takes **60** votes on most bills.',
+'u11-8':'In 2013 and 2017, the Senate used the **"nuclear option"** to change its rules so that **nominations need only a simple majority to end debate**.',
+'u11-9':'Before the **17th Amendment (1913)**, **state legislatures** chose U.S. senators. Now voters elect them directly.',
+'u11-10':'Any **single senator** can place a **"hold"** to signal they object to taking up a bill or nomination. It\'s a powerful delay tool.',
+'u11-11':'Much Senate business moves by **unanimous consent**: **it goes forward unless any senator objects**.',
+'u11-12':'House powers vs. Senate powers:',
+'u11-13':'Confirming a Cabinet secretary takes only a **simple majority**. Two-thirds is for treaties and impeachment convictions.',
+/* u12 Checks & Balances in Action */
+'u12-0':'Three checks, three branches:',
+'u12-1':'Judicial review was established in **Marbury v. Madison (1803)**, the most famous case in U.S. history.',
+'u12-2':'The Chief Justice in Marbury was **John Marshall**, who served 34 years and built the Court\'s power.',
+'u12-3':'Plot twist: **the words "judicial review" don\'t appear in the Constitution**. The Court claimed the power in Marbury.',
+'u12-4':'When Congress holds hearings to see how agencies carry out laws, that\'s **oversight**.',
+'u12-5':'The President checks the courts **by nominating judges**, shaping the bench for decades.',
+'u12-6':'Congress checks the courts by **confirming or rejecting judges, impeaching judges, and proposing amendments** to override rulings. (It can\'t cut judges\' pay.)',
+'u12-7':'After Vietnam, Congress passed the **War Powers Resolution (1973)**: the President must **notify Congress within 48 hours of sending troops into combat**.',
+'u12-8':'In **United States v. Nixon (1974)**, the Court ruled **executive privilege isn\'t absolute**. Nixon had to hand over the Watergate tapes, and he resigned soon after.',
+'u12-9':'Overriding a veto is **hard and rare**, because it takes two-thirds of both chambers.',
+'u12-10':'Courts check the President by **ruling that an executive action is unconstitutional**.',
+'u12-11':'Impeachment and removal, step by step:',
+'u12-12':'The whole point of checks and balances: **to keep any branch from abusing power**.',
+'u12-13':'If Congress wants to stop a program the President likes, it can defund it with **the power of the purse**.',
+/* u13 Amendments 11–27 */
+'u13-0':'The amendments that remade America after the Civil War and beyond:',
+'u13-1':'The **13th Amendment** (1865) **abolished slavery**.',
+'u13-2':'The **14th Amendment\'s Equal Protection Clause** says states can\'t **deny any person equal protection of the laws**. It\'s behind many civil rights rulings.',
+'u13-3':'The **16th Amendment** (1913) allowed a **federal income tax**.',
+'u13-4':'The **21st Amendment** is the **only one that repealed another**: it ended Prohibition in 1933.',
+'u13-5':'Prohibition came from the **18th Amendment** (1919), which banned **making and selling alcohol**.',
+'u13-6':'The **20th Amendment** moved Inauguration Day from March to **January 20**.',
+'u13-7':'The **25th Amendment** deals with **presidential succession and disability**, including what happens if a President can\'t do the job.',
+'u13-8':'During Vietnam, people said "old enough to fight, old enough to vote." The **26th Amendment** (1971) lowered the voting age to **18**.',
+'u13-9':'The **27th Amendment** (congressional pay raises) was first proposed in **1789** by Madison and finally ratified in 1992. A college student\'s paper revived it.',
+'u13-10':'The **Equal Rights Amendment** passed Congress in **1972** but **wasn\'t ratified by enough states before its deadline**.',
+'u13-11':'Congress has sent **33** amendments to the states. Only **27** were ratified.',
+'u13-12':'These amendments came in this order (1865, 1920, 1951, 1971):',
+'u13-13':'The **17th Amendment** lets voters directly elect **senators**.',
+/* u14 Elections & Parties */
+'u14-0':'To win the presidency you need **270** electoral votes, a majority of 538.',
+'u14-1':'There are **538** electors: 435 (House) + 100 (Senate) + 3 (D.C.).',
+'u14-2':'A state\'s electors = **its House seats plus 2 for its senators**. Washington has 10 + 2 = 12.',
+'u14-3':'Almost every state is winner-take-all. **Maine and Nebraska** are the two that can split their electoral votes by district.',
+'u14-4':'The **23rd Amendment** (1961) gave **Washington, D.C.** three electoral votes.',
+'u14-5':'Yes, **a candidate can win the national popular vote and still lose the Electoral College**. It happened in 1876, 1888, 2000, and 2016.',
+'u14-6':'A **closed primary** lets **only registered party members** vote. Open primaries let anyone vote. (Washington uses a "top two" primary.)',
+'u14-7':'A **caucus** is **a meeting where party members discuss and pick candidates**, instead of a simple ballot.',
+'u14-8':'Why do third parties rarely win? **Winner-take-all, single-member districts favor two big parties**. Political scientists call this Duverger\'s law.',
+'u14-9':'Four amendments that expanded the vote:',
+'u14-10':'The **Voting Rights Act of 1965** **banned literacy tests and protected minority voters**, especially in the South.',
+'u14-11':'The **19th Amendment**, giving women the vote, was ratified in **1920**.',
+'u14-12':'The **Constitution never mentions political parties**. It certainly didn\'t create the Democrats and Republicans. Washington even warned against parties.',
+'u14-13':'Party nominees for President are officially chosen at **national conventions**, after the primaries and caucuses.',
+/* u15 Landmark Supreme Court Cases */
+'u15-0':'Four cases every American should know:',
+'u15-1':'**Plessy v. Ferguson (1896)** allowed **"separate but equal"** segregation. It was a disaster for civil rights for 58 years.',
+'u15-2':'**Brown v. Board of Education** (1954) overturned Plessy: separate schools are inherently unequal.',
+'u15-3':'In **Tinker v. Des Moines** (1969), students wore black armbands against the Vietnam War. The Court ruled **students don\'t lose free speech rights at school**.',
+'u15-4':'**Gibbons v. Ogden (1824)**, a steamboat case, expanded Congress\'s power to **regulate interstate commerce**.',
+'u15-5':'**Mapp v. Ohio** (1961) applied the **exclusionary rule** to states: **illegally obtained evidence can\'t be used in court**.',
+'u15-6':'"You have the right to remain silent" comes from **Miranda v. Arizona (1966)**.',
+'u15-7':'**Engel v. Vitale (1962)** ruled that **public schools can\'t lead official prayers**.',
+'u15-8':'In the **Pentagon Papers** case (1971), the Court blocked the government from **prior restraint**: stopping a newspaper from publishing in advance.',
+'u15-9':'**Schenck v. United States (1919)** created the **"clear and present danger"** test for speech. ("Falsely shouting fire in a theatre.")',
+'u15-10':'**Citizens United v. FEC (2010)** held that **independent political spending by corporations and unions is protected speech**. It led to super PACs.',
+'u15-11':'In **Obergefell v. Hodges (2015)**, the Court ruled that **same-sex couples have a constitutional right to marry**.',
+'u15-12':'**Dobbs v. Jackson Women\'s Health Organization (2022)** overturned **Roe v. Wade (1973)**, returning abortion law to the states.',
+'u15-13':'Put the big cases on a timeline (1803, 1896, 1954, 1966):',
+});
+Object.assign(TEACH,{
+/* u16 Political Theory */
+'u16-0':'**Thomas Hobbes** (Leviathan, 1651) argued that without government, life would be **"solitary, poor, nasty, brutish, and short."** So people accept a strong ruler for safety.',
+'u16-1':'**John Locke** was more hopeful. His natural rights were **life, liberty, and property**. Jefferson remixed them into "life, liberty, and the pursuit of happiness."',
+'u16-2':'**Jean-Jacques Rousseau** said legitimate government follows the **general will**: what the community as a whole wants for the common good.',
+'u16-3':'**Montesquieu**\'s book **"The Spirit of the Laws"** (1748) shaped the idea of **separation of powers**. The Framers quoted him constantly.',
+'u16-4':'The four Federalist Papers professors love most:',
+'u16-5':'The **Federalist Papers** (85 essays, 1787–88) were written by **Alexander Hamilton, James Madison, and John Jay** under the pen name "Publius" to sell the Constitution.',
+'u16-6':'Madison\'s most famous line, from Federalist No. 51: **"If men were angels, no government would be necessary."**',
+'u16-7':'In **Federalist No. 10**, Madison defines a **faction** as **a group united by an interest against others\' rights or the common good**. His cure: a large republic with many competing factions.',
+'u16-8':'The **Anti-Federalists** feared a strong central government. Their **biggest demand: a bill of rights**. They got it in 1791.',
+'u16-9':'In Federalist No. 78, **Hamilton** called the judiciary the **"least dangerous" branch** because it has **neither the sword nor the purse**, only judgment.',
+/* u17 Congressional Procedure */
+'u17-0':'**Suspension of the rules** is the House fast lane: a bill needs **a two-thirds vote, with limited debate and no amendments**. It\'s used for popular, low-conflict bills.',
+'u17-1':'Two steps for spending: **authorization creates a program; appropriation funds it**. A program can exist on paper with no money.',
+'u17-2':'If spending bills aren\'t passed on time, Congress can avoid a shutdown with a **continuing resolution** (CR), which keeps funding at current levels.',
+'u17-3':'**Budget reconciliation** is powerful in the Senate because **it can\'t be filibustered, so it can pass with a simple majority**. Big tax and spending laws often use it.',
+'u17-4':'Reconciliation has a limit: the **Byrd rule** blocks provisions that are **"extraneous,"** meaning not mainly about spending or revenue.',
+'u17-5':'The nonpartisan **Congressional Budget Office (CBO)** estimates what bills will cost. (OMB is the President\'s budget office; GAO audits spending.)',
+'u17-6':'An unrelated amendment attached to a bill is a **rider**. Riders often hitch onto must-pass spending bills.',
+'u17-7':'The Senate Majority Leader can **"fill the amendment tree"**, using up every open amendment slot to **block other senators from offering amendments**.',
+'u17-8':'To move faster, the House turns itself into the **Committee of the Whole**, which can do business with a **quorum of just 100 members** instead of 218.',
+'u17-9':'Congress normally aims to pass **12** regular appropriations bills each year, one per appropriations subcommittee.',
+/* u18 Presidency & Bureaucracy */
+'u18-0':'Richard **Neustadt** (Presidential Power, 1960) argued that **presidential power is the power to persuade**. Orders alone rarely work.',
+'u18-1':'**Theodore Roosevelt** called the presidency a **"bully pulpit"**, a great platform for shaping public opinion. ("Bully" meant "excellent.")',
+'u18-2':'When signing a bill, a President may issue a **signing statement** explaining how they\'ll interpret or enforce it.',
+'u18-3':'The **unitary executive theory** holds that **the President controls the entire executive branch**, including the power to fire officials.',
+'u18-4':'Some agencies are built to be insulated from the President: **independent regulatory agencies**, like the **Securities and Exchange Commission (SEC)**.',
+'u18-5':'An **iron triangle** is a cozy, stable relationship between **agencies, congressional committees, and interest groups** in one policy area.',
+'u18-6':'Agencies make rules through **notice and comment** under the **Administrative Procedure Act (1946)**: propose a rule, take public comments, then finalize.',
+'u18-7':'Proposed and final federal regulations are published in the **Federal Register**, the government\'s daily journal. Anyone can comment.',
+'u18-8':'In **Loper Bright v. Raimondo (2024)**, the Supreme Court **overruled Chevron deference**. Courts no longer defer to agencies\' readings of unclear statutes.',
+'u18-9':'After a frustrated job seeker assassinated President Garfield, the **Pendleton Act (1883)** began replacing the **spoils system** with a **merit-based civil service**.',
+/* u19 Opinion, Voting & Parties */
+'u19-0':'How do people get their political views? Through family, school, friends, and media. Scholars call it **political socialization**.',
+'u19-1':'The **strongest single predictor** of how Americans vote is **party identification**. It often starts in childhood and rarely changes.',
+'u19-2':'The **median voter theorem**: in two-party races on one issue dimension, candidates **move toward the center** to win the middle voter.',
+'u19-3':'**Anthony Downs** wrote **"An Economic Theory of Democracy" (1957)**, applying economic logic to voters and parties.',
+'u19-4':'The **paradox of voting** asks **why people vote when one vote almost never decides an election**. Answers involve civic duty and social pressure.',
+'u19-5':'Judging an incumbent by how well they\'ve done ("Are you better off?") is **retrospective voting**. Judging by promises is prospective voting.',
+'u19-6':'**Duverger\'s Law**: plurality, single-member district elections tend to produce **a two-party system**.',
+'u19-7':'Some elections reshape party loyalties for decades. The **1932** election that built FDR\'s New Deal coalition is a classic **critical (realigning) election**.',
+'u19-8':'Disliking and distrusting the other party, beyond disagreeing on issues, is **affective polarization**. It has risen sharply in the U.S.',
+'u19-9':'**Proportional representation** systems give seats by vote share, so they **tend to support more than two parties**.',
+/* u20 Comparative Politics */
+'u20-0':'In a **parliamentary system** (like the UK or Canada), the head of government is usually **a prime minister drawn from the legislature**.',
+'u20-1':'Parliaments hold a big weapon: a **vote of no confidence** can **bring down a government**, forcing a new cabinet or an election.',
+'u20-2':'**France** has both a powerful elected president and a prime minister. That\'s a **semi-presidential system**.',
+'u20-3':'In **proportional representation**, parties win seats **roughly in proportion to their share of the vote**. Win 20% of votes, get about 20% of seats.',
+'u20-4':'**Germany and New Zealand** use **mixed-member proportional** (MMP): some seats from districts, the rest topped up to match vote share.',
+'u20-5':'**Ranked-choice voting** lets voters **rank candidates in order of preference**. Alaska, Maine, and New York City use it, and Seattle voters approved it in 2022 for city primaries starting in 2027.',
+'u20-6':'Arend **Lijphart** contrasted **majoritarian democracies** (winner takes power) with **consensus democracies** (power shared broadly).',
+'u20-7':'Juan **Linz** warned about the **"perils of presidentialism"**: **fixed terms and dual legitimacy** (president and legislature both elected) **can cause deadlock and crises**.',
+'u20-8':'When the central government holds most power and regions only get delegated authority, the country is **unitary**, like France or Japan.',
+'u20-9':'The **United Kingdom has no single written constitution**. Its constitution is **uncodified**: statutes, conventions, and court rulings.',
+/* u21 Rational Choice & Game Theory */
+'u21-0':'Mancur **Olson** explained why big groups struggle to organize: **members can free-ride on others\' efforts** and still get the benefits. Organizers, take note.',
+'u21-1':'Olson\'s fix: **selective incentives**, benefits given **only to members who join**, like insurance or a magazine.',
+'u21-2':'In the **prisoner\'s dilemma**, each player\'s rational choice leads to **an outcome worse for both players than cooperating**.',
+'u21-3':'Majorities can go in circles: A beats B, B beats C, C beats A. That\'s the **Condorcet paradox**.',
+'u21-4':'**Arrow\'s impossibility theorem** shows **no ranked voting rule can meet every fairness condition with 3+ options**.',
+'u21-5':'Keith **Krehbiel**\'s pivotal politics: the **filibuster pivot** is **the senator who casts the 60th vote for cloture**. Bills must win them over.',
+'u21-6':'Because supermajority pivots can block change, a range of status quo policies stays stuck. That range is the **gridlock interval**.',
+'u21-7':'George **Tsebelis**: policy stability increases when **there are more veto players with more distant preferences**. More vetoes, less change.',
+'u21-8':'When Congress delegates to an agency but can\'t fully monitor it, that\'s a **principal–agent problem**. The agent may drift from what the principal wants.',
+'u21-9':'**Agenda control matters most when majority preferences cycle**, because whoever sets the order of votes can pick the winner.',
+/* u22 Congress Scholarship */
+'u22-0':'David **Mayhew** (1974) described members of Congress as **"single-minded seekers of reelection."**',
+'u22-1':'Mayhew\'s three reelection activities:',
+'u22-2':'Richard **Fenno**\'s **"Home Style"** studied **how members present themselves to voters in their districts**. He followed them home.',
+'u22-3':'Gary **Cox and Mathew McCubbins** say the majority party acts like a cartel mainly by **controlling the agenda to block bills that would split the party**.',
+'u22-4':'The informal **Hastert rule**: the Speaker brings up bills only if **a majority of the majority party supports them**.',
+'u22-5':'**Conditional party government** predicts strong party leaders when **members within each party agree and the parties are far apart**.',
+'u22-6':'**Path dependence**: **early choices lock in later outcomes**, even when better options appear later.',
+'u22-7':'Stephen **Skowronek**\'s "political time": FDR and Reagan swept away a failing old order, so they\'re presidents of **reconstruction**.',
+'u22-8':'**DW-NOMINATE** is a method for **measuring legislators\' ideology from roll-call votes**. It\'s how scholars chart polarization.',
+'u22-9':'**Historical institutionalism** emphasizes **critical junctures and long-run sequences**: how history shapes institutions.',
+/* u23 Constitutional Interpretation */
+'u23-0':'Reading the Constitution by **its meaning when it was ratified** is **originalism**. Its rival is "living constitutionalism."',
+'u23-1':'The doctrine of following precedent is **stare decisis**, Latin for "to stand by things decided."',
+'u23-2':'Courts use three levels of scrutiny when a law treats groups differently:',
+'u23-3':'Laws that classify people **by race** get the toughest test: **strict scrutiny**.',
+'u23-4':'Laws that classify **by sex** usually get **intermediate scrutiny**.',
+'u23-5':'**Footnote four** of Carolene Products (1938) suggested **closer review for laws affecting "discrete and insular minorities" and the political process**. It\'s the seed of tiered scrutiny.',
+'u23-6':'Applying Bill of Rights protections to states through the 14th Amendment, one right at a time, is **selective incorporation**.',
+'u23-7':'**McDonald v. Chicago (2010)** incorporated **the 2nd Amendment** against the states.',
+'u23-8':'The **major questions doctrine** (West Virginia v. EPA, 2022): agencies **need clear authorization from Congress for decisions of vast economic and political significance**.',
+'u23-9':'**Textualism** focuses on **the ordinary meaning of a law\'s words** rather than what lawmakers intended.',
+/* u24 Research Methods */
+'u24-0':'A **confounder** is a variable that influences **both** the supposed cause and the effect. Ice cream sales and drownings both rise with summer heat.',
+'u24-1':'**Randomized experiments** are the gold standard because **random assignment balances confounders between groups on average**.',
+'u24-2':'Comparing candidates who **barely won** with those who **barely lost** is a **regression discontinuity design**. Near the cutoff, winners and losers are nearly identical.',
+'u24-3':'**Difference-in-differences** compares changes over time between groups. Its key assumption: **parallel trends** without the treatment.',
+'u24-4':'Whether findings apply to other places and times is **external validity**.',
+'u24-5':'People overreport voting in surveys because it\'s seen as good. That\'s **social desirability bias**.',
+'u24-6':'Tracing the step-by-step causal mechanism within one case is **process tracing**.',
+'u24-7':'If wealth causes democracy, a study claiming democracy causes wealth may suffer from **reverse causality**.',
+'u24-8':'Classic rule: **correlation, even statistically significant, does not prove causation**.',
+'u24-9':'Alan **Gerber and Donald Green** ran famous field experiments on **get-out-the-vote mobilization**. Their finding: door-knocking beats robocalls. Useful for organizers!',
+});
+Object.assign(TEACH,{
+/* w1 Seattle City Government */
+'w1-0':'Seattle has a **strong mayor–council** government. The **mayor runs the city departments**; the **council makes laws** and passes the budget. (Some cities hire a city manager instead.)',
+'w1-1':'The **Seattle City Council** has **9** members.',
+'w1-2':'Of those 9, **7 are elected by district** and **2 citywide** (Positions 8 and 9). You have three council members: your district rep plus the two citywide ones.',
+'w1-3':'Seattle\'s mayor serves a **4-year** term.',
+'w1-4':'Seattle city races are **nonpartisan**: no "Democrat" or "Republican" label on the ballot. Candidates still get party and group endorsements.',
+'w1-5':'The city doesn\'t run its own elections. **King County Elections** does, for Seattle and every other city in the county.',
+'w1-6':'Buses are a county job: **King County Metro** is run by **King County**. Light rail is Sound Transit, a regional agency.',
+'w1-7':'The **Port of Seattle** (seaport plus Sea-Tac Airport) is its own government, run by **5 commissioners elected countywide**. It\'s an often overlooked elected office.',
+'w1-8':'Washington uses a **top-two primary**: everyone runs on one ballot and **the two highest vote-getters advance, regardless of party**. Two Democrats can face off in November.',
+'w1-9':'Seattle\'s **Democracy Voucher** program gives each eligible resident **four $25 vouchers** to give to **qualifying city candidates**. It lets people run without big donors.',
+'w1-10':'Seattle voters approved **ranked-choice voting** for city primaries, starting in **2027**.',
+'w1-11':'**Washington votes almost entirely by mail.** Ballots arrive about 18 days before Election Day, and you can return them in a drop box.',
+/* w2 Washington State Government */
+'w2-0':'Washington is split into **49 legislative districts**.',
+'w2-1':'Each district elects **1 state senator and 2 state representatives**. So you have three state legislators.',
+'w2-2':'Washington **state senators serve 4-year terms**. State representatives serve 2 years.',
+'w2-3':'The Washington Legislature meets in **Olympia**, the state capital.',
+'w2-4':'In **odd-numbered years**, when the two-year budget is written, the regular session lasts **105 days**. In even years it\'s a short 60-day session.',
+'w2-5':'Washington voters separately elect the Attorney General, Secretary of State, Treasurer, and more. That\'s a **plural executive**: power isn\'t all in the governor\'s hands.',
+'w2-6':'Washington\'s governor has a **section veto**: they **can veto individual sections of bills**, not just the whole bill.',
+'w2-7':'To qualify an initiative for the ballot, sponsors need signatures equal to **8% of the votes cast for governor in the last election**.',
+'w2-8':'An **initiative to the Legislature** **goes to lawmakers first**. If they don\'t pass it, it goes to the ballot.',
+'w2-9':'Washington has **no state income tax** on wages, so it relies heavily on **sales and property taxes**. That makes its tax system one of the most regressive in the country.',
+/* w3 Running for Local Office */
+'w3-0':'Washington candidates officially file to run during **filing week in May**. Then comes the August primary and November general.',
+'w3-1':'The filing fee for a paid office is generally **1% of the office\'s annual salary**.',
+'w3-2':'Can\'t afford the fee? You can **submit signatures instead**. Money shouldn\'t block you from the ballot.',
+'w3-3':'Washington state and local candidates report money raised and spent to the **Public Disclosure Commission (PDC)**. (Federal races report to the FEC.)',
+'w3-4':'Every campaign starts with its **win number**: **the number of votes needed to win**.',
+'w3-5':'Math time: in a two-candidate race with about **40,000** voters, you need a majority. Half is 20,000, so the rough win number is **20,001**. (Real campaigns add a safety cushion.)',
+'w3-6':'Going door to door to talk with voters is **canvassing**. It\'s still the most effective way to win votes.',
+'w3-7':'Campaigns use the **voter file** to **see who\'s registered and how often they vote, so they can target outreach**. Ballots stay secret; the file never shows who you voted for.',
+'w3-8':'A common first step toward local office: **serving on a city board, commission, or neighborhood group**. You build experience and a network.',
+'w3-9':'In Washington, **Precinct Committee Officers (PCOs)** are **elected neighborhood-level party representatives**. It\'s the most grassroots elected position there is.',
+/* w4 Organizing & Running Meetings */
+'w4-0':'Under **Robert\'s Rules**, someone makes a motion ("I move that..."), then **another member seconds it** before debate begins. No second, no debate.',
+'w4-1':'A **quorum** is **the minimum number of members needed to do official business**. Without one, no binding votes.',
+'w4-2':'The official record of what a meeting decided is the **minutes**. Good minutes list motions and results, not every word said.',
+'w4-3':'The rules that govern how an organization runs itself are its **bylaws**. Read your chapter\'s bylaws before you run for anything.',
+'w4-4':'In organizing, a **one-on-one** is **a conversation to build a relationship and learn what someone cares about**. Listen far more than you talk.',
+'w4-5':'**Power mapping** helps a campaign figure out **who has the power to decide an issue and who influences them**.',
+'w4-6':'A campaign\'s **target** is **a specific person with the power to grant the demand**: a named councilmember, not "the city."',
+'w4-7':'Changed your mind? Robert\'s Rules lets members move to **rescind or amend something previously adopted** at an earlier meeting.',
+'w4-8':'Moving the **"previous question"** **ends debate** and goes straight to a vote. It usually **needs a two-thirds vote**, since it cuts off discussion.',
+'w4-9':'**DSA\'s National Political Committee** is elected at **the national convention, held every two years** by delegates from the chapters.',
+/* l1 Laws in the News */
+'l1-0':'The **CHIPS and Science Act (2022)** aimed to **boost U.S. computer-chip manufacturing and research**, with about $52 billion for chips.',
+'l1-1':'The **Inflation Reduction Act (2022)** (climate, health care, taxes) dodged a Senate filibuster by using **budget reconciliation**.',
+'l1-2':'After January 6, Congress passed the **Electoral Count Reform Act (2022)**, which made clear **the Vice President only has a ceremonial role** in counting electoral votes.',
+'l1-3':'The same law raised the bar for objecting to a state\'s electoral votes: it now needs **one-fifth of each chamber**, up from one member of each.',
+'l1-4':'The **Respect for Marriage Act (2022)** requires **recognition of valid same-sex and interracial marriages performed in other states**.',
+'l1-5':'The **Infrastructure Investment and Jobs Act (2021)** paid for **roads, bridges, broadband, water systems, and transit**.',
+'l1-6':'The **Laken Riley Act** (January 2025), about detaining certain immigrants, was **the first bill Trump signed in his second term**.',
+'l1-7':'The **TAKE IT DOWN Act (2025)** targets **nonconsensual intimate images, including AI deepfakes**, and requires platforms to remove them quickly.',
+'l1-8':'The **GENIUS Act (2025)** created the first federal rules for **stablecoins**, a kind of cryptocurrency pegged to the dollar.',
+'l1-9':'The **One Big Beautiful Bill Act**, signed July 4, 2025, passed the Senate with a simple majority because it used **budget reconciliation**. Notice a pattern?',
+'l1-10':'The **CARES Act (2020)** was a roughly **$2 trillion pandemic relief law**, including stimulus checks.',
+'l1-11':'Recent big laws on a timeline (2020, 2021, 2022, 2025):',
+/* l2 Bills & Amendments to Watch */
+'l2-0':'**One Congress lasts 2 years**, matching the House election cycle.',
+'l2-1':'The **119th Congress** runs from **2025 to 2027**.',
+'l2-2':'When a Congress ends, unpassed bills die. **They have to be reintroduced in the next Congress** and start over.',
+'l2-3':'To track any federal bill, use **Congress.gov**, the official site. You can see text, sponsors, and votes.',
+'l2-4':'**Virginia** ratified the **Equal Rights Amendment** in 2020 as the 38th state. It\'s still not in the Constitution because **the deadline Congress set had passed and the Archivist hasn\'t certified it**.',
+'l2-5':'The **National Popular Vote Interstate Compact** would give a state\'s electors to the national vote winner. It **takes effect when states with at least 270 electoral votes join**.',
+'l2-6':'Want to cap how long members of Congress serve? That would take **a congressional term limits amendment**. The 22nd Amendment only limits Presidents.',
+'l2-7':'The filibuster isn\'t in the Constitution, so **ending it would only require changing Senate rules**, not amending the Constitution.',
+'l2-8':'A **Balanced Budget Amendment** would require **the federal government not to spend more than it takes in**, with some exceptions like war.',
+'l2-9':'Citizens United was a constitutional ruling, so reformers usually propose **a constitutional amendment** to overturn it directly.',
+});
 (function(){
 'use strict';
 /* ---------- helpers ---------- */
@@ -1404,7 +1845,7 @@ function weekRow(ws,days){return '<div class="week">'+days.map((d,i)=>{const ds=
 function heartsModal(fromLesson){heartsTick();
  modal('<div style="color:var(--red)">'+ic('heart',72)+'</div><h2>'+(st.unlimited?'Unlimited hearts are on':st.hearts+' of 5 hearts')+'</h2><p class="muted" style="font-weight:700">'+(st.unlimited?'You won\'t lose hearts for mistakes.':st.hearts>=5?'You\'re full. Every wrong answer in a lesson costs a heart.':'Next heart in '+nextHeartIn()+' minutes. Practice sessions also earn hearts back.')+'</p>'+
  '<div class="row">'+(!st.unlimited&&st.hearts<5?'<button class="btn" data-a="buy" data-k="refill" '+(st.gems<150?'disabled':'')+'>Refill for 150 '+ic('gem',18)+'</button><button class="btn ghost" data-a="prac" data-k="review">Practice to earn hearts</button>':'')+'<button class="btn '+(st.unlimited||st.hearts>=5?'':'ghost')+'" data-a="close">Close</button></div>')}
-function guideModal(u){modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('smirk',64)+'<div style="text-align:left"><small class="eyebrow muted">Guidebook</small><h2>'+esc(u.title)+'</h2></div></div>'+u.tips.map(t=>learnCard(t)).join('')+'<div class="row"><button class="btn wide" data-a="close">Close</button></div>','guidebook')}
+function guideModal(u){modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('smirk',64)+'<div style="text-align:left"><small class="eyebrow muted">Guidebook</small><h2>'+esc(u.title)+'</h2></div></div>'+u.tips.map((t,k)=>learnCard(t)+'<details class="gfacts"><summary>'+ic('book',16)+'Every fact in lesson '+(k+1)+'</summary>'+u.q.slice(k*chunkSize(u),(k+1)*chunkSize(u)).map(q=>'<div class="tcard">'+teachBody(q)+'</div>').join('')+'</details>').join('')+'<div class="row"><button class="btn wide" data-a="close">Close</button></div>','guidebook')}
 function learnCard(t){return '<div class="learn"><h3>'+md(t[0])+'</h3><ul>'+t[1].map(b=>'<li><span>'+md(b)+'</span></li>').join('')+'</ul></div>'}
 function showNotices(){const n=notices.shift();if(!n)return;
  if(n.type==='freeze')modal('<div style="color:var(--teal)">'+ic('snow',80)+'</div><h2>Streak Freeze used</h2><p class="muted" style="font-weight:700">You missed '+n.n+' day'+(n.n>1?'s':'')+', but your '+st.streak+'-day streak survived.</p><div class="row"><button class="btn wide" data-a="close-next">Phew</button></div>');
@@ -1414,20 +1855,32 @@ function showNotices(){const n=notices.shift();if(!n)return;
 /* ---------- sessions ---------- */
 let S=null,R=null,lightTimer=null;
 const LABEL={mc:'Select the correct answer',tf:'True or false?',fill:'Fill in the blank',order:'Put these in order',match:'Tap the matching pairs',type:'Type your answer'};
-function lessonQs(u,k){const n=u.q.length,size=Math.ceil(n/u.L);const chunk=u.q.slice(k*size,(k+1)*size);const earlier=u.q.slice(0,k*size);const rev=shuffle(earlier).slice(0,k?3:0);return shuffle(chunk).concat(shuffle(rev))}
+function chunkSize(u){return Math.ceil(u.q.length/u.L)}
+function taughtQs(u){const p=pr(u);if(p.t||p.d>=u.L)return u.q;return u.q.slice(0,Math.min(u.q.length,p.d*chunkSize(u)))}
+function lessonQs(u,k,teach){const size=chunkSize(u);const chunk=u.q.slice(k*size,(k+1)*size);const earlier=u.q.slice(0,k*size);const rev=shuffle(earlier).slice(0,k?3:0);
+ if(!teach)return shuffle(chunk).concat(shuffle(rev));
+ let out=[];for(let i=0;i<chunk.length;i+=2){const g=chunk.slice(i,i+2);g.forEach((q,j)=>out.push({t:'teach',q,n:i+j+1,of:chunk.length}));out=out.concat(shuffle(g))}
+ return out.concat(shuffle(rev))}
+function newInfo(ex,t){const w=s=>s.toLowerCase().replace(/[^a-z0-9 ]/g,' ').split(/ +/).filter(x=>x.length>3);const T=new Set(w(t));const e=w(ex);return e.filter(x=>!T.has(x)).length/Math.max(1,e.length)>.5}
+function teachBody(q){let h='<p class="tfact">'+md(TEACH[q.id]||q.ex||answerText(q))+'</p>';
+ if(q.t==='order')h+='<ol class="tlist">'+q.a.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>';
+ if(q.t==='match')h+='<div class="tpairs">'+q.pairs.map(p=>'<div><span>'+esc(p[0])+'</span><b>'+esc(p[1])+'</b></div>').join('')+'</div>';
+ if(q.ex&&TEACH[q.id]&&q.t!=='order'&&newInfo(q.ex,TEACH[q.id]))h+='<p class="tmore">'+ic('bolt',16)+'<span>'+esc(q.ex)+'</span></p>';
+ return h}
+const TEACH_MOOD=['smirk','wow','cheer','smirk'],TEACH_LEAD=['Listen up, rebel.','Here\'s one to remember.','This one comes up a lot.','Quick briefing.','Pay attention to the bold part.','Ooh, good one.'];
 function startSession(o){closeModal();
  S=Object.assign({queue:[],idx:0,base:0,done:0,correct:0,wrong:0,combo:0,maxCombo:0,start:Date.now(),checked:false,learn:null,v:null},o);
  const k=o.kind;
- if(k==='lesson'){S.queue=lessonQs(o.u,o.k);if(!o.replay)S.learn=o.u.tips[o.k]}
+ if(k==='lesson'){S.queue=lessonQs(o.u,o.k,!o.replay);if(!o.replay)S.learn=o.u.tips[o.k]}
  else if(k==='test')S.queue=shuffle(o.u.q).slice(0,10);
  else if(k==='cp'){const us=UNITS.filter(u=>u.s===o.s);const per=Math.max(2,Math.ceil(16/us.length));let qs=[];us.forEach(u=>{qs=qs.concat(shuffle(u.q).slice(0,per))});S.queue=shuffle(qs).slice(0,16)}
- else if(k==='review'){let pool=[];reachedUnits().forEach(u=>{pool=pool.concat(u.q)});S.queue=shuffle(pool).slice(0,10)}
+ else if(k==='review'){let pool=[];UNITS.forEach(u=>{pool=pool.concat(taughtQs(u))});S.queue=shuffle(pool).slice(0,10)}
  else if(k==='mistakes')S.queue=shuffle(st.mistakes.map(id=>QMAP[id]).filter(Boolean)).slice(0,10);
- else if(k==='lightning'){let pool=[];reachedUnits().forEach(u=>{pool=pool.concat(u.q.filter(q=>q.t==='mc'||q.t==='tf'||q.t==='fill'))});S.pool=pool;S.queue=shuffle(pool);S.endAt=Date.now()+60000;S.learn=null}
- if(!S.queue.length){S=null;toast('Nothing to practice yet.');return}
+ else if(k==='lightning'){let pool=[];UNITS.forEach(u=>{pool=pool.concat(taughtQs(u).filter(q=>q.t==='mc'||q.t==='tf'||q.t==='fill'))});S.pool=pool;S.queue=shuffle(pool);S.endAt=Date.now()+60000;S.learn=null}
+ if(!S.queue.length){S=null;toast('Finish a lesson first. I only quiz you on what I\'ve taught you.');return}
  S.base=S.queue.length;newView();$('#overlay').classList.add('on');document.body.style.overflow='hidden';sfx('tap');renderSession();
  if(k==='lightning')startLightTimer()}
-function newView(){const q=S.queue[S.idx];if(!q){S.v=null;return}const v={sel:null};
+function newView(){const q=S.queue[S.idx];if(!q){S.v=null;return}const v={sel:null};if(q.t==='teach'){S.v=v;S.checked=false;S.result=null;S.fresh=true;return}
  if(q.t==='mc'||q.t==='fill')v.opts=shuffle(q.o);
  if(q.t==='tf')v.opts=q.o.slice();
  if(q.t==='order'){let b=shuffle(q.a.map((s,i)=>i));if(b.every((x,i)=>x===i))b=b.reverse();v.bank=b;v.picked=[]}
@@ -1443,8 +1896,11 @@ function headHTML(){const k=S.kind;let pct=Math.min(100,S.done/S.base*100),right
  return '<div class="lhead"><button class="x" data-a="quit" aria-label="Quit">'+ic('x',26)+'</button><div class="bar '+(k==='lightning'?'timer':'')+(S.bump?' bump':'')+'" style="--c:var(--green)"><i id="pbar" style="width:'+pct+'%"></i></div>'+right+'</div>'}
 function renderSession(){if(!S)return;const ov=$('#overlay');let body,foot;
  if(S.learn){
-  body='<div class="lin'+(S.fresh?'':' still')+'"><span class="qtype newword">'+ic('book',18)+'New lesson</span><div class="speak">'+ruckus('smirk',96)+'<div class="bubble">Read this first. Then I\'ll quiz you on it.</div></div>'+learnCard(S.learn)+'</div>';
-  foot='<div class="lfoot"><div class="in" style="justify-content:flex-end"><button class="btn green" data-a="learn-go" style="min-width:200px">Start lesson</button></div></div>'}
+  body='<div class="lin'+(S.fresh?'':' still')+'"><span class="qtype newword">'+ic('book',18)+'New lesson</span><div class="speak">'+ruckus('smirk',96)+'<div class="bubble">Here\'s the big picture. Next I\'ll teach you each fact, one at a time, before I quiz you on it. No surprises.</div></div>'+learnCard(S.learn)+'</div>';
+  foot='<div class="lfoot"><div class="in" style="justify-content:flex-end"><button class="btn green" data-a="learn-go" style="min-width:200px">Let\'s go</button></div></div>'}
+ else if(S.queue[S.idx]&&S.queue[S.idx].t==='teach'){const it=S.queue[S.idx],q=it.q,r=hash(q.id);
+  body='<div class="lin'+(S.fresh?'':' still')+'"><span class="qtype newword">'+ic('book',18)+'New fact '+it.n+' of '+it.of+'</span><div class="speak"><div class="mascot-react idle">'+ruckus(TEACH_MOOD[r%4],84)+'</div><div class="bubble">'+TEACH_LEAD[r%TEACH_LEAD.length]+'</div></div><div class="tcard">'+teachBody(q)+'</div></div>';
+  foot='<div class="lfoot"><div class="in"><p class="muted" style="font-weight:800;margin:0">'+(it.n%2===0||it.n===it.of?'Quiz on this next.':'One more fact, then a quick check.')+'</p><button class="btn green" data-a="taught" style="min-width:200px">Got it</button></div></div>'}
  else{const q=S.queue[S.idx];body='<div class="lin'+(S.fresh?'':' still')+'">'+qHTML(q)+'</div>';foot=footHTML(q)}
  const sc=ov.querySelector('.lbody');const keep=sc?sc.scrollTop:0;
  ov.innerHTML='<div class="screen">'+headHTML()+'<div class="lbody">'+body+'</div>'+foot+'</div>';
@@ -1464,9 +1920,10 @@ function qHTML(q){const v=S.v,ch=S.checked;let h='<span class="qtype">'+LABEL[q.
 const PRAISE=['Nice!','Correct!','Great job!','Excellent!','Nailed it!','Sharp!','Rebel scholar!'];
 function answerText(q){if(q.t==='order')return q.a.map((s,i)=>(i+1)+'. '+s).join('   ');if(q.t==='match')return q.pairs.map(p=>p[0]+' = '+p[1]).join('; ');return q.a}
 function footHTML(q){if(S.kind==='lightning')return '<div class="lfoot '+(S.checked?(S.result?'ok':'bad'):'')+'"><div class="in"><p class="muted" style="font-weight:800">'+(S.checked?(S.result?'Correct!':'Answer: '+esc(q.a)):'Tap an answer. Speed counts.')+'</p></div></div>';
- if(!S.checked){if(q.t==='match')return '<div class="lfoot"><div class="in"><p class="muted" style="font-weight:800">Tap a card on the left, then its match on the right.</p></div></div>';
-  return '<div class="lfoot"><div class="in" style="justify-content:flex-end"><button class="btn green" data-a="check" style="min-width:200px" '+(canCheck(q,S.v)?'':'disabled')+'>Check</button></div></div>'}
- const ok=S.result;const why=q.ex?'<p class="why">'+esc(q.ex)+'</p>':'';
+ if(!S.checked){if(q.t==='match')return '<div class="lfoot"><div class="in"><p class="muted" style="font-weight:800">Tap a card on the left, then its match on the right.</p>'+((S.kind==='lesson'||S.kind==='review'||S.kind==='mistakes')?'<button class="btn ghost hintbtn" data-a="hint">'+ic('book',18)+'Hint</button>':'')+'</div></div>';
+  const hint=(S.kind==='lesson'||S.kind==='review'||S.kind==='mistakes')&&TEACH[q.id]?'<button class="btn ghost hintbtn" data-a="hint">'+ic('book',18)+'Hint</button>':'';
+  return '<div class="lfoot"><div class="in" style="justify-content:'+(hint?'space-between':'flex-end')+'">'+hint+'<button class="btn green" data-a="check" style="min-width:200px" '+(canCheck(q,S.v)?'':'disabled')+'>Check</button></div></div>'}
+ const ok=S.result;const why=q.ex?'<p class="why">'+esc(q.ex)+'</p>':(TEACH[q.id]&&q.t!=='match'&&q.t!=='order'?'<p class="why">'+md(TEACH[q.id])+'</p>':'');
  return '<div class="lfoot '+(ok?'ok':'bad')+'"><div class="in"><div class="fb"><span class="badge" style="color:'+(ok?'var(--green)':'var(--red)')+'">'+ic(ok?'check':'x',30)+'</span><div><h3>'+(ok?PRAISE[Math.floor(Math.random()*PRAISE.length)]:(q.t==='match'?'Close. Watch those pairs.':'Correct answer:'))+'</h3>'+(ok?'':(q.t==='match'?'':'<p>'+esc(answerText(q))+'</p>'))+why+'</div></div><button class="btn '+(ok?'green':'red')+'" data-a="cont" style="min-width:200px">Continue</button></div></div>'}
 function check(){const q=S.queue[S.idx],v=S.v;let ok;
  if(q.t==='order')ok=v.picked.every((ix,i)=>ix===i);
@@ -1574,6 +2031,8 @@ const A={
  mr:el=>matchTap('R',+el.dataset.x),
  check:()=>{if(S&&!S.checked&&canCheck(S.queue[S.idx],S.v))check()},
  cont:()=>{if(S&&S.checked)cont()},
+ taught:()=>{if(!S)return;S.done++;S.bump=true;sfx('tap');S.idx++;if(S.idx>=S.queue.length){finish();return}newView();renderSession()},
+ hint:()=>{if(!S)return;const q=S.queue[S.idx];if(!q||q.t==='teach')return;sfx('tap');modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('wow',64)+'<div style="text-align:left"><small class="eyebrow muted">Hint</small><h2>Here\'s what I taught you</h2></div></div><div class="tcard" style="text-align:left;width:100%">'+teachBody(q)+'</div><div class="row"><button class="btn wide" data-a="close">Back to the question</button></div>','guidebook')},
  quit:()=>modal(ruckus('sad',100)+'<h2>Wait, don\'t bail!</h2><p class="muted" style="font-weight:700">If you quit now, you\'ll lose your progress in this session.</p><div class="row"><button class="btn wide" data-a="close">Keep learning</button><button class="linkbtn" data-a="quit-yes" style="color:var(--red)">End session</button></div>'),
  'quit-yes':()=>closeSession(),
  'ooh-refill':()=>{if(st.gems<150)return;st.gems-=150;st.hearts=5;save();closeModal();sfx('coin');cont()},
@@ -1625,6 +2084,7 @@ document.addEventListener('keydown',e=>{
  if(e.key==='Escape'){A.quit();return}
  if(S.learn){if(e.key==='Enter'){e.preventDefault();A['learn-go']()}return}
  const q=S.queue[S.idx];
+ if(q&&q.t==='teach'){if(e.key==='Enter'||e.key===' '){e.preventDefault();A.taught()}return}
  if(e.key==='Enter'){if(q.t==='type'&&!e.shiftKey)e.preventDefault();if(S.checked)A.cont();else if(canCheck(q,S.v))check();return}
  if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;
  const n=parseInt(e.key,10);if(n>=1&&n<=9){if((q.t==='mc'||q.t==='tf'||q.t==='fill')&&S.v.opts[n-1]!=null){if(S.kind==='lightning'){lightAnswer(n-1);return}if(!S.checked){S.v.sel=S.v.opts[n-1];sfx('tap');renderSession()}}}});
