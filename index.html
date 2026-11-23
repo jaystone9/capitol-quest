@@ -2171,9 +2171,9 @@ VIEWS.friends=function(){
  return h};
 
 /* ---------- play reminders (Web Push; settings stored in Firestore, sent by a scheduled GitHub job) ---------- */
-const VAPID_PUBLIC='BF_ZmKgbN1gBU0BTPqeA7oMTM_-keEtT1MMgHRi35Og2Itl5qhlORBZR5LOMce7N_3ncqQc9fMVy4i9ytiwI03I';
+const VAPID_PUBLIC='';
 const REM_FREQ=[['off','Off'],['daily','Daily'],['every2','Every 2 days'],['weekly','Weekly']];
-function remSupported(){return lbOn()&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window&&window.isSecureContext}
+function remSupported(){return !!VAPID_PUBLIC&&lbOn()&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window&&window.isSecureContext}
 function isIOS(){return /iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)}
 function isStandalone(){return (window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true}
 function remURL(id){return 'https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(LB_CFG.projectId)+'/databases/(default)/documents/reminders/'+encodeURIComponent(id)+'?key='+encodeURIComponent(LB_CFG.apiKey)}
