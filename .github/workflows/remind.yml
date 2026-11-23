@@ -19,5 +19,5 @@ jobs:
         env:
           FIREBASE_PROJECT: capitol-quest-f793e
           FIREBASE_API_KEY: AIzaSyAsQBMCIDIzfIZ7JxFvfOQaKqYv2RQjPWo
-          VAPID_PUBLIC_KEY: ''
+          VAPID_PUBLIC_KEY: BI6u9EW61fiIMJMBJHL-uJ5YlLT00LQO6cM6rOYi5nxiFwEUyB9Rwch1FXIjHx86KWDiDZmaZhwkLGGouBMFSGg
           VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
