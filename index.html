@@ -1179,6 +1179,65 @@ q:[
  M('Which elected party post works at the most local, neighborhood level in New York?','County committee member',['Borough President','State senator','Public Advocate'])
 ]},
 
+{id:'ut1',s:4,region:'ut',title:'Salt Lake City & County',desc:'The mayor, the 7-member council, the county, and who runs what',
+tips:[
+ ['How Salt Lake City is run',['Salt Lake City has a **strong mayor–council** government.','The **City Council** has **7 members**, each elected from a district.','City races are **nonpartisan** and held in **odd-numbered years**.']],
+ ['Voting in the city',['Salt Lake City uses **ranked-choice voting** in city races.','The council picks its own **chair** each year.','Mayors and council members serve **4-year terms**.']],
+ ['The county and the region',['**Salt Lake County** has a **county mayor** and a **9-member council**.','The **County Clerk** runs elections, and the **District Attorney** prosecutes felonies.','Buses and TRAX trains are run by **UTA**, a regional authority.']]
+],
+q:[
+ M('What form of government does Salt Lake City have?','Strong mayor–council',['Council–manager','Commission','Town meeting']),
+ M('How many members are on the Salt Lake City Council?','7, each elected from a district',['9, all elected citywide','5, appointed by the mayor','15, by neighborhood']),
+ TF('Salt Lake City council races list candidates as Republicans or Democrats.',false,'City races are nonpartisan.'),
+ M('Salt Lake City elects its mayor and council in...','Odd-numbered years',['Even-numbered years, with Congress','Every year','Only in presidential years']),
+ TF('Salt Lake City uses ranked-choice voting for its city elections.',true),
+ M('Who leads Salt Lake City Council meetings?','A chair the council members choose each year',['The mayor','The governor','The longest-serving member, for life']),
+ M('How long is a Salt Lake City mayor\'s term?','4 years',['2 years','6 years','No limit, until the council removes them']),
+ M('Salt Lake County is led by...','A county mayor and a 9-member county council',['The Salt Lake City mayor','Three county commissioners','The governor']),
+ M('Which office runs elections for Salt Lake County voters?','The Salt Lake County Clerk',['The Salt Lake City Council','The Utah Supreme Court','The mayor\'s office']),
+ M('Who prosecutes felony crimes in Salt Lake County?','The Salt Lake County District Attorney',['The Salt Lake City Council','The governor','The FBI']),
+ M('TRAX light rail and most buses in the Salt Lake area are run by...','UTA, the Utah Transit Authority',['Salt Lake City alone','Salt Lake County Sheriff','A private company owned by the city']),
+ TF('Salt Lake County has a 9-member council.',true)
+]},
+
+{id:'ut2',s:4,region:'ut',title:'Utah State Government',desc:'The Legislature, the governor, initiatives, and the redistricting fight',
+tips:[
+ ['The Legislature',['**29 senators** serve **4-year terms**. **75 House members** serve **2-year terms**.','The general session lasts **45 days**, starting in **January**.','The Capitol is in **Salt Lake City**.']],
+ ['Executive and direct democracy',['The **governor** serves **4-year terms**.','Utah voters can pass laws by **citizen initiative** and challenge laws by **referendum**.','Constitutional amendments need **two-thirds of each chamber**, then the voters.']],
+ ['The map fight',['In 2018 voters passed **Prop 4** to stop partisan gerrymandering.','Lawmakers replaced it in 2020, and courts later sided with the voters.','In **November 2025** a judge picked a new map with a Salt Lake–based district.']]
+],
+q:[
+ M('How many members are in the Utah State Senate?','29',['50','75','100']),
+ M('How many members are in the Utah House of Representatives?','75',['29','99','150']),
+ M('How long are Utah legislators\' terms?','4 years for senators, 2 years for House members',['2 years for both','4 years for both','6 years for senators, 2 for House members']),
+ M('How long is the Utah Legislature\'s general session?','45 days, starting in January',['All year','90 days, starting in March','10 days in the fall']),
+ M('Where does the Utah Legislature meet?','The State Capitol in Salt Lake City',['Provo','Ogden','St. George']),
+ M('How long is a Utah governor\'s term?','4 years',['2 years','6 years','8 years']),
+ TF('Utah voters can put their own laws on the ballot through citizen initiatives.',true),
+ M('To amend the Utah Constitution, a proposal must...','Pass both chambers by two-thirds, then win a statewide vote',['Be signed by the governor only','Win a court ruling','Pass the Salt Lake City Council']),
+ M('What did Utah\'s 2018 Proposition 4 do?','Created an independent redistricting commission and banned partisan gerrymandering',['Legalized medical cannabis','Expanded Medicaid','Raised the gas tax']),
+ M('What happened to Utah\'s congressional map in November 2025?','A judge picked a new map that includes a district based in Salt Lake County',['The Legislature added a fifth district','Utah switched to at-large elections','Nothing changed'])
+]},
+
+{id:'ut3',s:4,region:'ut',title:'Running for Office in Utah',desc:'Caucuses, conventions, signatures, money rules, and ranked-choice races',
+tips:[
+ ['Getting on the ballot',['For party races, candidates can go through the **party convention**, **gather signatures**, or both.','That dual path came from **SB54** in **2014**.','Neighborhood **caucus meetings** elect delegates and **precinct chairs**.']],
+ ['Primaries and money',['The **Republican** primary is **closed** to registered Republicans. The **Democratic** primary is **open**.','Utah has **no limits** on donations to state candidates, but they must be **disclosed**.']],
+ ['City races',['Salt Lake City races are **nonpartisan** and use **ranked-choice voting**.','In 2025, **Chris Wharton** won District 3 in the **third round** of counting.','**Community councils** are volunteer neighborhood groups and a common first step.']]
+],
+q:[
+ M('How can a candidate for the Utah Legislature reach a party primary ballot?','Win enough support at the party convention, gather signatures, or both',['Only by winning the convention','Only by paying a fee','Only by being appointed by the governor']),
+ M('Which 2014 law created Utah\'s signature path to the primary ballot?','SB54, the "Count My Vote" compromise',['Proposition 4','HB 267','The Voting Rights Act']),
+ M('At Utah neighborhood caucus meetings, party members elect...','Delegates to the party convention and precinct leaders',['The governor','City council members','Judges']),
+ TF('To run for the Utah Legislature as a Republican or Democrat, you must win your party\'s convention.',false,'You can also qualify by gathering signatures.'),
+ M('Who can vote in Utah\'s Republican primary?','Only registered Republicans',['Any registered voter','Only convention delegates','Only people over 25']),
+ M('Utah\'s Democratic primary is...','Open to any registered voter',['Closed to Democrats only','Held only at the convention','Decided by the governor']),
+ M('How much can one person donate to a Utah state legislative candidate?','There is no limit, but donations must be disclosed',['$100','$1,000','$5,000 per year']),
+ M('In a ranked-choice race, if no one wins a majority of first choices...','The last-place candidate is cut and their votes move to those voters\' next choices',['The oldest candidate wins','The council picks the winner','A new election is held next year']),
+ M('In 2025, Chris Wharton won Salt Lake City Council District 3 in...','The third round of ranked-choice counting',['The first round','A coin toss','A runoff in December']),
+ M('Salt Lake City\'s community councils are...','Volunteer neighborhood groups that give the city input',['Paid city departments','Courts for neighborhood disputes','Part of the state Legislature'])
+]},
+
 {id:'w4',s:4,title:'Organizing & Running Meetings',desc:'Robert\'s Rules, one-on-ones, power mapping, and member democracy',
 tips:[
  ['Running a meeting',['Under **Robert\'s Rules of Order**, business moves by **motions**: a member makes one, another **seconds** it, the group debates, then votes.','A **quorum** is the minimum number of members needed to do business.','The **agenda** sets the order of business, **minutes** record decisions, and **bylaws** govern the organization itself.']],
@@ -1239,6 +1298,27 @@ q:[
  M('Who is the majority leader of the New York State Senate?','Andrea Stewart-Cousins',['Carl Heastie','Kathy Hochul','Julie Menin']),
  M('Who is Speaker of the New York State Assembly?','Carl Heastie',['Andrea Stewart-Cousins','Julie Menin','Chuck Schumer']),
  TF('All of New York City is inside one congressional district.',false)
+]},
+
+{id:'ut4',s:4,region:'ut',title:'Know Your Reps: Utah',desc:'Who represents Salt Lake City at every level, and what each office controls',
+tips:[
+ ['City and county',['Salt Lake City Mayor **Erin Mendenhall**. Council Chair **Alejandro "Ale" Puy** leads the council in 2026.','Salt Lake County Mayor **Jenny Wilson**. County District Attorney **Sim Gill**.']],
+ ['Utah\'s Capitol',['Gov. **Spencer Cox** and Lt. Gov. **Deidre Henderson**, who oversees elections.','Attorney General **Derek Brown**.','Senate President **Stuart Adams** and House Speaker **Mike Schultz**.']],
+ ['Washington, D.C.',['U.S. Senators **Mike Lee** and **John Curtis**. Neither seat was up in 2026.','Democrat **Ben McAdams** won the new **1st District**, based in Salt Lake County.','Find yours on the My reps page.']]
+],
+q:[
+ M('Who is Salt Lake City\'s mayor?','Erin Mendenhall',['Jenny Wilson','Spencer Cox','Ben McAdams']),
+ M('Who chairs the Salt Lake City Council in 2026?','Alejandro "Ale" Puy',['Erin Mendenhall','Mike Schultz','Sim Gill']),
+ P('Match each local official to their job.',[['Erin Mendenhall','Salt Lake City Mayor'],['Jenny Wilson','Salt Lake County Mayor'],['Sim Gill','County District Attorney'],['Ale Puy','City Council Chair']]),
+ M('Who is Utah\'s governor?','Spencer Cox',['Gary Herbert','Mike Lee','Deidre Henderson']),
+ M('Who is Utah\'s lieutenant governor?','Deidre Henderson',['Spencer Cox','Derek Brown','Jenny Wilson']),
+ M('In Utah, the lieutenant governor\'s office also...','Oversees elections',['Runs the state prisons','Writes the state budget alone','Appoints the mayor']),
+ M('Who is Utah\'s attorney general?','Derek Brown',['Sean Reyes','Stuart Adams','Sim Gill']),
+ M('Who is president of the Utah State Senate?','Stuart Adams',['Mike Schultz','Spencer Cox','John Curtis']),
+ M('Who is Speaker of the Utah House?','Mike Schultz',['Stuart Adams','Ben McAdams','Mike Lee']),
+ M('Who are Utah\'s two U.S. senators?','Mike Lee and John Curtis',['Mitt Romney and Mike Lee','Spencer Cox and John Curtis','Ben McAdams and Mike Lee']),
+ M('Who won Utah\'s new 1st Congressional District, based in Salt Lake County, in 2026?','Ben McAdams',['Celeste Maloy','Blake Moore','Erin Mendenhall']),
+ TF('Utah elected a U.S. senator in November 2026.',false,'Mike Lee\'s term runs to 2029 and John Curtis\'s to 2031.')
 ]},
 
 {id:'l1',s:5,title:'Laws in the News',desc:'Major federal laws from 2020 to 2025',
@@ -1321,6 +1401,27 @@ q:[
  M('How did statewide Proposal 1 do in 2025?','It passed narrowly, with about 52%',['It failed badly','It passed with 80%','It was struck from the ballot']),
  TF('In 2026, New Yorkers voted on a statewide initiative put on the ballot by gathering signatures.',false,'New York has no citizen initiatives. Only the Legislature can send questions to voters.'),
  V('NYC Proposal 5 (Nov. 2026): Rainy day fund targets','Sets targets for how much the city saves in its rainy day fund, so there is money to draw on in a recession or emergency.',['Protects schools and services from deep cuts in a downturn.','Ratings agencies reward cities with healthy reserves.'],['Money set aside can\'t be spent on needs today.','Future leaders may face rules that don\'t fit a new crisis.'],'Passed with about 72% yes in unofficial results.')
+]},
+
+{id:'ut5',s:5,region:'ut',title:'On Your Ballot: Utah',desc:'Recent Utah and Salt Lake County ballot questions. Learn them, then cast your own vote.',
+tips:[
+ ['Amendment B: a higher bar for tax initiatives',['In Nov. 2026, **Amendment B** asked if citizen initiatives that raise taxes should need **60%** of the vote.','It **failed**, with about **62%** voting no.','Utah\'s 2018 **Medicaid expansion** passed with about **53%**.']],
+ ['Amendment A and the union law',['**Amendment A** lets lawmakers set how proposed amendments are published, instead of requiring **newspapers**. It passed with about **60%**.','In 2025, **HB 267** banned collective bargaining for public-sector unions.','After a referendum drive, lawmakers **repealed** it in **December 2025**.']],
+ ['Salt Lake County parks and recreation',['In Nov. 2026, county voters approved a **$128 million** recreation bond.','It replaces an expiring bond, so the county says the tax rate won\'t rise.','It passed with about **61%** yes.']]
+],
+q:[
+ M('What would Utah\'s 2026 Amendment B have done?','Required 60% of the vote to pass citizen initiatives that raise taxes',['Banned all citizen initiatives','Raised the sales tax','Moved elections to odd years']),
+ M('What happened to Amendment B in November 2026?','It failed, with about 62% voting no',['It passed with 60%','It passed narrowly','It was removed from the ballot']),
+ TF('Utah\'s 2018 Medicaid expansion initiative passed with less than 60% of the vote.',true,'It got about 53%.'),
+ V('Utah Amendment B (Nov. 2026): 60% for tax-raising initiatives','Would require at least 60% of voters, instead of a simple majority, to pass a citizen initiative that creates or raises a tax.',['Supporters say new taxes should need broad public support.','The Utah Republican Party and the Utah Taxpayers Association backed it.'],['Opponents say voters would face a stricter bar than the Legislature itself.','Past initiatives like Medicaid expansion would have failed under it.'],'Failed, with about 62% voting no (unofficial).'),
+ M('What did Utah\'s 2026 Amendment A change?','Proposed constitutional amendments no longer have to be published in newspapers; lawmakers set how',['It lowered the voting age to 16','It created term limits for legislators','It ended the 45-day session']),
+ M('What did Utah\'s 2025 law HB 267 do?','Banned collective bargaining for public-sector unions like teachers and firefighters',['Raised teacher pay','Created a state union','Banned private-sector unions']),
+ M('What happened to HB 267?','After more than 320,000 people signed for a referendum, lawmakers repealed it in December 2025',['Voters upheld it in 2026','A court struck it down in 2025','It is still in effect']),
+ V('HB 267 referendum (was set for Nov. 2026): Ban public-union bargaining','A Yes vote would have kept the 2025 law ending collective bargaining for public employees. A No vote would have repealed it.',['Supporters said it gives elected officials more control over public budgets.','They argued unions should not bargain with the governments that fund them.'],['Opponents said teachers, police, and firefighters deserve a collective voice.','Over 320,000 Utahns signed to put it to a vote.'],'Never voted on. Lawmakers repealed the law in December 2025.'),
+ M('What did Salt Lake County voters approve in November 2026?','A $128 million bond for parks and recreation',['A new sales tax for light rail','A ban on new housing','A $1 billion stadium']),
+ M('About what share voted yes on the 2026 county recreation bond?','About 61%',['About 51%','About 80%','About 40%']),
+ M('Amendments A and B grew out of a fight between the Legislature and...','Citizen initiatives, especially after courts enforced Prop 4',['The federal government','Salt Lake City\'s mayor','Neighboring states']),
+ V('Salt Lake County recreation bond (Nov. 2026)','Lets the county borrow $128 million over about 10 years for parks and recreation, replacing a bond that is ending.',['Builds and fixes parks, trails, and rec centers.','The county says the tax rate won\'t rise because an old bond is ending.'],['Property owners keep paying instead of seeing the old bond drop off.','Debt adds interest costs.'],'Passed with about 61% yes (unofficial).')
 ]}
 ];
 
@@ -1464,6 +1565,64 @@ const TEACH={
 'u8-13':'The **9th Amendment** says **listing some rights doesn\'t deny people other rights**. The list isn\'t the whole story.',
 'u8-14':'The **10th Amendment** says powers not given to the federal government are reserved **to the states or the people**.',
 'u8-15':'Twist: **the Bill of Rights originally limited only the federal government, not the states**. After the 14th Amendment (1868), courts applied most of it to states, a process called **incorporation**.',
+/* ut1 Salt Lake City & County */
+'ut1-0':'Salt Lake City has a **strong mayor–council** government. The mayor runs city departments, and the council passes laws and the budget.',
+'ut1-1':'The **Salt Lake City Council** has **7 members**, and **each is elected from a district**. There are no citywide seats.',
+'ut1-2':'Salt Lake City races are **nonpartisan**: no party labels on the ballot, like Seattle and unlike New York.',
+'ut1-3':'City elections happen in **odd-numbered years**, like 2025 and 2027, separate from state and federal races.',
+'ut1-4':'Salt Lake City uses **ranked-choice voting** in city races. You rank candidates in order of preference.',
+'ut1-5':'The council members choose a **chair** each year to lead meetings. The mayor is not part of the council.',
+'ut1-6':'The mayor of Salt Lake City serves a **4-year term**. So do council members.',
+'ut1-7':'**Salt Lake County** is led by an elected **county mayor** and a **9-member county council**.',
+'ut1-8':'In Utah, counties run elections. For Salt Lake County voters, that\'s the **Salt Lake County Clerk**. Utah votes mostly by mail.',
+'ut1-9':'Felony cases in the county are prosecuted by the **Salt Lake County District Attorney**, an elected office.',
+'ut1-10':'Buses, **TRAX** light rail, and FrontRunner trains are run by **UTA, the Utah Transit Authority**, a regional agency, not the city.',
+'ut1-11':'Remember: the **Salt Lake County Council** has **9 members**, more than the city\'s 7.',
+/* ut2 Utah State Government */
+'ut2-0':'The **Utah State Senate** has **29 members**.',
+'ut2-1':'The **Utah House of Representatives** has **75 members**.',
+'ut2-2':'Utah **senators serve 4-year terms** and **House members serve 2-year terms**.',
+'ut2-3':'The Legislature\'s general session is short: **45 days, starting in January**. Lawmakers are part-time.',
+'ut2-4':'The Legislature meets at the **State Capitol in Salt Lake City**, on the hill above downtown.',
+'ut2-5':'Utah\'s **governor** serves **4-year terms**.',
+'ut2-6':'Utah has **citizen initiatives**: voters can gather signatures to put **their own laws on the ballot**. They can also challenge new laws by **referendum**.',
+'ut2-7':'To amend the Utah Constitution, a proposal must **pass both chambers by two-thirds, then win a statewide vote**.',
+'ut2-8':'In 2018 voters passed **Prop 4**, which **created an independent redistricting commission and banned partisan gerrymandering**. Lawmakers replaced it in 2020, and courts later sided with the voters.',
+'ut2-9':'In **November 2025**, a judge **picked a new congressional map that includes a district based in Salt Lake County**. It was used for the 2026 election.',
+/* ut3 Running for Office in Utah */
+'ut3-0':'To reach a party primary ballot in Utah, a candidate can **win enough support at the party convention, gather signatures, or both**.',
+'ut3-1':'The signature path came from **SB54**, a **2014** law known as the **"Count My Vote" compromise**.',
+'ut3-2':'Every election year, parties hold neighborhood **caucus meetings**. Members elect **delegates to the party convention** and **precinct leaders**.',
+'ut3-3':'Myth: you don\'t have to win the convention. Candidates can **skip it by gathering signatures**.',
+'ut3-4':'Utah\'s **Republican primary** is **closed**: **only registered Republicans** can vote in it.',
+'ut3-5':'Utah\'s **Democratic primary** is **open to any registered voter**.',
+'ut3-6':'Utah has **no limit** on how much one person can give to a state candidate. Donations **must be disclosed** publicly.',
+'ut3-7':'Ranked-choice counting: if no one has a majority, **the last-place candidate is cut and their votes move to those voters\' next choices**. Repeat until someone wins.',
+'ut3-8':'In 2025, **Chris Wharton** won Salt Lake City Council District 3 in **the third round** of ranked-choice counting.',
+'ut3-9':'Salt Lake City\'s **community councils** are **volunteer neighborhood groups that give the city input**. Showing up is a great first step into local politics.',
+/* ut4 Know Your Reps: Utah */
+'ut4-0':'Salt Lake City\'s mayor is **Erin Mendenhall**.',
+'ut4-1':'In January 2026 the Salt Lake City Council chose **Alejandro "Ale" Puy** of District 2 as its chair.',
+'ut4-2':'Your local team: **Erin Mendenhall** is Salt Lake City Mayor, **Jenny Wilson** is Salt Lake County Mayor, **Sim Gill** is County District Attorney, and **Ale Puy** is City Council Chair.',
+'ut4-3':'Utah\'s governor is **Spencer Cox**.',
+'ut4-4':'Utah\'s lieutenant governor is **Deidre Henderson**.',
+'ut4-5':'In Utah, the lieutenant governor\'s office **oversees elections**, including certifying results and ballot measures.',
+'ut4-6':'Utah\'s attorney general is **Derek Brown**, elected in 2024.',
+'ut4-7':'The **Utah State Senate** is led by President **Stuart Adams**.',
+'ut4-8':'The **Utah House** is led by Speaker **Mike Schultz**.',
+'ut4-9':'Utah\'s two U.S. senators are **Mike Lee** and **John Curtis**.',
+'ut4-10':'Democrat **Ben McAdams** won the new **1st Congressional District**, based in Salt Lake County, in November 2026. He takes office in January 2027.',
+'ut4-11':'Neither Senate seat was up in 2026: **Mike Lee\'s term runs to 2029** and **John Curtis\'s to 2031**.',
+/* ut5 On Your Ballot: Utah */
+'ut5-0':'Utah\'s 2026 **Amendment B** would have **required 60% of the vote to pass citizen initiatives that raise taxes**, instead of a simple majority.',
+'ut5-1':'Amendment B **failed**, with about **62% voting no** in unofficial results.',
+'ut5-2':'For comparison: Utah\'s 2018 **Medicaid expansion** initiative passed with about **53%**, which is **less than 60%**.',
+'ut5-4':'**Amendment A** means **proposed constitutional amendments no longer have to be published in newspapers**. Lawmakers set how instead. It passed with about 60%.',
+'ut5-5':'In 2025, **HB 267** **banned collective bargaining for public-sector unions**, like teachers, police, and firefighters.',
+'ut5-6':'Opponents gathered **more than 320,000 signatures** for a referendum, so lawmakers **repealed HB 267 in December 2025** rather than face a vote.',
+'ut5-8':'In November 2026, Salt Lake County voters approved a **$128 million bond for parks and recreation**.',
+'ut5-9':'The recreation bond passed with **about 61%** yes. It replaces an older bond that is ending.',
+'ut5-10':'Both amendments grew out of the Legislature\'s fight with **citizen initiatives**, especially after **courts enforced Prop 4**, the anti-gerrymandering initiative.',
 /* n1 New York City Government */
 'n1-0':'The **New York City Council** has **51 members**, one for each Council district. That\'s far bigger than Seattle\'s 9.',
 'n1-1':'The Council is led by the **Speaker**, who is **elected by the council members** themselves. The Speaker controls committees and which bills come up for a vote.',
@@ -1850,8 +2009,8 @@ const reduceMotion=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)'
 
 const QMAP={};UNITS.forEach(u=>u.q.forEach(q=>{QMAP[q.id]=q}));
 const ALL_UNITS=UNITS.slice();const SEC4={level:SECTIONS[4].level,blurb:SECTIONS[4].blurb};
-const REGIONS={wa:{name:'Seattle & Washington',short:'Seattle',local:'Seattle & Organizing',blurb:SEC4.blurb},ny:{name:'New York',short:'New York',local:'New York & Organizing',blurb:'New York City and New York State government, how to run for office in NYC, and how to organize and run meetings. Always open.'}};
-function region(){return st.region==='ny'?'ny':'wa'}
+const REGIONS={wa:{name:'Seattle & Washington',short:'Seattle',local:'Seattle & Organizing',blurb:SEC4.blurb},ny:{name:'New York',short:'New York',local:'New York & Organizing',blurb:'New York City and New York State government, how to run for office in NYC, and how to organize and run meetings. Always open.'},ut:{name:'Salt Lake City & Utah',short:'Utah',local:'Utah & Organizing',blurb:'Salt Lake City, Salt Lake County, and Utah government, how to run for office in Utah, and how to organize and run meetings. Always open.'}};
+function region(){return st.region==='ny'||st.region==='ut'?st.region:'wa'}
 function applyRegion(){const r=region();UNITS.length=0;ALL_UNITS.forEach(u=>{if(!u.region||u.region===r)UNITS.push(u)});SECTIONS[4].level=REGIONS[r].local;SECTIONS[4].blurb=REGIONS[r].blurb}
 function visQ(id){const u=id.slice(0,id.lastIndexOf('-'));return !!QMAP[id]&&UNITS.some(x=>x.id===u)}
 function setRegion(r){st.region=r;save();applyRegion();buildNodes();openNode=-1}
@@ -2069,7 +2228,7 @@ const LDS={11:['Bob Hasegawa',['David Hackney','Steve Bergquist'],'South end of 
  46:['Javier Valdez',['Gerry Pollet','Darya Farivar'],'Northeast Seattle, Lake City, Lake Forest Park','Position 1 was on the 2026 ballot. Check the District Finder for the winner.']};
 function repCard(office,name,what,note,extra){return '<div class="repc"><small class="eyebrow muted">'+office+'</small><h3>'+name+'</h3>'+(extra?'<p class="muted" style="font-weight:700">'+extra+'</p>':'')+'<p>'+what+'</p>'+(note?'<p class="repnote">'+ic('bolt',14)+'<span>'+note+'</span></p>':'')+'</div>'}
 function repSel(k,label,opts){const v=st.reps[k]||'';return '<label class="repsel"><span>'+label+'</span><select data-rep="'+k+'"><option value="">Pick one</option>'+opts.map(o=>'<option value="'+o[0]+'" '+(String(v)===String(o[0])?'selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select></label>'}
-VIEWS.reps=function(){if(region()==='ny')return repsNY();const r=st.reps;const lk=(u,t)=>'<a href="'+u+'" target="_blank" rel="noopener">'+t+'</a>';
+VIEWS.reps=function(){if(region()==='ny')return repsNY();if(region()==='ut')return repsUT();const r=st.reps;const lk=(u,t)=>'<a href="'+u+'" target="_blank" rel="noopener">'+t+'</a>';
  let h='<div class="pagehead">'+ruckus('cheer',72)+'<div><h1>My reps</h1><p class="muted">Who represents you, and what they control. Checked '+REPS_CHECKED+'.</p></div></div>';
  h+='<div class="card" style="display:grid;gap:12px">'+repSel('cd','Seattle City Council district',Object.keys(COUNCIL).map(k=>[k,'District '+k+' ('+COUNCIL[k][1]+')']))+repSel('ld','State legislative district',Object.keys(LDS).map(k=>[k,k+'th ('+LDS[k][2]+')']))+repSel('cong','Congressional district',[['7','WA-7 (most of Seattle)'],['9','WA-9 (parts of southeast Seattle)']])+
   '<p class="muted" style="font-weight:700;font-size:14px">Not sure? Look up your address: '+lk('https://www.seattle.gov/council/meet-the-council/find-your-council-district','council district')+', '+lk('https://app.leg.wa.gov/districtfinder/','legislative and congressional districts')+'.</p></div>';
@@ -2091,7 +2250,7 @@ VIEWS.practice=function(){const mc=st.mistakes.length;
  (()=>{const d=weakDue().length,l=weakLater();return pcard('weak','Weak spots'+(d?' · '+d+' due today':''),d?'Questions you missed, brought back on a schedule: 1, 3, 7, 14, then 30 days later. Get one right each time and it graduates.':(l?'Nothing due today. '+l+' more coming back on schedule.':'Questions you miss land here, then come back after 1, 3, 7, 14, and 30 days until they stick.'),'redo','var(--red)',!d)})()+
  pcard('review','Review mix','10 questions from everything you\'ve studied so far.','dumbbell','var(--blue)')+
  pcard('lightning','Lightning Round','Answer as many as you can in 60 seconds. Best: '+st.stats.lightning+'.','clock','var(--gold)')+
- pcard('reps','My reps',region()==='ny'?'See who represents you in New York, from City Hall to Albany to Congress.':'Pick your districts and see exactly who represents you, from City Council to Congress.','user','var(--purple)')+
+ pcard('reps','My reps',region()==='ny'?'See who represents you in New York, from City Hall to Albany to Congress.':region()==='ut'?'See who represents you in Salt Lake City and Utah, from City Hall to the Capitol to Congress.':'Pick your districts and see exactly who represents you, from City Council to Congress.','user','var(--purple)')+
  pcard('local',esc(SECTIONS[4].level),'Local government, running for office, and running great meetings.','capitol','var(--teal)')+
  pcard('livedesk','Live Desk','New laws and amendments to watch, updated over time.','news','var(--punk)')}
 function pcard(k,t,p,icon,c,dis){return '<button class="practice-card tilt" data-a="prac" data-k="'+k+'" '+(dis?'disabled style="opacity:.55"':'')+'><span class="pc-ic" style="background:'+c+'">'+ic(icon,38)+'</span><div><h3>'+t+'</h3><p>'+p+'</p></div></button>'}
@@ -2136,8 +2295,25 @@ function repsNY(){const r=st.reps;const lk=(u,t)=>'<a href="'+u+'" target="_blan
  h+='<h3 style="margin:22px 0 10px">Congress</h3><div class="reps">'+repCard('U.S. Senators','Chuck Schumer and Kirsten Gillibrand','Vote on federal laws, confirm judges and Cabinet members, and approve treaties.')+
   repCard('U.S. House, your district','Look it up by address','Votes on federal laws and spending. Serves 2-year terms.','Find yours with '+lk('https://www.house.gov/representatives/find-your-representative','the House finder')+'.')+'</div>';
  return h+'<p class="muted" style="margin-top:16px;font-weight:700;font-size:14px">Officeholders change after elections. New state officials take office in January 2027.</p>'}
-function regionPicker(sel,act){return '<div class="opts">'+[['wa','Seattle & Washington','Seattle, King County, and Washington State'],['ny','New York','New York City and New York State']].map(g=>'<button class="opt goalopt '+(sel===g[0]?'sel':'')+'" data-a="'+act+'" data-r="'+g[0]+'"><span><b>'+g[1]+'</b><br><small class="muted">'+g[2]+'</small></span></button>').join('')+'</div>'}
-function regionModal(){modal(ruckus('wow',100)+'<h2>Where do you live?</h2><p class="muted" style="font-weight:700">Capitol Quest now covers two places. Pick yours, and you\'ll only see that region\'s local government, reps, and ballot measures. Your progress stays the same. You can change this in Profile.</p>'+regionPicker('', 'region-pick'))}
+const SLC={1:['Victoria Petro','Rose Park, Westpointe, Jordan Meadows'],2:['Alejandro "Ale" Puy','Glendale, Poplar Grove, Fairpark','Council Chair for 2026.'],3:['Chris Wharton','The Avenues, Capitol Hill, Marmalade'],4:['Jennifer Napier-Pearce','Downtown, Central City, East Central','Appointed in June 2026 to fill a vacancy.'],5:['Erika Carlsen','Liberty Wells, Ballpark, East Liberty Park','Council Vice Chair for 2026.'],6:['Dan Dugan','East Bench, Foothill, Yalecrest'],7:['Sarah Young','Sugar House, Highland Park, Wasatch Hollow']};
+function repsUT(){const r=st.reps;const lk=(u,t)=>'<a href="'+u+'" target="_blank" rel="noopener">'+t+'</a>';const C=SLC[r.slc];
+ let h='<div class="pagehead">'+ruckus('cheer',72)+'<div><h1>My reps</h1><p class="muted">Who represents you in Salt Lake City and Utah, and what they control. Checked '+REPS_CHECKED+'.</p></div></div>';
+ h+='<div class="card" style="display:grid;gap:12px">'+repSel('slc','Salt Lake City Council district',Object.keys(SLC).map(k=>[k,'District '+k+' ('+SLC[k][1]+')']))+
+  '<p class="muted" style="font-weight:700;font-size:14px">Not sure? Look up your address: '+lk('https://www.slc.gov/council/','city council district')+', '+lk('https://le.utah.gov/GIS/findDistrict.jsp','legislative and congressional districts')+'.</p></div>';
+ h+='<h3 style="margin:22px 0 10px">Salt Lake City</h3><div class="reps">'+
+  repCard('Mayor','Erin Mendenhall','Runs city departments like police, fire, streets, and parks. Proposes the budget and can veto ordinances.')+
+  (C?repCard('City Council, District '+r.slc,C[0],'Your district\'s vote on city laws, the budget, zoning, and taxes.',C[2]||'',C[1]):repCard('City Council, your district','Pick your district above','Your district\'s vote on city laws, the budget, zoning, and taxes.'))+'</div>';
+ h+='<h3 style="margin:22px 0 10px">Salt Lake County</h3><div class="reps">'+repCard('County Mayor','Jenny Wilson','Runs county services like the jail, health department, parks, and libraries.')+repCard('District Attorney','Sim Gill','Prosecutes felonies across the county.')+'</div>';
+ h+='<h3 style="margin:22px 0 10px">State of Utah</h3><div class="reps">'+
+  repCard('Governor','Spencer Cox','Signs or vetoes state bills, proposes the state budget, and runs state agencies.')+
+  repCard('Lieutenant Governor','Deidre Henderson','Oversees elections and is next in line for governor.')+
+  repCard('Attorney General','Derek Brown','The state\'s top lawyer.')+
+  repCard('Your State Senator and Representative','Look it up by address','One of 29 senators (4-year terms) and one of 75 House members (2-year terms).','Find yours with '+lk('https://le.utah.gov/GIS/findDistrict.jsp','the district finder')+'. Senate President: Stuart Adams. House Speaker: Mike Schultz.')+'</div>';
+ h+='<h3 style="margin:22px 0 10px">Congress</h3><div class="reps">'+repCard('U.S. Senators','Mike Lee and John Curtis','Vote on federal laws, confirm judges and Cabinet members, and approve treaties.')+
+  repCard('U.S. House, 1st District (most of Salt Lake County)','Ben McAdams','Votes on federal laws and spending. Serves 2-year terms.','Won in November 2026 under the new map and takes office in January 2027. Parts of the south county are in the 3rd District. Check yours with '+lk('https://le.utah.gov/GIS/findDistrict.jsp','the district finder')+'.')+'</div>';
+ return h+'<p class="muted" style="margin-top:16px;font-weight:700;font-size:14px">Officeholders change after elections. New members of Congress and the Legislature take office in January 2027.</p>'}
+function regionPicker(sel,act){return '<div class="opts">'+[['wa','Seattle & Washington','Seattle, King County, and Washington State'],['ny','New York','New York City and New York State'],['ut','Salt Lake City & Utah','Salt Lake City, Salt Lake County, and Utah']].map(g=>'<button class="opt goalopt '+(sel===g[0]?'sel':'')+'" data-a="'+act+'" data-r="'+g[0]+'"><span><b>'+g[1]+'</b><br><small class="muted">'+g[2]+'</small></span></button>').join('')+'</div>'}
+function regionModal(){modal(ruckus('wow',100)+'<h2>Where do you live?</h2><p class="muted" style="font-weight:700">Capitol Quest now covers three places. Pick yours, and you\'ll only see that region\'s local government, reps, and ballot measures. Your progress stays the same. You can change this in Profile.</p>'+regionPicker('', 'region-pick'))}
 
 /* ---------- friends leaderboard (Firestore REST; shares a display name and game stats only) ---------- */
 const LB_CFG={projectId:'capitol-quest-f793e',apiKey:'AIzaSyAsQBMCIDIzfIZ7JxFvfOQaKqYv2RQjPWo'};
