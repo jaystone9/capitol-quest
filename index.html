@@ -424,6 +424,14 @@ body{background-image:radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--
 .gfacts .tcard{margin-top:10px;padding:16px}
 .gfacts .tfact{font-size:16px}
 @media (prefers-reduced-motion:reduce){.lin:not(.still) .tcard{animation:none}}
+/* level switcher */
+.lvlchips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;margin:0 0 8px;scrollbar-width:none}
+.lvlchips::-webkit-scrollbar{display:none}
+.lvlchip{flex:none;padding:8px 14px;border-radius:999px;background:var(--c);color:#fff;font-weight:900;font-size:13px;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 4px 0 color-mix(in srgb,var(--c) 65%,#000);transition:transform .14s cubic-bezier(.3,1.7,.5,1)}
+.lvlchip:hover{transform:translateY(-2px)}
+.lvlchip:active{transform:translateY(3px);box-shadow:0 1px 0 color-mix(in srgb,var(--c) 65%,#000)}
+button.chip-level{cursor:pointer}
+button.chip-level:hover{background:var(--surface-2)}
 #modal{position:fixed;inset:0;z-index:75;pointer-events:none}#modal>*{pointer-events:auto}</style>
 <div id="app"><aside class="side" id="side"></aside><div class="mainwrap"><header class="topbar" id="top"></header><main class="view" id="view"></main></div><aside class="rail" id="rail"></aside><nav class="tabs" id="tabs"></nav></div>
 <div id="overlay"></div><div id="modal"></div><div id="toast"></div><canvas id="confetti"></canvas>
@@ -1583,6 +1591,7 @@ const IC={
  lock:'<rect x="5" y="10.5" width="14" height="10.5" rx="2.5"/><path d="M8.2 10.5V7.8a3.8 3.8 0 0 1 7.6 0v2.7" fill="none" stroke="currentColor" stroke-width="2.6"/>',
  trophy:'<path d="M7 3h10v5a5 5 0 0 1-10 0z"/><path d="M7 5H3.5v1.5A4 4 0 0 0 7.5 10.5M17 5h3.5v1.5a4 4 0 0 1-4 4" fill="none" stroke="currentColor" stroke-width="2"/><rect x="10.5" y="12.5" width="3" height="4"/><rect x="7" y="16.5" width="10" height="4" rx="1.2"/>',
  check:'<path d="M4.5 12.5l4.8 4.8L19.5 7" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>',
+ chevron:'<path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
  x:'<path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>',
  capitol:'<path d="M12 1.8l1.1 2.4h-2.2z"/><rect x="11.3" y="4.2" width="1.4" height="1.6"/><path d="M6.4 11a5.6 5.6 0 0 1 11.2 0z"/><rect x="4" y="11.6" width="16" height="1.8" rx=".4"/><rect x="5.2" y="13.9" width="2" height="5.3"/><rect x="9.1" y="13.9" width="2" height="5.3"/><rect x="12.9" y="13.9" width="2" height="5.3"/><rect x="16.8" y="13.9" width="2" height="5.3"/><rect x="3" y="19.6" width="18" height="2.2" rx=".5"/>',
  shield:'<path d="M12 2l8 3v6.2c0 5-3.4 8.9-8 10.8-4.6-1.9-8-5.8-8-10.8V5z"/><path d="M12 6.5l1.5 3.1 3.4.4-2.5 2.3.7 3.4-3.1-1.7-3.1 1.7.7-3.4-2.5-2.3 3.4-.4z" fill="#fff" opacity=".85"/>',
@@ -1682,39 +1691,22 @@ const pr=u=>st.prog[u.id]||{d:0,t:false};
 function nodeDone(n){if(n.type==='lesson')return pr(n.u).d>n.k;if(n.type==='test')return !!pr(n.u).t;return !!st.cp[n.s]}
 const isLive=n=>!!SECTIONS[n.s].live;
 const openSec=id=>!!(SECTIONS[id].live||SECTIONS[id].open);
-const trackOf=n=>openSec(n.s)?'s'+n.s:'main';
+const trackOf=n=>'s'+n.s;
 let CUR={main:-1};
-function computeCur(){CUR={main:-1};for(let j=0;j<NODES.length;j++){const n=NODES[j];const tr=trackOf(n);if(CUR[tr]===undefined)CUR[tr]=-1;if(CUR[tr]===-1&&!nodeDone(n))CUR[tr]=j}}
+function computeCur(){CUR={};for(let j=0;j<NODES.length;j++){const n=NODES[j];const tr=trackOf(n);if(CUR[tr]===undefined)CUR[tr]=-1;if(CUR[tr]===-1&&!nodeDone(n))CUR[tr]=j}}
 function nodeState(i){const n=NODES[i];if(nodeDone(n))return 'done';const c=CUR[trackOf(n)];return c===i?'cur':'lock'}
 function unitDone(u){return !!pr(u).t}
-function curSection(){const c=CUR.main;return c>=0?NODES[c].s:3}
+function curSection(){let m=0;UNITS.forEach(u=>{if(!SECTIONS[u.s].open&&!SECTIONS[u.s].live&&(pr(u).d>0||pr(u).t))m=Math.max(m,u.s)});return m}
 function reachedUnits(){const r=UNITS.filter(u=>pr(u).d>0||pr(u).t);return r.length?r:[UNITS[0]]}
 function sectionsCleared(){return SECTIONS.filter(s=>!s.live&&st.cp[s.id]).length}
 const TITLES=['Concerned Citizen','Civics Whiz','Policy Wonk','Political Scientist','Master of Politics'];
 
-/* ---------- leagues ---------- */
-const TIERS=[['Town Council','#B07A4A'],['County Board','#8E9AAF'],['City Hall','#E0A526'],['State House','#2F6BFF'],['State Senate','#10B4C2'],["Governor's Office",'#1FBF75'],['U.S. House','#8B5CF6'],['U.S. Senate','#FF2E88'],['Cabinet','#FF4B5C'],['Supreme Court','#3A3F5C']];
-const NAMES=['Ava M.','Liam K.','Sofia R.','Noah T.','Maya P.','Ethan W.','Zoe L.','Lucas B.','Aria S.','Mateo G.','Chloe D.','Leo H.','Nora J.','Jaylen C.','Priya N.','Omar F.','Hana Y.','Diego V.','Grace O.','Kai Z.','Ruby A.','Theo E.','Isla Q.','Malik U.','Wren I.','Sam X.'];
-const AVC=['#2F6BFF','#1FBF75','#8B5CF6','#FFB320','#FF4B5C','#10B4C2','#FF2E88','#FF8A1F'];
-function bots(week,tier){const r=rng(hash(week+':'+tier));return shuffleR(NAMES,r).slice(0,19).map((n,i)=>({n:n,target:Math.round((30+Math.pow(r(),1.7)*520)*(1+tier*.22)),e:.55+r()*1.3,col:AVC[i%AVC.length]}))}
-function botXp(b,frac){return Math.round(b.target*Math.min(1,Math.pow(frac,b.e))/5)*5}
-function leagueBoard(week,tier,myxp,frac){const ws=parseD(week).getTime();if(frac==null)frac=Math.max(0,Math.min(1,(Date.now()-ws)/(7*864e5)));const rows=bots(week,tier).map(b=>({n:b.n,xp:botXp(b,frac),col:b.col}));rows.push({n:st.name||'You',xp:myxp,me:true,col:'var(--blue)'});rows.sort((a,b)=>(b.xp-a.xp)||(a.me?-1:b.me?1:0));return rows}
-function ensureLeague(){const w=weekStart();const L=st.league;if(L.week===w)return;
- if(L.week){const board=leagueBoard(L.week,L.tier,L.xp,1);const rank=board.findIndex(r=>r.me)+1;let ch=0;if(L.xp>0){if(rank<=7&&L.tier<9)ch=1;else if(rank>=16&&L.tier>0)ch=-1}notices.push({type:'league',rank:rank,ch:ch,from:L.tier,to:L.tier+ch});L.tier+=ch}
- L.week=w;L.xp=0;save()}
-function daysLeftInWeek(){const end=parseD(weekStart()).getTime()+7*864e5;return Math.max(1,Math.ceil((end-Date.now())/864e5))}
-
-/* ---------- quests & achievements ---------- */
-function quests(){const d=st.daily;const r=rng(hash('q'+d.day));
- const pool=[{id:'l2',t:'Complete 2 lessons',n:2,v:d.lessons},{id:'c5',t:'Get 5 answers right in a row',n:5,v:d.combo},{id:'c10',t:'Get 10 answers right in a row',n:10,v:d.combo},{id:'pf',t:'Finish a lesson with no mistakes',n:1,v:d.perfect},{id:'r20',t:'Answer 20 questions correctly',n:20,v:d.correct},{id:'l3',t:'Complete 3 lessons',n:3,v:d.lessons}];
- const pick=shuffleR(pool,r).slice(0,2);
- return [{id:'xp',t:'Earn '+st.goal+' XP',n:st.goal,v:d.xp,g:20}].concat(pick.map((q,i)=>Object.assign({},q,{g:[15,25][i]})))}
+/* ---------- achievements ---------- */
 const ACH=[
  {id:'fire',name:'Wildfire',d:'Reach a {n}-day streak',lv:[3,7,14,30,100],v:()=>st.longest,col:'var(--flame)',icon:'flame'},
  {id:'xp',name:'Scholar',d:'Earn {n} total XP',lv:[100,500,1500,5000,15000],v:()=>st.xp,col:'var(--gold)',icon:'bolt'},
  {id:'sharp',name:'Sharpshooter',d:'Finish {n} lessons with no mistakes',lv:[1,10,25,50,100],v:()=>st.stats.perfect,col:'var(--green)',icon:'target'},
  {id:'law',name:'Lawmaker',d:'Complete {n} units',lv:[1,4,8,15,26],v:()=>UNITS.filter(unitDone).length,col:'var(--blue)',icon:'capitol'},
- {id:'climb',name:'Climber',d:'Reach league tier {n}',lv:[2,4,6,8,10],v:()=>st.league.tier+1,col:'var(--purple)',icon:'shield'},
  {id:'bolt',name:'Lightning',d:'Score {n} in a Lightning Round',lv:[5,10,15,20,30],v:()=>st.stats.lightning,col:'var(--teal)',icon:'clock'},
  {id:'grad',name:'Graduate',d:'Clear {n} section checkpoints',lv:[1,2,3,4],v:()=>sectionsCleared(),col:'var(--punk)',icon:'trophy'}
 ];
@@ -1723,44 +1715,36 @@ function newAchievements(){const out=[];ACH.forEach(a=>{const l=achLevel(a);if(l
 
 /* ---------- UI chrome ---------- */
 let tab='learn',openNode=-1,scrollPending=true,enterAnim=true;
-const TABS=[['learn','Learn','capitol'],['practice','Practice','dumbbell'],['league','Leagues','shield'],['quests','Quests','chest'],['shop','Shop','bag'],['me','Profile','user']];
+const TABS=[['learn','Learn','capitol'],['practice','Practice','dumbbell'],['me','Profile','user']];
 function statsHTML(){heartsTick();const done=st.lastDay===today();
  return '<button class="stat flame '+(done?'':'cold')+'" data-a="streak" aria-label="Streak">'+ic('flame',24)+'<span class="num">'+st.streak+'</span></button>'+
- '<button class="stat gem" data-a="tab" data-t="shop" aria-label="Gems">'+ic('gem',24)+'<span class="num">'+st.gems+'</span></button>'+
  '<button class="stat heart" data-a="hearts" aria-label="Hearts">'+ic('heart',24)+'<span class="num">'+(st.unlimited?'∞':st.hearts)+'</span></button>'}
 function navHTML(){return TABS.map(t=>'<button class="tab '+(tab===t[0]?'on':'')+'" data-a="tab" data-t="'+t[0]+'">'+ic(t[2],26)+'<span>'+t[1]+'</span></button>').join('')}
 function renderChrome(){computeCur();const s=SECTIONS[curSection()];
- $('#top').innerHTML='<span class="chip-level" style="'+scol(s.id)+'">'+ic('capitol',18)+s.level+'</span><div class="stats-m">'+statsHTML()+'</div>';
+ $('#top').innerHTML='<button class="chip-level" data-a="levels" style="'+scol(s.id)+'">'+ic('capitol',18)+s.level+ic('chevron',14)+'</button><div class="stats-m">'+statsHTML()+'</div>';
  $('#side').innerHTML='<div class="brand">'+ruckus('smirk',44)+'<b>Capitol Quest</b></div>'+navHTML();
  $('#tabs').innerHTML=navHTML();
  $('#rail').innerHTML=railHTML()}
-function render(){ensureDaily();ensureLeague();renderChrome();const v=VIEWS[tab]||VIEWS.learn;const vw=$('#view');vw.innerHTML=v();if(enterAnim&&!reduceMotion()){enterAnim=false;vw.classList.remove('enter');void vw.offsetWidth;vw.classList.add('enter');clearTimeout(vw._t);vw._t=setTimeout(()=>vw.classList.remove('enter'),1400)}
+function render(){ensureDaily();renderChrome();const v=VIEWS[tab]||VIEWS.learn;const vw=$('#view');vw.innerHTML=v();if(enterAnim&&!reduceMotion()){enterAnim=false;vw.classList.remove('enter');void vw.offsetWidth;vw.classList.add('enter');clearTimeout(vw._t);vw._t=setTimeout(()=>vw.classList.remove('enter'),1400)}
  if(tab==='learn'&&scrollPending){scrollPending=false;setTimeout(()=>{const el=document.querySelector('.node.cur');if(el)el.scrollIntoView({block:'center',behavior:reduceMotion()?'auto':'smooth'})},60)}}
 function goalRing(size){const p=Math.min(1,st.daily.xp/st.goal);const r=26,c=2*Math.PI*r;
  return '<div class="ring-goal" style="width:'+size+'px;height:'+size+'px"><svg viewBox="0 0 64 64" width="'+size+'" height="'+size+'"><circle cx="32" cy="32" r="'+r+'" fill="none" stroke="var(--surface-2)" stroke-width="8"/><circle cx="32" cy="32" r="'+r+'" fill="none" stroke="var(--gold)" stroke-width="8" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+(c*(1-p))+'"/></svg><b class="num">'+Math.round(p*100)+'%</b></div>'}
-function railHTML(){const L=st.league;const board=leagueBoard(L.week,L.tier,L.xp);const rank=board.findIndex(r=>r.me)+1;const T=TIERS[L.tier];
- const qs=quests();
+function railHTML(){
  return '<div class="railstats">'+statsHTML()+'</div>'+
- '<div class="card"><div class="hd"><h3>'+esc(T[0])+' League</h3><button class="linkbtn" data-a="tab" data-t="league" style="padding:0">View</button></div><div style="display:flex;gap:14px;align-items:center"><span style="color:'+T[1]+'">'+ic('shield',48)+'</span><div><b style="font-size:18px">You\'re ranked #'+rank+'</b><p class="muted">'+L.xp+' XP this week · '+daysLeftInWeek()+' days left</p></div></div></div>'+
  '<div class="card"><div class="hd"><h3>Daily goal</h3><span class="muted num" style="font-weight:800">'+Math.min(st.daily.xp,st.goal)+' / '+st.goal+' XP</span></div><div style="display:flex;gap:14px;align-items:center">'+goalRing(64)+'<p style="font-weight:700">'+(st.daily.xp>=st.goal?'Goal met. Ruckus approves.':'Earn '+(st.goal-st.daily.xp)+' more XP to hit today\'s goal.')+'</p></div></div>'+
- '<div class="card"><div class="hd"><h3>Daily quests</h3><button class="linkbtn" data-a="tab" data-t="quests" style="padding:0">View all</button></div>'+qs.map(q=>questRow(q,true)).join('')+'</div>'}
-function questRow(q,mini){const done=q.v>=q.n,claimed=st.daily.claimed.includes(q.id);const pct=Math.min(100,q.v/q.n*100);
- return '<div class="quest"><span style="color:'+(q.id==='xp'?'var(--gold)':'var(--punk)')+'">'+ic(q.id==='xp'?'bolt':'target',36)+'</span><div><div class="t">'+esc(q.t)+'</div><div class="bar" style="--c:var(--gold)"><i style="width:'+pct+'%"></i><span class="num">'+Math.min(q.v,q.n)+' / '+q.n+'</span></div></div>'+
- (claimed?'<span style="color:var(--green)">'+ic('check',28)+'</span>':done?'<button class="btn gold sm" data-a="claim" data-q="'+q.id+'" data-g="'+q.g+'">'+(mini?'Claim':'Claim '+q.g)+'</button>':'<span style="color:var(--gold);opacity:.55">'+ic('chest',34)+'</span>')+'</div>'}
+ '<div class="card"><div class="hd"><h3>Your levels</h3></div><div style="display:grid;gap:12px">'+SECTIONS.map(sc=>{const us=UNITS.filter(u=>u.s===sc.id);const d=us.filter(unitDone).length;return '<button data-a="golevel" data-s="'+sc.id+'" style="text-align:left;display:grid;gap:6px;'+scol(sc.id)+'"><span style="display:flex;justify-content:space-between;font-weight:800"><span>'+esc(sc.level)+'</span><span class="muted num">'+d+' / '+us.length+'</span></span><span class="bar" style="height:10px"><i style="width:'+(d/us.length*100)+'%"></i></span></button>'}).join('')+'</div></div>'}
 
 /* ---------- views ---------- */
 const OFF=[0,46,72,46,0,-46,-72,-46];
 const VIEWS={};
-VIEWS.learn=function(){computeCur();let h='';
+VIEWS.learn=function(){computeCur();let h='<div class="lvlchips">'+SECTIONS.map(s=>'<button class="lvlchip" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+'">'+esc(s.level)+'</button>').join('')+'</div>';
  if(st.streak>0&&st.lastDay!==today())h+='<div class="banner-risk">'+ruckus('wow',54)+'<div>Your '+st.streak+'-day streak is at risk. One lesson keeps it alive.</div></div>';
- if(Date.now()<st.boostUntil)h+='<div class="banner-risk" style="--flame:var(--purple)">'+ic('bolt',30,'style="color:var(--purple)"')+'<div>Double XP is on for '+Math.ceil((st.boostUntil-Date.now())/60000)+' more minutes.</div></div>';
  SECTIONS.forEach(s=>{const units=UNITS.filter(u=>u.s===s.id);const firstIdx=NODES.findIndex(n=>n.s===s.id);const locked=nodeState(firstIdx)==='lock';
   const doneU=units.filter(unitDone).length;
   h+='<section class="sec" id="sec'+s.id+'"><div class="sec-head '+(locked?'locked':'')+'" style="'+scol(s.id)+'">'+
    '<span class="lvl">'+(s.live?'<span class="live-dot" style="background:#fff"></span>':'')+esc(s.level)+'</span><h2>'+esc(s.title)+'</h2><p class="muted">'+esc(s.blurb)+'</p>'+
    (s.live?'<span class="live-tag"><span class="live-dot"></span>'+esc(s.updated)+'</span>':s.open?'<span class="live-tag" style="color:var(--c)">Always open · '+esc(s.updated)+'</span>':'')+
    '<div class="bar" style="'+scol(s.id)+'"><i style="width:'+(doneU/units.length*100)+'%"></i></div><small class="muted num" style="font-weight:800">'+doneU+' of '+units.length+' units complete</small>'+
-   (locked&&!openSec(s.id)&&s.id>0?'<button class="btn sm" data-a="jump" data-s="'+(s.id-1)+'" style="justify-self:start;'+scol(s.id)+'">Test out to jump here</button>':'')+
    '</div>';
   units.forEach((u,ui)=>{const uIdx=NODES.findIndex(n=>n.u===u);const ulock=nodeState(uIdx)==='lock';const flip=UNITS.indexOf(u)%2===1;
    h+='<div class="unit-banner tilt '+(ulock?'locked':'')+'" style="'+ucol(u)+'"><div><small>'+esc(s.level)+' · Unit '+(ui+1)+'</small><h3>'+esc(u.title)+'</h3><p>'+esc(u.desc)+'</p></div><button class="guide" data-a="guide" data-u="'+u.id+'">'+ic('book',26)+'GUIDE</button></div>';
@@ -1786,7 +1770,7 @@ function nodeHTML(i,x,u){const n=NODES[i];const stt=nodeState(i);const col=u?uco
 function popHTML(i,stt,col){const n=NODES[i];let t,sub,btn;
  if(n.type==='lesson'){t=n.u.title;sub='Lesson '+(n.k+1)+' of '+n.u.L;btn=stt==='done'?'Practice +5 XP':'Start +10 XP'}
  else if(n.type==='test'){t='Unit test: '+n.u.title;sub='Score 75% or better to earn the trophy.';btn=stt==='done'?'Retake test':'Take test +25 XP'}
- else{t='Checkpoint: '+SECTIONS[n.s].level;sub='Pass this to unlock the next level.';btn=stt==='done'?'Retake checkpoint':'Start +50 XP'}
+ else{t='Checkpoint: '+SECTIONS[n.s].level;sub='Final exam covering this whole level.';btn=stt==='done'?'Retake checkpoint':'Start +50 XP'}
  if(stt==='lock')return '<div class="pop lock" style="'+col+'"><h4>'+esc(t)+'</h4><p>Finish everything above to unlock this.</p></div>';
  return '<div class="pop" style="'+col+'"><h4>'+esc(t)+'</h4><p>'+esc(sub)+'</p><button class="btn wide" data-a="start" data-i="'+i+'">'+btn+'</button></div>'}
 
@@ -1799,30 +1783,11 @@ VIEWS.practice=function(){const mc=st.mistakes.length;
  pcard('livedesk','Live Desk','New laws and amendments to watch, updated over time.','news','var(--punk)')}
 function pcard(k,t,p,icon,c,dis){return '<button class="practice-card tilt" data-a="prac" data-k="'+k+'" '+(dis?'disabled style="opacity:.55"':'')+'><span class="pc-ic" style="background:'+c+'">'+ic(icon,38)+'</span><div><h3>'+t+'</h3><p>'+p+'</p></div></button>'}
 
-VIEWS.league=function(){const L=st.league;const T=TIERS[L.tier];const board=leagueBoard(L.week,L.tier,L.xp);
- let h='<div class="tiers">'+TIERS.map((t,i)=>'<span class="tierb '+(i>L.tier?'off':'')+'" style="color:'+t[1]+'" title="'+esc(t[0])+'">'+ic('shield',i===L.tier?52:40)+'</span>').join('')+'</div>';
- h+='<div style="text-align:center;margin-bottom:12px"><h1 style="font-size:26px">'+esc(T[0])+' League</h1><p class="muted" style="font-weight:700">Top 7 move up to '+(L.tier<9?esc(TIERS[L.tier+1][0]):'stay on top')+'. '+daysLeftInWeek()+' days left.</p></div><div class="card lb">';
- board.forEach((r,i)=>{if(i===7&&L.tier<9)h+='<div class="zone up">'+ic('star',14)+' Promotion zone</div>';if(i===15&&L.tier>0)h+='<div class="zone down">Demotion zone</div>';
-  h+='<div class="lbrow '+(r.me?'me':'')+'"><span class="rk num '+(i<3?'top':'')+'">'+(i+1)+'</span><span class="av" style="background:'+r.col+'">'+esc((r.n||'Y')[0].toUpperCase())+'</span><span class="nm">'+esc(r.n)+(r.me?' (you)':'')+'</span><span class="xp num">'+r.xp+' XP</span></div>'});
- return h+'</div>'};
-
-VIEWS.quests=function(){const qs=quests();const hrs=24-new Date().getHours();
- return '<div class="pagehead">'+ruckus('cheer',72)+'<div><h1>Daily quests</h1><p class="muted">New quests in '+hrs+' hour'+(hrs>1?'s':'')+'.</p></div></div><div class="card">'+qs.map(q=>questRow(q,false)).join('')+'</div>'+
- '<div class="card" style="margin-top:16px;display:flex;gap:16px;align-items:center">'+goalRing(76)+'<div><h3>Daily goal: '+st.goal+' XP</h3><p class="muted" style="font-weight:700">'+st.daily.xp+' XP earned today. Change your goal in Profile.</p></div></div>'};
-
-VIEWS.shop=function(){const items=[
-  ['freeze','Streak Freeze','Protects your streak for one missed day. Hold up to 2. You have '+st.freezes+'.',120,'snow','var(--teal)',st.freezes>=2],
-  ['refill','Refill hearts','Get all 5 hearts back right now.',150,'heart','var(--red)',st.unlimited||st.hearts>=5],
-  ['boost','Rally Boost','Double XP for the next 15 minutes.',100,'bolt','var(--purple)',Date.now()<st.boostUntil]];
- return '<div class="pagehead">'+ruckus('smirk',72)+'<div><h1>Shop</h1><p class="muted" style="display:flex;gap:6px;align-items:center;font-weight:800"><span style="color:var(--blue)">'+ic('gem',20)+'</span><span class="num">'+st.gems+' gems</span></p></div></div><div class="card">'+
- items.map(it=>'<div class="shopitem"><span class="pc-ic" style="width:64px;height:64px;background:'+it[5]+'">'+ic(it[4],34)+'</span><div><h3>'+it[1]+'</h3><p>'+it[2]+'</p></div><button class="btn sm '+(it[6]?'':'')+'" data-a="buy" data-k="'+it[0]+'" '+(it[6]||st.gems<it[3]?'disabled':'')+'><span class="price">'+ic('gem',16)+it[3]+'</span></button></div>').join('')+'</div>'+
- '<p class="muted" style="margin-top:14px;font-weight:700">Earn gems from lessons, tests, and daily quests. Prefer no hearts at all? Turn on unlimited hearts in Profile.</p>'};
-
 VIEWS.me=function(){const acc=st.stats.answered?Math.round(100*st.stats.correct/st.stats.answered):0;const joined=parseD(st.created);
  const title=TITLES[Math.min(4,sectionsCleared())];
  let h='<div class="card" style="display:flex;gap:16px;align-items:center;margin-bottom:16px"><span class="av" style="width:76px;height:76px;font-size:32px;background:var(--punk)">'+esc((st.name||'Y')[0].toUpperCase())+'</span><div style="min-width:0;flex:1;display:grid;gap:4px"><input class="textin" id="nameIn" data-in="name" value="'+esc(st.name)+'" placeholder="Your name" maxlength="24" aria-label="Your name"><p class="muted" style="font-weight:700">'+esc(title)+' · Joined '+joined.toLocaleString(undefined,{month:'long',year:'numeric'})+'</p></div></div>';
  h+='<h3 style="margin:6px 0 10px">Statistics</h3><div class="grid2">'+
-  sbox('flame','var(--flame)',st.streak,'Day streak')+sbox('bolt','var(--gold)',st.xp,'Total XP')+sbox('shield',TIERS[st.league.tier][1],TIERS[st.league.tier][0],'League')+sbox('trophy','var(--green)',UNITS.filter(unitDone).length+' / '+UNITS.length,'Units done')+
+  sbox('flame','var(--flame)',st.streak,'Day streak')+sbox('bolt','var(--gold)',st.xp,'Total XP')+sbox('check','var(--purple)',st.stats.lessons,'Lessons done')+sbox('trophy','var(--green)',UNITS.filter(unitDone).length+' / '+UNITS.length,'Units done')+
   sbox('target','var(--blue)',acc+'%','Accuracy')+sbox('flame','var(--teal)',st.longest,'Longest streak')+'</div>';
  h+='<h3 style="margin:22px 0 10px">Achievements</h3><div class="card">'+ACH.map(a=>{const l=achLevel(a);const nx=a.lv[Math.min(l,a.lv.length-1)];const v=a.v();const max=l>=a.lv.length;
    return '<div class="ach"><span class="pc-ic" style="width:62px;height:62px;background:'+(l?a.col:'var(--surface-2)')+';color:'+(l?'#fff':'var(--ink-2)')+';position:relative">'+ic(a.icon,32)+'<small style="position:absolute;bottom:-6px;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:8px;font-size:11px;font-weight:900;padding:0 5px">LV '+l+'</small></span><div><h4>'+a.name+'<span class="muted num" style="font-size:13px">'+(max?'Maxed':Math.min(v,nx)+' / '+nx)+'</span></h4><p>'+a.d.replace('{n}',nx)+'</p><div class="bar" style="--c:'+a.col+'"><i style="width:'+(max?100:Math.min(100,v/nx*100))+'%"></i></div></div></div>'}).join('')+'</div>';
@@ -1844,13 +1809,13 @@ function streakModal(){const ws=weekStart();const days=['M','T','W','T','F','S',
 function weekRow(ws,days){return '<div class="week">'+days.map((d,i)=>{const ds=addDays(ws,i);const on=(st.days[ds]||0)>0,fz=st.frozen.includes(ds);return '<span class="wd '+(on?'on':fz?'fz':'')+(ds===today()?' today':'')+'"><span>'+d+'</span><i>'+(on?ic('check',16):fz?ic('snow',16):'')+'</i></span>'}).join('')+'</div>'}
 function heartsModal(fromLesson){heartsTick();
  modal('<div style="color:var(--red)">'+ic('heart',72)+'</div><h2>'+(st.unlimited?'Unlimited hearts are on':st.hearts+' of 5 hearts')+'</h2><p class="muted" style="font-weight:700">'+(st.unlimited?'You won\'t lose hearts for mistakes.':st.hearts>=5?'You\'re full. Every wrong answer in a lesson costs a heart.':'Next heart in '+nextHeartIn()+' minutes. Practice sessions also earn hearts back.')+'</p>'+
- '<div class="row">'+(!st.unlimited&&st.hearts<5?'<button class="btn" data-a="buy" data-k="refill" '+(st.gems<150?'disabled':'')+'>Refill for 150 '+ic('gem',18)+'</button><button class="btn ghost" data-a="prac" data-k="review">Practice to earn hearts</button>':'')+'<button class="btn '+(st.unlimited||st.hearts>=5?'':'ghost')+'" data-a="close">Close</button></div>')}
+ '<div class="row">'+(!st.unlimited&&st.hearts<5?'<button class="btn ghost" data-a="prac" data-k="review">Practice to earn hearts</button>':'')+'<button class="btn '+(st.unlimited||st.hearts>=5?'':'ghost')+'" data-a="close">Close</button></div>')}
+function levelsModal(){modal(ruckus('cheer',90)+'<h2>Pick a level</h2><p class="muted" style="font-weight:700">Every level is open. Your progress in each one is saved separately, so you can switch any time.</p><div class="row">'+SECTIONS.map(s=>{const us=UNITS.filter(u=>u.s===s.id);const d=us.filter(unitDone).length;return '<button class="btn wide" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+';--cd:color-mix(in srgb,var(--c) 70%,#000);justify-content:space-between"><span>'+esc(s.level)+'</span><small class="num" style="opacity:.85">'+d+' / '+us.length+' units</small></button>'}).join('')+'</div>')}
 function guideModal(u){modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('smirk',64)+'<div style="text-align:left"><small class="eyebrow muted">Guidebook</small><h2>'+esc(u.title)+'</h2></div></div>'+u.tips.map((t,k)=>learnCard(t)+'<details class="gfacts"><summary>'+ic('book',16)+'Every fact in lesson '+(k+1)+'</summary>'+u.q.slice(k*chunkSize(u),(k+1)*chunkSize(u)).map(q=>'<div class="tcard">'+teachBody(q)+'</div>').join('')+'</details>').join('')+'<div class="row"><button class="btn wide" data-a="close">Close</button></div>','guidebook')}
 function learnCard(t){return '<div class="learn"><h3>'+md(t[0])+'</h3><ul>'+t[1].map(b=>'<li><span>'+md(b)+'</span></li>').join('')+'</ul></div>'}
 function showNotices(){const n=notices.shift();if(!n)return;
  if(n.type==='freeze')modal('<div style="color:var(--teal)">'+ic('snow',80)+'</div><h2>Streak Freeze used</h2><p class="muted" style="font-weight:700">You missed '+n.n+' day'+(n.n>1?'s':'')+', but your '+st.streak+'-day streak survived.</p><div class="row"><button class="btn wide" data-a="close-next">Phew</button></div>');
- else if(n.type==='lost')modal(ruckus('sad',120)+'<h2>Your '+n.n+'-day streak ended</h2><p class="muted" style="font-weight:700">Even rebels have off days. Start a new streak with one lesson today.</p><div class="row"><button class="btn wide" data-a="close-next">Start over</button></div>');
- else if(n.type==='league')modal('<div style="color:'+TIERS[n.to][1]+'">'+ic('shield',80)+'</div><h2>'+(n.ch>0?'Promoted to '+TIERS[n.to][0]+'!':n.ch<0?'Moved down to '+TIERS[n.to][0]:'You stayed in '+TIERS[n.to][0])+'</h2><p class="muted" style="font-weight:700">You finished last week ranked #'+n.rank+'.</p><div class="row"><button class="btn wide" data-a="close-next">Continue</button></div>')}
+ else if(n.type==='lost')modal(ruckus('sad',120)+'<h2>Your '+n.n+'-day streak ended</h2><p class="muted" style="font-weight:700">Even rebels have off days. Start a new streak with one lesson today.</p><div class="row"><button class="btn wide" data-a="close-next">Start over</button></div>');}
 
 /* ---------- sessions ---------- */
 let S=null,R=null,lightTimer=null;
@@ -1939,8 +1904,8 @@ function comboToast(n){const d=document.createElement('div');d.className='combo'
 function cont(){if(S.kind==='lesson'&&!st.unlimited&&st.hearts<=0){outOfHearts();return}S.idx++;
  if(S.kind==='lightning'&&S.idx>=S.queue.length-2)S.queue=S.queue.concat(shuffle(S.pool));
  if(S.idx>=S.queue.length){finish();return}newView();renderSession()}
-function outOfHearts(){const can=st.gems>=150;
- modal(ruckus('sad',110)+'<h2>You ran out of hearts</h2><p class="muted" style="font-weight:700">Refill to keep going, or practice to earn a heart back. Your next free heart arrives in '+nextHeartIn()+' minutes.</p><div class="row"><button class="btn" data-a="ooh-refill" '+(can?'':'disabled')+'>Refill for 150 '+ic('gem',18)+'</button><button class="btn ghost" data-a="ooh-unl">Turn on unlimited hearts</button><button class="btn ghost" data-a="ooh-practice">Practice to earn hearts</button><button class="linkbtn" data-a="ooh-end">End lesson</button></div>')}
+function outOfHearts(){
+ modal(ruckus('sad',110)+'<h2>You ran out of hearts</h2><p class="muted" style="font-weight:700">Practice to earn a heart back, or turn on unlimited hearts. Your next free heart arrives in '+nextHeartIn()+' minutes.</p><div class="row"><button class="btn ghost" data-a="ooh-unl">Turn on unlimited hearts</button><button class="btn ghost" data-a="ooh-practice">Practice to earn hearts</button><button class="linkbtn" data-a="ooh-end">End lesson</button></div>')}
 function startLightTimer(){clearInterval(lightTimer);lightTimer=setInterval(()=>{if(!S||S.kind!=='lightning'){clearInterval(lightTimer);return}const left=S.endAt-Date.now();const b=$('#pbar');if(b)b.style.width=Math.max(0,left/600)+'%';if(left<=0){clearInterval(lightTimer);finish()}},100)}
 function lightAnswer(i){const q=S.queue[S.idx];if(S.checked)return;S.v.sel=S.v.opts[i];const ok=S.v.sel===q.a;S.checked=true;S.result=ok;st.stats.answered++;
  if(ok){S.correct++;S.bump=true;S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);st.stats.correct++;st.daily.correct++;st.daily.combo=Math.max(st.daily.combo,S.combo);sfx('ok')}else{S.wrong++;S.combo=0;sfx('bad')}
@@ -1948,7 +1913,7 @@ function lightAnswer(i){const q=S.queue[S.idx];if(S.checked)return;S.v.sel=S.v.o
 function closeSession(){clearInterval(lightTimer);S=null;R=null;$('#overlay').classList.remove('on');$('#overlay').innerHTML='';document.body.style.overflow='';closeModal();enterAnim=true;render()}
 
 function finish(){clearInterval(lightTimer);const k=S.kind;const answered=S.correct+S.wrong;const acc=answered?Math.round(100*S.correct/answered):0;const secs=Math.round((Date.now()-S.start)/1000);
- let xp=0,gems=0,passed=true,perfect=S.wrong===0,unlock=null,heart=false;const boost=Date.now()<st.boostUntil?2:1;
+ let xp=0,gems=0,passed=true,perfect=S.wrong===0,unlock=null,heart=false;const boost=1;
  const wasDone=(k==='test'&&pr(S.u).t)||(k==='cp'&&st.cp[S.s]);
  if(k==='lesson'){xp=S.replay?5:10;if(perfect)xp+=5;gems=S.replay?2:(5+(perfect?5:0));if(!S.replay){const p=pr(S.u);st.prog[S.u.id]={d:Math.max(p.d,S.k+1),t:p.t}}st.stats.lessons++;st.daily.lessons++;if(perfect){st.stats.perfect++;st.daily.perfect++}}
  else if(k==='test'||k==='cp'){const score=S.correct/S.base;passed=score>=.75;st.stats.tests++;st.daily.lessons++;
@@ -1961,8 +1926,8 @@ function finish(){clearInterval(lightTimer);const k=S.kind;const answered=S.corr
  else{xp=10;gems=3;st.daily.lessons++}
  if(k==='review'||k==='mistakes'||k==='lightning'){if(!st.unlimited&&st.hearts<5){st.hearts++;heart=true}}
  xp*=boost;
- const before=st.daily.xp;st.xp+=xp;st.gems+=gems;st.daily.xp+=xp;st.days[today()]=(st.days[today()]||0)+xp;st.league.xp+=xp;
- let ext=false;if(xp>0&&st.lastDay!==today()){st.streak=(st.lastDay===addDays(today(),-1))?st.streak+1:1;st.lastDay=today();st.longest=Math.max(st.longest,st.streak);ext=true}
+ const before=st.daily.xp;st.xp+=xp;st.daily.xp+=xp;st.days[today()]=(st.days[today()]||0)+xp;
+ let ext=false;if(xp>0&&st.lastDay!==today()){st.streak=(st.lastDay===addDays(today(),-1))?st.streak+1:1;st.lastDay=today();st.longest=Math.max(st.longest,st.streak);ext=true;if(st.streak%7===0&&st.freezes<2){st.freezes++;setTimeout(()=>toast(ic('snow',20)+'7-day streak! You earned a Streak Freeze.'),1500)}}
  const goalHit=before<st.goal&&st.daily.xp>=st.goal;
  const achs=newAchievements();
  save();
@@ -1978,7 +1943,7 @@ function renderResult(){const sc=R.screens[R.i];const d=R.d;const ov=$('#overlay
   else{title='Practice complete!';sub=d.heart?'You earned back a heart.':'Keep that brain sharp.'}
   const mm=Math.floor(d.secs/60)+':'+pad(d.secs%60);
   body='<div class="result"><div class="hero">'+(good?'<div class="burst"></div>':'')+ruckus(good?'cheer':'sad',150)+'</div>'+'<h1 class="'+(good?'':'fail')+'">'+title+'</h1><p class="muted" style="font-weight:700;max-width:420px">'+sub+'</p><div class="tiles">'+
-   tile('Total XP'+(d.boost>1?' ×2':''),'var(--gold)',ic('bolt',22),d.xp)+(d.k==='lightning'?'':tile(good?(d.acc>=90?'Amazing':'Accuracy'):'Accuracy','var(--green)',ic('target',22),d.acc,'%'))+tile('Time','var(--blue)',ic('clock',22),mm,'',true)+(d.gems?tile('Gems','var(--teal)',ic('gem',22),d.gems):'')+'</div></div>'}
+   tile('Total XP'+(d.boost>1?' ×2':''),'var(--gold)',ic('bolt',22),d.xp)+(d.k==='lightning'?'':tile(good?(d.acc>=90?'Amazing':'Accuracy'):'Accuracy','var(--green)',ic('target',22),d.acc,'%'))+tile('Time','var(--blue)',ic('clock',22),mm,'',true)+'</div></div>'}
  else if(sc.t==='streak'){const ws=weekStart();body='<div class="result"><div class="hero"><div class="burst flame"></div><div class="bigflame" style="color:var(--flame)">'+ic('flame',120)+'</div></div><div class="bignum num">'+st.streak+'</div><h1 style="color:var(--flame)">day streak!</h1>'+weekRow(ws,['M','T','W','T','F','S','S'])+'<p class="muted" style="font-weight:700;max-width:380px">'+(st.streak===1?'Day one. Come back tomorrow to build it.':'Come back tomorrow so your streak doesn\'t reset.')+'</p></div>'}
  else if(sc.t==='goal'){body='<div class="result"><div class="hero"><div class="burst"></div>'+goalRing(150)+'</div>'+'<h1>Daily goal reached!</h1><p class="muted" style="font-weight:700">You earned '+st.daily.xp+' XP today. Claim your quest reward in Quests.</p></div>'}
  else if(sc.t==='unlock'){body='<div class="result"><div class="hero"><div class="burst"></div><div style="color:var(--gold)" class="bigflame">'+ic(sc.u.icon,120)+'</div></div><h1>'+esc(sc.u.t)+'</h1><p class="muted" style="font-weight:700;max-width:420px">'+esc(sc.u.p)+'</p></div>'}
@@ -2002,12 +1967,11 @@ function renderOB(){const ov=$('#overlay');let body,btn;
  if(OB.step===0){body=ruckus('smirk',170)+'<h1>Hey. I\'m Ruckus.</h1><p class="muted" style="font-weight:700;font-size:18px">I question authority. To question it well, you have to know exactly how it works. I\'ll take you from 8th-grade civics to graduate political science, one short lesson a day.</p>';btn='Let\'s go'}
  else if(OB.step===1){body=ruckus('wow',120)+'<h1>What should I call you?</h1><input class="textin" id="obName" data-in="obname" maxlength="24" placeholder="Your name" value="'+esc(OB.name)+'" style="width:100%;font-size:20px;padding:14px" aria-label="Your name">';btn='Continue'}
  else if(OB.step===2){body=ruckus('smirk',110)+'<h1>Pick a daily goal</h1><div class="opts">'+[[10,'Casual','About 1 lesson a day'],[20,'Regular','About 2 lessons a day'],[30,'Serious','About 3 lessons a day'],[50,'Intense','For future senators']].map(g=>'<button class="opt goalopt '+(OB.goal===g[0]?'sel':'')+'" data-a="ob-goal" data-g="'+g[0]+'"><span><b>'+g[1]+'</b><br><small class="muted">'+g[2]+'</small></span><span class="num">'+g[0]+' XP / day</span></button>').join('')+'</div>';btn='Continue'}
- else{body=ruckus('cheer',140)+'<h1>Where do you want to start?</h1><div class="opts"><button class="opt" data-a="ob-start" data-m="scratch"><span class="k">1</span><span><b>Start from the beginning</b><br><small class="muted">8th grade civics, the founding, the three branches</small></span></button><button class="opt" data-a="ob-start" data-m="test"><span class="k">2</span><span><b>I know the basics</b><br><small class="muted">Take the 8th grade checkpoint and jump to High School</small></span></button></div>';btn=null}
+ else{body=ruckus('cheer',140)+'<h1>Where do you want to start?</h1><div class="opts"><button class="opt" data-a="ob-start" data-m="scratch"><span class="k">1</span><span><b>Start from the beginning</b><br><small class="muted">8th grade civics, the founding, the three branches</small></span></button><button class="opt" data-a="ob-start" data-m="pick"><span class="k">2</span><span><b>Pick my level</b><br><small class="muted">Every level is open: 8th grade, high school, college, or graduate</small></span></button></div>';btn=null}
  ov.innerHTML='<div class="screen"><div class="onb">'+body+'</div>'+(btn?'<div class="rfoot"><div class="in"><button class="btn wide" data-a="ob-next">'+btn+'</button></div></div>':'')+'</div>';
  const n=$('#obName');if(n)n.focus()}
 function finishOB(mode){st.name=(OB.name||'').trim().slice(0,24);st.goal=OB.goal;st.onboarded=true;save();OB=null;$('#overlay').classList.remove('on');$('#overlay').innerHTML='';render();
- if(mode==='test')startSession({kind:'cp',s:0,jump:true});
- else{computeCur();openNode=CUR.main;render()}}
+ computeCur();openNode=CUR.s0;render();if(mode==='pick')levelsModal()}
 
 /* ---------- actions ---------- */
 const A={
@@ -2015,9 +1979,10 @@ const A={
  node:el=>{const i=+el.dataset.i;sfx('tap');openNode=openNode===i?-1:i;$('#view').innerHTML=VIEWS.learn()},
  start:el=>{const i=+el.dataset.i;openNode=-1;startNode(i)},
  guide:el=>{const u=UNITS.find(x=>x.id===el.dataset.u);if(u)guideModal(u)},
- jump:el=>startSession({kind:'cp',s:+el.dataset.s,jump:true}),
  streak:()=>streakModal(),
  hearts:()=>heartsModal(),
+ levels:()=>levelsModal(),
+ golevel:el=>{closeModal();const id=+el.dataset.s;const go=()=>{const sec=$('#sec'+id);if(!sec)return;const cur=sec.querySelector('.node.cur');(cur||sec).scrollIntoView({block:cur?'center':'start',behavior:reduceMotion()?'auto':'smooth'})};if(tab!=='learn'){setTab('learn');scrollPending=false;setTimeout(go,120)}else go()},
  close:()=>closeModal(),
  'close-next':()=>{closeModal();showNotices()},
  'modal-bg':(el,e)=>{if(e.target===el)closeModal()},
@@ -2035,21 +2000,13 @@ const A={
  hint:()=>{if(!S)return;const q=S.queue[S.idx];if(!q||q.t==='teach')return;sfx('tap');modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('wow',64)+'<div style="text-align:left"><small class="eyebrow muted">Hint</small><h2>Here\'s what I taught you</h2></div></div><div class="tcard" style="text-align:left;width:100%">'+teachBody(q)+'</div><div class="row"><button class="btn wide" data-a="close">Back to the question</button></div>','guidebook')},
  quit:()=>modal(ruckus('sad',100)+'<h2>Wait, don\'t bail!</h2><p class="muted" style="font-weight:700">If you quit now, you\'ll lose your progress in this session.</p><div class="row"><button class="btn wide" data-a="close">Keep learning</button><button class="linkbtn" data-a="quit-yes" style="color:var(--red)">End session</button></div>'),
  'quit-yes':()=>closeSession(),
- 'ooh-refill':()=>{if(st.gems<150)return;st.gems-=150;st.hearts=5;save();closeModal();sfx('coin');cont()},
  'ooh-unl':()=>{st.unlimited=true;save();closeModal();toast(ic('heart',20)+'Unlimited hearts on. Change it any time in Profile.');cont()},
  'ooh-practice':()=>{closeSession();startSession({kind:'review'})},
  'ooh-end':()=>closeSession(),
  'res-next':()=>{R.i++;if(R.i>=R.screens.length){const d=R.d;closeSession();scrollPending=true;if(tab!=='learn'&&(d.k==='lesson'||d.k==='test'||d.k==='cp'))setTab('learn');else render()}else renderResult()},
  'res-guide':()=>{const d=R.d;const u=d.unitId?UNITS.find(x=>x.id===d.unitId):UNITS.find(x=>x.s===d.s);closeSession();if(u)guideModal(u)},
- claim:el=>{const id=el.dataset.q,g=+el.dataset.g;if(st.daily.claimed.includes(id))return;st.daily.claimed.push(id);st.gems+=g;save();sfx('coin');
-  modal('<div class="chest" style="color:var(--gold)">'+ic('chest',110)+'</div><h2>Quest complete!</h2><p style="display:flex;gap:6px;align-items:center;font-weight:900;font-size:22px;color:var(--blue)">'+ic('gem',28)+'+'+g+' gems</p><div class="row"><button class="btn wide" data-a="close">Nice</button></div>');confetti();renderChrome();if(tab==='quests')$('#view').innerHTML=VIEWS.quests()},
- buy:el=>{const k=el.dataset.k;const price={freeze:120,refill:150,boost:100}[k];if(st.gems<price)return;
-  if(k==='freeze'){if(st.freezes>=2)return;st.freezes++;toast(ic('snow',20)+'Streak Freeze equipped.')}
-  if(k==='refill'){if(st.hearts>=5)return;st.hearts=5;closeModal();toast(ic('heart',20)+'Hearts refilled.')}
-  if(k==='boost'){st.boostUntil=Date.now()+15*60000;toast(ic('bolt',20)+'Double XP for 15 minutes. Go!')}
-  st.gems-=price;save();sfx('coin');render()},
  set:el=>{const k=el.dataset.k;st[k]=!st[k];save();if(k==='sound'&&st.sound)sfx('ok');render()},
- reset:()=>modal(ruckus('wow',100)+'<h2>Reset everything?</h2><p class="muted" style="font-weight:700">This deletes your streak, XP, gems, and all lesson progress on this device. It can\'t be undone.</p><div class="row"><button class="btn red wide" data-a="reset-yes">Yes, reset</button><button class="btn ghost wide" data-a="close">Cancel</button></div>'),
+ reset:()=>modal(ruckus('wow',100)+'<h2>Reset everything?</h2><p class="muted" style="font-weight:700">This deletes your streak, XP, and all lesson progress on this device. It can\'t be undone.</p><div class="row"><button class="btn red wide" data-a="reset-yes">Yes, reset</button><button class="btn ghost wide" data-a="close">Cancel</button></div>'),
  'reset-yes':()=>{st=fresh();save();closeModal();buildNodes();onboarding()},
  prac:el=>{const k=el.dataset.k;closeModal();if(k==='local'){setTab('learn');setTimeout(()=>{const s=$('#sec4');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}
  if(k==='livedesk'){setTab('learn');setTimeout(()=>{const s=$('#sec5');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}startSession({kind:k})},
@@ -2095,7 +2052,7 @@ setInterval(()=>{if(S||OB||R)return;const a=document.activeElement;if(a&&(a.tagN
 document.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse'||reduceMotion())return;const el=e.target.closest('.tilt');document.querySelectorAll('.tilt[data-tilted]').forEach(o=>{if(o!==el){o.style.transform='';delete o.dataset.tilted}});if(!el)return;const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform='perspective(700px) rotateX('+(-y*9).toFixed(2)+'deg) rotateY('+(x*11).toFixed(2)+'deg) translateY(-3px)';el.dataset.tilted='1'});
 
 /* ---------- boot ---------- */
-load();buildNodes();ensureDaily();checkStreak();ensureLeague();heartsTick();newAchievements();save();
+load();buildNodes();ensureDaily();checkStreak();heartsTick();newAchievements();save();
 const h0=location.hash.slice(1);if(VIEWS[h0])tab=h0;
 render();
 if(!st.onboarded)onboarding();else showNotices();
