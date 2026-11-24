@@ -491,6 +491,67 @@ details.danger summary{cursor:pointer;font-weight:800;color:var(--ink-2);padding
 .path-mascot.talk{z-index:4}
 .pquip{max-width:150px}
 .lfoot .quip{font-style:italic}
+
+.testout{margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);color:inherit;border:2px solid rgba(255,255,255,.55);border-radius:12px;padding:6px 12px;font-weight:800;font-size:14px;cursor:pointer}
+.testout:hover{background:rgba(255,255,255,.3)}
+.unit-banner.locked .testout{opacity:1;filter:none}
+.chiprow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.chiprow .btn{color:var(--c);border-color:var(--c)}
+.deeper{display:grid;gap:6px;text-align:left;width:100%;max-width:520px;margin:14px auto 0;padding:14px 16px;border:2px solid var(--line);border-radius:16px;background:var(--surface)}
+.deeper b{display:flex;align-items:center;gap:6px;font-weight:900}
+.deeper a{color:var(--blue);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.hinge{display:flex;gap:8px;align-items:flex-start;margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--surface-2);font-weight:700;font-size:15px;text-align:left}
+.hinge svg{flex:none;margin-top:3px;color:var(--purple)}
+.hinge a{color:var(--blue);font-weight:800;margin-left:4px}
+.lfoot .hinge{font-size:14px}
+.recap{text-align:left;width:100%;max-width:520px;margin:18px auto 0;padding:14px 16px;border:2px solid var(--line);border-radius:16px;background:var(--surface)}
+.recap h3{display:flex;align-items:center;gap:6px;font-size:17px;margin:0 0 8px;color:var(--green)}
+.recap ul{margin:0;padding-left:18px;display:grid;gap:8px;font-weight:600;font-size:15px;line-height:1.4}
+.recap b{color:var(--ink)}
+.mapsec{margin:0 0 18px;border:2px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
+.maphd{background:var(--c);color:#fff;padding:12px 16px;display:grid;gap:2px}
+.maphd .lvl{font-weight:900;font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.maphd h2{margin:0;font-size:19px}
+.maphd small{font-weight:800;opacity:.9}
+.maprow{display:grid;grid-template-columns:32px 1fr 70px;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;border-top:2px solid var(--line);padding:10px 14px;color:var(--ink);cursor:pointer;font:inherit}
+.maprow:first-of-type{border-top:0}
+.maprow:hover{background:var(--surface-2)}
+.maprow b{display:block;font-weight:800}
+.maprow small{color:var(--ink-2);font-weight:700}
+.mapic{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);color:var(--ink-2)}
+.maprow.done .mapic{background:var(--c);color:#fff}
+.maprow.cur .mapic{border:3px solid var(--c);color:var(--c)}
+.maprow.lock{opacity:.7}
+.mapbar{height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.mapbar i{display:block;height:100%;background:var(--c)}
+
+.term{all:unset;cursor:pointer;font-weight:800;color:var(--punk);text-decoration:underline dotted 2px;text-underline-offset:4px;border-radius:4px}
+.term:hover,.term:focus-visible{background:color-mix(in srgb,var(--punk) 14%,transparent);outline:none}
+.tfact .term{background:linear-gradient(transparent 60%,color-mix(in srgb,var(--gold) 40%,transparent) 60%);padding:0 2px}
+.glossm{text-align:left}
+.gloss{display:grid;gap:12px;width:100%;text-align:left}
+.gloss h2{margin:0;color:var(--punk)}
+.gloss .gd{font-weight:700;font-size:17px;line-height:1.45;margin:0}
+.gsrc,.gex{border:2px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--surface-2)}
+.gsrc b,.gex b{display:flex;align-items:center;gap:6px;font-weight:900;font-size:14px;margin-bottom:4px}
+.gsrc p,.gex p{margin:0;font-weight:600;line-height:1.45}
+.glink{color:var(--blue);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+
+.path-mascot.bea{z-index:4}
+.beaq{border-color:#E23B3B;box-shadow:0 3px 0 #E23B3B}
+.beaq::after{border-top-color:#E23B3B}
+.beatake{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:10px 12px;border:2px dashed #E23B3B;border-radius:14px;text-align:left}
+.beatake .beafig{flex:none}
+.beatake b{color:#E23B3B;font-weight:900}
+.beatake p{margin:2px 0 4px;font-weight:700}
+.beatake small{color:var(--ink-2);font-weight:700;font-size:12px}
+.beacameo{display:flex;gap:10px;align-items:center;max-width:460px;margin:14px auto 0;text-align:left}
+.beacameo .bubble{border-color:#E23B3B}
+.beacameo b{color:#E23B3B}
+.result{justify-content:flex-start}
+.result>:first-child{margin-top:auto}
+.result>:last-child{margin-bottom:auto}
+.recap,.deeper,.beacameo{flex:none}
 #modal{position:fixed;inset:0;z-index:75;pointer-events:none}#modal>*{pointer-events:auto}</style>
 <div id="app"><aside class="side" id="side"></aside><div class="mainwrap"><header class="topbar" id="top"></header><main class="view" id="view"></main></div><aside class="rail" id="rail"></aside><nav class="tabs" id="tabs"></nav></div>
 <div id="overlay"></div><div id="modal"></div><div id="toast"></div><canvas id="confetti"></canvas>
@@ -511,6 +572,7 @@ function O(p,steps,ex){return {t:'order',p,a:steps,ex}}
 function P(p,pairs,ex){return {t:'match',p,pairs,ex}}
 function T(p,acc,ex){return {t:'type',p,acc,a:acc[0],ex}}
 function V(p,what,pro,con,result){return {t:'vote',p,what,pro,con,result,a:''}}   // how would you vote? (not graded)
+function D(p,what,pro,con,result){return Object.assign(V(p,what,pro,con,result),{debate:true})}   // both-sides debate (not graded)
 
 const SECTIONS=[
  {id:0,how:'Step 1 of 4 · Start here',level:'8th Grade',title:'Civics Foundations',blurb:'The founding, the Constitution, the three branches, and how a bill becomes a law.'},
@@ -518,7 +580,8 @@ const SECTIONS=[
  {id:2,how:'Step 3 of 4 · New topics that build on High School',level:'College',title:'Political Science',blurb:'Political theory, congressional procedure, the bureaucracy, voting behavior, and comparative politics.'},
  {id:3,how:'Step 4 of 4 · New topics that build on College',level:'Graduate',title:'Mastery Seminar',blurb:'Game theory, institutions, constitutional interpretation, and research methods.'},
  {id:4,how:'Side track · Do anytime, alongside any level',level:'Seattle & Organizing',title:'Lead Locally',blurb:'Seattle, King County, and Washington government, how to run for local office, and how to organize and run meetings. Always open.',open:true,updated:'Officeholders checked November 2026'},
- {id:5,how:'Side track · Do anytime · New unit added monthly',level:'Live Desk',title:'New Laws & Amendments',blurb:'Recent laws and the proposals to watch. Always open, and updated as new laws pass.',live:true,updated:'Current through November 2026'}
+ {id:5,how:'Side track · Do anytime · New unit added monthly',level:'Live Desk',title:'New Laws & Amendments',blurb:'Recent laws and the proposals to watch. Always open, and updated as new laws pass.',live:true,updated:'Current through November 2026'},
+ {id:6,how:'Side track · Do anytime',level:'Think Tank',title:'Why, What If, and Great Debates',blurb:'Why the rules are built the way they are, what happens in tricky scenarios, and the strongest case on each side of big fights. Always open.',open:true}
 ];
 
 const UNITS=[
@@ -532,19 +595,19 @@ tips:[
 ],
 q:[
  M('What kind of government does the United States have?','A representative democracy (a republic)',['An absolute monarchy','A dictatorship','A direct democracy where everyone votes on every law'],'Citizens elect representatives who make laws for them. That\'s a republic.'),
- M('"Popular sovereignty" means...','Government\'s power comes from the people',['The most popular person rules','States are more powerful than the nation','The king owns the land']),
+ M('"Popular sovereignty" means...','Government\'s power comes from the people',['The national government outranks the states','Each state is sovereign over its own people','Courts have the final word on what the law means']),
  TF('In a direct democracy, citizens vote on laws themselves instead of electing representatives.',true),
- M('What is one main job of government?','Making and enforcing rules that protect people\'s rights and safety',['Choosing everyone\'s job','Owning every business','Picking which religion people follow']),
+ M('What is one main job of government?','Making and enforcing rules that protect people\'s rights and safety',['Guaranteeing economic equality among citizens','Directing how the national economy grows','Preserving the customs of the majority']),
  M('Who was the main author of the Declaration of Independence?','Thomas Jefferson',['George Washington','Benjamin Franklin','Abraham Lincoln']),
  F('The Declaration of Independence was adopted on July 4, ___.','1776',['1787','1791','1812']),
- M('According to the Declaration, which are "unalienable rights"?','Life, liberty, and the pursuit of happiness',['Wealth, land, and power','Voting, jury duty, and taxes','Speech, arms, and privacy']),
+ M('According to the Declaration, which are "unalienable rights"?','Life, liberty, and the pursuit of happiness',['Life, liberty, and property','Liberty, equality, and fraternity','Life, liberty, and the security of property']),
  TF('The Declaration of Independence created the three branches of government.',false,'That was the Constitution (1787). The Declaration announced independence and explained why.'),
  M('What was the biggest weakness of the Articles of Confederation?','Congress could not collect taxes',['The President had too much power','The Supreme Court struck down too many laws','States had no say at all'],'There was no President or Supreme Court under the Articles.'),
  M('Under the Articles, how many votes did each state get in Congress?','One',['Based on population','Two','Three']),
  M('Which 1786–87 farmers\' uprising convinced leaders the Articles were too weak?','Shays\' Rebellion',['The Whiskey Rebellion','The Boston Tea Party','The Stamp Act riots'],'Daniel Shays led indebted Massachusetts farmers, and the national government had no army to respond. The Whiskey Rebellion came later, in 1794.'),
  M('Where was the Constitutional Convention held?','Philadelphia',['Boston','New York City','Washington, D.C.'],'Washington, D.C. didn\'t exist yet.'),
  M('Who is called the "Father of the Constitution"?','James Madison',['John Adams','Alexander Hamilton','Thomas Jefferson'],'Jefferson was in France during the Convention.'),
- M('The Great Compromise created...','A House based on population and a Senate with equal votes per state',['A President and a Vice President','A Supreme Court with 9 justices','Two political parties'],'Roger Sherman of Connecticut proposed it, so it\'s also called the Connecticut Compromise.'),
+ M('The Great Compromise created...','A House based on population and a Senate with equal votes per state',['An Electoral College to choose the president','A House chosen by state legislatures and a Senate chosen by voters','Counting three-fifths of enslaved people for representation'],'Roger Sherman of Connecticut proposed it, so it\'s also called the Connecticut Compromise.'),
  O('Put these founding events in order, earliest first.',['Declaration of Independence','Articles of Confederation take effect','Constitutional Convention','Bill of Rights ratified'],'1776, 1781, 1787, 1791.'),
  P('Match each document to what it did.',[['Declaration of Independence','Announced the break from Britain'],['Articles of Confederation','Created a weak first government'],['Constitution','Set up today\'s federal government'],['Bill of Rights','Listed protected freedoms']])
 ]},
@@ -552,26 +615,26 @@ q:[
 {id:'u2',s:0,title:'The Constitution, Article by Article',desc:'The Preamble, the seven articles, and the clauses everyone quotes',
 tips:[
  ['The Preamble\'s six goals',['"We the People" ... to **form a more perfect Union**, **establish Justice**, **insure domestic Tranquility**,','**provide for the common defence**, **promote the general Welfare**,','and **secure the Blessings of Liberty**.']],
- ['Articles I, II, and III',['**Article I**: Congress. The longest article. **Section 8** lists Congress\'s powers.','**Article II**: the President and the executive branch.','**Article III**: the courts. The **Supreme Court** is the only court it names. It also defines **treason**.']],
+ ['Articles I, II, and III',['**Article I**: Congress. The longest article, because it **lists and limits** Congress\'s powers (**Section 8** and **Section 9**).','**Article II**: the President and the executive branch.','**Article III**: the courts. The **Supreme Court** is the only court it names. It also defines **treason**.']],
  ['Articles IV through VII',['**IV**: how states treat each other (**Full Faith and Credit**), new states.','**V**: how to amend. **VI**: the Constitution is the **supreme law**; no religious test for office.','**VII**: the Constitution took effect when **9 of 13** states ratified.']],
  ['Clauses to know',['**Commerce Clause**: Congress regulates trade with other nations, among states, and with tribes.','**Habeas corpus** can be suspended only in rebellion or invasion.','No **bills of attainder** (punishment without trial) and no **ex post facto** laws.']]
 ],
 q:[
  M('How many articles are in the original Constitution?','7',['10','3','27']),
  O('Put the Preamble\'s goals in the order they\'re written.',['Form a more perfect Union','Establish Justice','Insure domestic Tranquility','Provide for the common defence','Promote the general Welfare','Secure the Blessings of Liberty']),
- M('Which is NOT one of the Preamble\'s goals?','Guarantee everyone a job',['Establish Justice','Provide for the common defence','Promote the general Welfare']),
+ M('Which is NOT one of the Preamble\'s goals?','Protect the rights of private property',['Insure domestic Tranquility','Secure the Blessings of Liberty','Promote the general Welfare']),
  P('Match the article to its subject.',[['Article I','Congress'],['Article II','The President'],['Article III','The courts'],['Article V','Amendments']]),
- M('Which is the longest article in the Constitution?','Article I (Congress)',['Article II (the President)','Article III (the courts)','Article VII (ratification)']),
+ M('Why is Article I, on Congress, by far the longest and most detailed article?','The framers listed Congress\'s powers, and the limits on them, so it couldn\'t claim powers it wasn\'t given',['Congress was meant to be the weakest branch, so it needed the most rules','The framers copied it almost word for word from the Articles of Confederation','It also spells out the powers of the President and the courts']),
  M('Article I, Section 8 is famous because it...','Lists the powers of Congress',['Lists the rights of citizens','Creates the Cabinet','Explains impeachment trials']),
- M('Which is the only court the Constitution creates by name?','The Supreme Court',['The Court of Appeals','The District Court','The Tax Court'],'Congress creates the lower federal courts by law.'),
+ M('The Constitution creates only one court by name, the Supreme Court. How did the federal district courts and courts of appeals come to exist?','Congress created them by law, starting with the Judiciary Act of 1789',['Article III lists them alongside the Supreme Court','The Supreme Court set them up under its own rules','States created them and later handed them to the federal government'],'Congress creates the lower federal courts by law.'),
  TF('Treason is the only crime the Constitution defines.',true,'Article III: levying war against the U.S. or giving its enemies aid and comfort.'),
- M('The Full Faith and Credit Clause means states must...','Respect each other\'s public records and court rulings',['Lend each other money','Use the same tax rates','Share a governor']),
+ M('The Full Faith and Credit Clause means states must...','Respect each other\'s public records and court rulings',['Enforce each other\'s criminal laws inside their own borders','Give visitors from other states the right to vote','Accept each other\'s professional licenses automatically']),
  M('Article VI says no religious test can be required to...','Hold a federal office',['Vote','Become a citizen','Own property']),
  F('Article VII said the Constitution would take effect once ___ states ratified it.','9',['13','7','4']),
- M('The Constitution says habeas corpus can be suspended only...','During rebellion or invasion, when public safety requires it',['Whenever the President wants','During election years','Never, under any circumstances']),
+ M('The Constitution says habeas corpus can be suspended only...','During rebellion or invasion, when public safety requires it',['Whenever the President declares a national emergency','When Congress formally declares war','Only with the Supreme Court\'s approval']),
  M('A writ of habeas corpus protects you from...','Being held in jail without going before a judge',['Paying unfair taxes','Losing your property','Being drafted']),
- M('An ex post facto law, which the Constitution bans, is one that...','Punishes an act that was legal when it was done',['Raises taxes','Passed without a vote','Applies to only one state']),
- M('The Commerce Clause lets Congress regulate trade...','With foreign nations, among the states, and with Native American tribes',['Only inside one state','Only with Britain','Only for farm goods']),
+ M('An ex post facto law, which the Constitution bans, is one that...','Punishes an act that was legal when it was done',['Punishes a named person without a trial','Applies to only one state','Takes effect before it is published']),
+ M('The Commerce Clause lets Congress regulate trade...','With foreign nations, among the states, and with Native American tribes',['Among the states only, not with other countries','With foreign nations only, leaving interstate trade to the states','Among the states and with foreign nations, but not with tribes']),
  TF('The word "democracy" appears in the Constitution.',false,'It doesn\'t appear in the Constitution or the Declaration of Independence.')
 ]},
 
@@ -586,7 +649,7 @@ q:[
  P('Match each branch with its main job.',[['Legislative','Makes the laws'],['Executive','Carries out the laws'],['Judicial','Interprets the laws']]),
  M('Which branch is Congress part of?','Legislative',['Executive','Judicial','None of them']),
  M('Who leads the executive branch?','The President',['The Speaker of the House','The Chief Justice','The Senate Majority Leader']),
- M('Why did the Framers split power into three branches?','So no single person or group gets too much power',['To make government faster','Because there were three big states','So each party could run one branch']),
+ M('Why did the Framers split power into three branches?','So no single person or group gets too much power',['To copy the British system of king, Lords, and Commons','So the states could each control one branch','To make the national government more efficient than the Articles']),
  M('Which branch has the power to declare war?','Congress',['The President','The Supreme Court','The Joint Chiefs of Staff'],'The President commands the military, but only Congress can formally declare war.'),
  M('"Power of the purse" belongs to...','Congress',['The President','The Supreme Court','The Treasury Secretary']),
  M('The President rejects a bill passed by Congress. This is called a...','Veto',['Filibuster','Impeachment','Pardon']),
@@ -612,7 +675,7 @@ q:[
  M('Congress is "bicameral." What does that mean?','It has two chambers',['It has two parties','It meets twice a year','It has two leaders']),
  P('Match the number to what it describes.',[['Members of the House','435'],['Members of the Senate','100'],['Years in a House term','2'],['Years in a Senate term','6']]),
  M('How many senators does each state have?','2',['1','It depends on population','4']),
- M('How are House seats divided among the states?','By population',['Equally, 2 per state','By land area','By how long they\'ve been states']),
+ M('How are House seats divided among the states?','By population',['Equally, 2 per state','By each state\'s share of federal taxes paid','By the number of registered voters']),
  F('A member of the House serves a ___-year term.','2',['4','6','8']),
  F('A U.S. senator serves a ___-year term.','6',['2','4','10']),
  M('What is the minimum age to serve in the House?','25',['18','30','35']),
@@ -624,12 +687,12 @@ q:[
  M('About how much of the Senate is up for election every 2 years?','One-third',['All of it','Half','One-fourth']),
  M('What happens every 10 years that can change how many House seats a state gets?','The census',['A constitutional convention','A Supreme Court review','A presidential election']),
  TF('Every American living in a state is represented by two senators and one House member.',true),
- M('Why do senators get longer terms than House members?','So they can focus on long-term issues with less election pressure',['Because senators are older','Because the Senate meets less often','No reason; it was an accident'],'Madison saw the Senate as a steadier, more deliberate body. The House was meant to stay close to public opinion.')
+ M('Why do senators get longer terms than House members?','So they can focus on long-term issues with less election pressure',['So the Senate could also serve as a court of appeals','Because senators represented the wealthiest citizens','To match the length of a presidential term plus two years'],'Madison saw the Senate as a steadier, more deliberate body. The House was meant to stay close to public opinion.')
 ]},
 
 {id:'u5',s:0,title:'How a Bill Becomes a Law',desc:'From an idea to the President\'s desk',
 tips:[
- ['Introducing a bill',['Only a **member of Congress** can introduce a bill, though anyone can suggest one.','In the House, bills go in a box called the **hopper**.','House bills are labeled **H.R.**, Senate bills **S.** Tax bills must start in the **House**.']],
+ ['Introducing a bill',['Only a **member of Congress** can introduce a bill, though anyone can suggest one.','**Most bills never get a vote.** Committees and leaders decide which ones move.','House bills are labeled **H.R.**, Senate bills **S.** Tax bills must start in the **House**.']],
  ['Committees do the heavy lifting',['The bill goes to a **committee** (like Agriculture or Armed Services).','Committees hold **hearings** and a **markup**, where they edit the text.','Most bills **die in committee**.']],
  ['Floor votes in both chambers',['In the House, the **Rules Committee** sets the terms of debate.','The full chamber debates and votes, then the other chamber does the same.','Both must pass **identical** text, often after a **conference committee**.']],
  ['The President decides',['The President has **10 days** (not counting Sundays).','**Sign** it and it\'s law. **Veto** it and Congress can override with **2/3** of both chambers.','Do nothing: it becomes law if Congress is in session, or dies by **pocket veto** if Congress has adjourned.']]
@@ -637,7 +700,7 @@ tips:[
 q:[
  O('Put the steps of how a bill becomes a law in order.',['A member of Congress introduces the bill','A committee studies and marks up the bill','The full chamber debates and votes','The other chamber passes the same bill','The President signs it into law']),
  M('Who can officially introduce a bill in Congress?','Only a member of Congress',['Any citizen','The President','A Supreme Court justice'],'Anyone can suggest an idea, and Presidents often push bills, but a member has to introduce it.'),
- M('In the House, a new bill is dropped into a box called the...','Hopper',['Ballot box','Docket','Chamber chest']),
+ M('Why do most bills introduced in Congress never get a floor vote?','Committees and chamber leaders decide which bills move, and most are never taken up',['The President vetoes them before a vote','The Parliamentarian rules most of them unconstitutional','Each member may bring only one bill to the floor per session']),
  M('A bill labeled "H.R. 1234" started in...','The House of Representatives',['The Senate','The White House','The Supreme Court']),
  TF('Bills that raise taxes (revenue bills) must start in the House.',true,'Article I, Section 7.'),
  M('After a bill is introduced, where does it usually go first?','To a committee',['Straight to the President','To the Supreme Court','To a public vote']),
@@ -668,8 +731,8 @@ q:[
  M('As Commander in Chief, the President...','Leads the armed forces',['Writes the federal budget alone','Leads the Supreme Court','Declares war alone'],'Only Congress can formally declare war.'),
  M('Who must approve treaties the President negotiates?','Two-thirds of the Senate',['A majority of the House','The Supreme Court','Three-fourths of the states']),
  M('Which power lets the President forgive someone for a federal crime?','The pardon power',['The veto','Judicial review','Impeachment']),
- M('What is the yearly report the President gives Congress called?','The State of the Union',['The Inaugural Address','The Farewell Address','The Gettysburg Address']),
- M('The Cabinet is made up of...','The heads of the executive departments, plus the Vice President',['All 100 senators','The nine Supreme Court justices','State governors']),
+ M('What is the yearly report the President gives Congress called?','The State of the Union',['The Inaugural Address','The Farewell Address','The Budget Message']),
+ M('The Cabinet is made up of...','The heads of the executive departments, plus the Vice President',['The congressional leaders of the President\'s party','The Joint Chiefs of Staff and the national security adviser','The White House chief of staff and senior aides only']),
  T('How many executive departments are there? (Type a number.)',['15','fifteen']),
  P('Match the Cabinet official to their department.',[['Secretary of State','Foreign affairs'],['Secretary of the Treasury','Money and taxes'],['Secretary of Defense','The military'],['Attorney General','Justice Department']]),
  M('If the President can no longer serve, who becomes President?','The Vice President',['The Speaker of the House','The Secretary of State','The Chief Justice']),
@@ -702,7 +765,7 @@ q:[
  M('One person sues another over a broken contract. This is a...','Civil case',['Criminal case','Impeachment','Treason trial']),
  TF('Most court cases in the U.S. are heard in state courts, not federal courts.',true),
  M('A brief filed by an outside group that isn\'t a party to the case is an...','Amicus curiae brief',['Indictment','Subpoena','Veto message']),
- M('The leader of the Supreme Court is the...','Chief Justice of the United States',['Attorney General','Solicitor General','Speaker of the Court'])
+ M('The leader of the Supreme Court is the...','Chief Justice of the United States',['Attorney General','Solicitor General','Senior Associate Justice'])
 ]},
 
 {id:'u8',s:0,title:'The Bill of Rights',desc:'All ten amendments, and the freedoms they protect',
@@ -721,10 +784,10 @@ q:[
  M('The 3rd Amendment protects against...','Being forced to house soldiers in your home',['Unfair taxes','Searches of your car','Being drafted']),
  M('"I plead the Fifth" means using the right to...','Not be a witness against yourself',['Bear arms','A speedy trial','Free speech']),
  TF('Double jeopardy means you can\'t be tried twice for the same crime after being acquitted.',true,'Protected by the 5th Amendment.'),
- M('Under the 5th Amendment, the government can take private property for public use only if it pays...','Just compensation',['Nothing','Double the value','In gold']),
+ M('Under the 5th Amendment, the government can take private property for public use only if it pays...','Just compensation',['Whatever amount Congress sets for that type of property','The owner\'s asking price','Nothing, as long as the use is truly public']),
  M('Which amendment guarantees a lawyer and a speedy, public trial?','6th',['2nd','4th','10th']),
  M('Police generally need a warrant to search your home because of the...','4th Amendment',['1st Amendment','3rd Amendment','9th Amendment']),
- M('The 7th Amendment guarantees a jury trial in...','Many civil cases',['Traffic court','Impeachments','Military courts']),
+ M('The 7th Amendment guarantees a jury trial in...','Many civil cases',['All criminal cases','Impeachments','Military courts']),
  M('Excessive bail is banned by the...','8th Amendment',['5th Amendment','6th Amendment','1st Amendment']),
  M('The 9th Amendment says...','Listing some rights doesn\'t deny people other rights',['States can leave the Union','Congress can add rights by law','Only listed rights exist']),
  M('The 10th Amendment reserves powers not given to the federal government to...','The states or the people',['The President','The Supreme Court','Congress']),
@@ -740,17 +803,17 @@ tips:[
 ],
 q:[
  M('In a democracy, government power comes from...','The people, through elections',['A king or queen','One ruling party','Religious leaders']),
- M('What is a constitutional monarchy?','A country with a king or queen, where an elected parliament makes the laws',['A country where the king writes all the laws','A country with no constitution','A country ruled by the military']),
+ M('What is a constitutional monarchy?','A country with a king or queen, where an elected parliament makes the laws',['A country where the monarch can overrule the parliament','A country with a written constitution but no head of state','A country where the monarch is elected by the legislature']),
  M('A government where a small group of wealthy or powerful people holds control is called...','An oligarchy',['A democracy','A monarchy','A federation']),
  M('In an authoritarian government...','One leader or party holds power and limits people\'s freedoms',['Voters choose between many parties','Courts can overturn any law','Power is split among three branches']),
- M('Under capitalism...','People and businesses own property and trade in markets',['The government owns all businesses','Money is banned','Prices are set by a king']),
- M('Socialism generally means...','More public ownership of industries or a larger role for government programs',['No government at all','Rule by a monarch','Only private charity, no taxes']),
+ M('Under capitalism...','People and businesses own property and trade in markets',['The government sets most prices and wages','Workers collectively own the factories','The state owns the land and leases it to businesses']),
+ M('Socialism generally means...','More public ownership of industries or a larger role for government programs',['Abolishing all private property and markets','No government at all','Only private charity, no taxes']),
  M('Who wrote The Communist Manifesto in 1848?','Karl Marx and Friedrich Engels',['Adam Smith','Thomas Jefferson','Benito Mussolini']),
  TF('The United States has a mixed economy: mostly private markets, plus government programs like Social Security and Medicare.',true),
  M('Which is a key feature of fascism?','Extreme nationalism under a dictator who crushes opposition',['Free and fair elections','A strong free press','Power shared by many parties']),
  M('Which leader founded fascism in Italy in the 1920s?','Benito Mussolini',['Karl Marx','Vladimir Lenin','Winston Churchill']),
- M('A totalitarian government tries to...','Control nearly every part of public and private life',['Stay out of people\'s lives','Hold elections every year','Let states make most decisions']),
- M('Which U.S. features guard against a dictatorship?','Limited powers, checks and balances, and the Bill of Rights',['A single ruling party','A king with veto power','No elections in wartime'])
+ M('A totalitarian government tries to...','Control nearly every part of public and private life',['Control politics while leaving private and economic life mostly alone','Rule through a hereditary monarch with limited powers','Govern through a single party that allows competitive elections']),
+ M('Which U.S. features guard against a dictatorship?','Limited powers, checks and balances, and the Bill of Rights',['A strong president who can rule by decree in emergencies','A Senate that can remove the President by majority vote','Lifetime terms for members of Congress'])
 ]},
 
 {id:'u9',s:1,title:'Federalism',desc:'National power, state power, and the line between them',
@@ -790,7 +853,7 @@ q:[
  M('Which party leader counts votes and makes sure members show up?','The whip',['The Speaker','The President pro tempore','The Parliamentarian']),
  M('Which House committee writes tax laws?','Ways and Means',['Rules','Armed Services','Oversight']),
  M('Which committee in each chamber decides how federal money is spent?','Appropriations',['Judiciary','Rules','Ethics']),
- M('A "closed rule" from the Rules Committee means...','No amendments can be offered on the floor',['The bill can never pass','Debate is secret','Only senators can vote']),
+ M('A "closed rule" from the Rules Committee means...','No amendments can be offered on the floor',['Only committee members may speak','Debate is held in closed session','The bill bypasses committee review']),
  F('A discharge petition needs ___ signatures to force a bill out of committee.','218',['100','60','290'],'218 is a majority of the 435-member House.'),
  M('In impeachment, the House\'s role is to...','Bring charges (impeach) by majority vote',['Hold the trial','Remove the official by a 2/3 vote','Choose the punishment']),
  M('If no candidate gets 270 electoral votes, how does the House vote for President?','Each state delegation casts one vote',['Each member gets one vote','Only the Speaker votes','The Senate breaks the tie']),
@@ -839,8 +902,8 @@ q:[
  TF('The words "judicial review" appear in the Constitution.',false),
  M('Congress holds hearings to see how agencies carry out laws. That\'s called...','Oversight',['Judicial review','Executive privilege','Gerrymandering']),
  M('How can the President check the judicial branch?','By nominating judges',['By firing judges','By overruling Supreme Court decisions','By vetoing court rulings']),
- M('How can Congress check the judicial branch?','Confirming or rejecting judges, impeaching judges, and proposing amendments',['Vetoing court decisions','Cutting a sitting judge\'s salary','Firing the Chief Justice'],'The Constitution says judges\' pay can\'t be cut while they serve.'),
- M('The War Powers Resolution (1973) requires the President to...','Notify Congress within 48 hours of sending troops into combat',['Get Supreme Court approval for war','Declare war personally','Ask the UN first']),
+ M('How can Congress check the judicial branch?','Confirming or rejecting judges, impeaching judges, and proposing amendments',['Vetoing court decisions','Cutting a sitting judge\'s salary','Overturning constitutional rulings by a two-thirds vote'],'The Constitution says judges\' pay can\'t be cut while they serve.'),
+ M('The War Powers Resolution (1973) requires the President to...','Notify Congress within 48 hours of sending troops into combat',['Get a formal declaration of war within 30 days','Win a majority vote in the Senate before acting','Notify the UN Security Council before any strike']),
  M('In United States v. Nixon (1974), the Court ruled that...','Executive privilege isn\'t absolute; Nixon had to hand over the tapes',['Presidents can\'t be impeached','Presidents can ignore subpoenas','Congress can\'t investigate the President']),
  TF('Overriding a veto is easy and happens most of the time.',false,'It takes 2/3 of both chambers, so overrides are rare.'),
  M('Which is a check the courts have on the President?','Ruling that an executive action is unconstitutional',['Vetoing executive orders','Impeaching the President','Refusing to confirm the Cabinet']),
@@ -889,7 +952,7 @@ q:[
  TF('A candidate can win the national popular vote and still lose the Electoral College.',true,'It happened in 1876, 1888, 2000, and 2016 (and in 1824, when the House decided).'),
  M('A primary where only registered party members can vote is a...','Closed primary',['Open primary','Caucus','General election']),
  M('A caucus is...','A meeting where party members discuss and pick candidates',['A mail-in ballot','A Supreme Court hearing','A kind of filibuster']),
- M('Why do third parties rarely win in the U.S.?','Winner-take-all, single-member districts favor two big parties',['Third parties are illegal','The Constitution names two parties','Third parties can\'t run for President']),
+ M('Why do third parties rarely win in the U.S.?','Winner-take-all, single-member districts favor two big parties',['Federal law caps public funding for parties outside the top two','The Constitution sets up a two-party Congress','Third-party candidates can\'t appear in presidential debates by law']),
  P('Match the amendment to the voting right.',[['15th','No race test for voting'],['19th','Women\'s suffrage'],['24th','Bans poll taxes'],['26th','Voting age 18']]),
  M('What did the Voting Rights Act of 1965 do?','Banned literacy tests and protected minority voters',['Gave women the vote','Created the Electoral College','Lowered the voting age']),
  F('The 19th Amendment, giving women the vote, was ratified in ___.','1920',['1865','1870','1971']),
@@ -908,14 +971,14 @@ q:[
  P('Match the case to its ruling.',[['Marbury v. Madison','Judicial review'],['Brown v. Board','Ended school segregation'],['Miranda v. Arizona','Police must read suspects their rights'],['Gideon v. Wainwright','Right to a lawyer']]),
  M('Which case allowed "separate but equal" segregation?','Plessy v. Ferguson (1896)',['Brown v. Board (1954)','Marbury v. Madison (1803)','Tinker v. Des Moines (1969)']),
  M('Which case overturned Plessy v. Ferguson?','Brown v. Board of Education',['Miranda v. Arizona','Engel v. Vitale','Mapp v. Ohio']),
- M('In Tinker v. Des Moines, students wore black armbands to protest the Vietnam War. The Court ruled...','Students don\'t lose free speech rights at school',['Schools can ban any protest','Armbands aren\'t speech','Only adults have free speech']),
+ M('In Tinker v. Des Moines, students wore black armbands to protest the Vietnam War. The Court ruled...','Students don\'t lose free speech rights at school',['Schools can ban any protest','Armbands are conduct, not speech','Schools may ban speech that is merely unpopular']),
  M('Gibbons v. Ogden (1824) expanded Congress\'s power to...','Regulate interstate commerce',['Declare war','Collect income taxes','Impeach judges']),
  M('The exclusionary rule from Mapp v. Ohio says...','Illegally obtained evidence can\'t be used in court',['Juries must be unanimous','Defendants must testify','Judges can exclude the public']),
  M('"You have the right to remain silent" comes from...','Miranda v. Arizona (1966)',['Gideon v. Wainwright (1963)','Mapp v. Ohio (1961)','Schenck v. U.S. (1919)']),
- M('Engel v. Vitale (1962) ruled that...','Public schools can\'t lead official prayers',['Students can\'t pray at all','Religious schools are illegal','Teachers can require prayer']),
+ M('Engel v. Vitale (1962) ruled that...','Public schools can\'t lead official prayers',['Students can\'t pray at school at all','Public schools can\'t teach about religion','Teachers can lead voluntary prayer']),
  M('New York Times v. United States (the Pentagon Papers case) blocked the government from...','Prior restraint (stopping publication in advance)',['Taxing newspapers','Suing for libel','Requiring press passes']),
  M('Which case created the "clear and present danger" test for speech?','Schenck v. United States (1919)',['Tinker v. Des Moines (1969)','Citizens United v. FEC (2010)','Engel v. Vitale (1962)']),
- M('Citizens United v. FEC (2010) held that...','Independent political spending by corporations and unions is protected speech',['Campaign donations are banned','Corporations can vote','Only individuals can run ads']),
+ M('Citizens United v. FEC (2010) held that...','Independent political spending by corporations and unions is protected speech',['Corporations can give unlimited money directly to candidates','Campaign contribution limits are unconstitutional','Super PACs must be banned']),
  TF('In Obergefell v. Hodges (2015), the Court ruled that same-sex couples have a constitutional right to marry.',true),
  M('Dobbs v. Jackson Women\'s Health Organization (2022) overturned...','Roe v. Wade (1973)',['Brown v. Board (1954)','Miranda v. Arizona (1966)','Marbury v. Madison (1803)']),
  O('Put these cases in order, oldest first.',['Marbury v. Madison','Plessy v. Ferguson','Brown v. Board of Education','Miranda v. Arizona'])
@@ -929,18 +992,18 @@ tips:[
  ['Elections and power',['**Bush v. Gore** (2000) stopped the Florida recount.','**Shelby County v. Holder** (2013) and **Rucho v. Common Cause** (2019) reshaped voting rights and redistricting.','**Trump v. United States** (2024) gave presidents immunity for official acts.']]
 ],
 q:[
- M('What did Buckley v. Valeo (1976) decide about campaign money?','Spending money on campaigns is a form of protected speech, so spending limits are unconstitutional',['All campaign donations are illegal','Only parties may spend money on elections','Campaigns must be publicly funded']),
- M('What did Citizens United v. FEC (2010) decide?','The government can\'t ban independent political spending by corporations and unions',['Corporations can\'t take part in politics at all','Every campaign must disclose its voters','Unions must stay out of elections']),
+ M('What did Buckley v. Valeo (1976) decide about campaign money?','Spending money on campaigns is a form of protected speech, so spending limits are unconstitutional',['Strict limits on both donations and spending are constitutional','Only parties may spend money on elections','Campaigns must be publicly funded']),
+ M('What did Citizens United v. FEC (2010) decide?','The government can\'t ban independent political spending by corporations and unions',['Corporations may give unlimited money directly to candidates','Super PACs must disclose their donors within 24 hours','Unions must stay out of elections']),
  M('What is a super PAC?','A group that can raise and spend unlimited money on elections, as long as it doesn\'t coordinate with candidates',['A candidate\'s official campaign','A government election agency','A political party\'s convention']),
  TF('Citizens United lets corporations give unlimited money directly to federal candidates.',false,'Direct corporate contributions to federal candidates are still banned. The ruling covers independent spending.'),
- M('What did Loving v. Virginia (1967) decide?','States can\'t ban interracial marriage',['States can ban same-sex marriage','Marriage is a federal power only','Virginia must pay reparations']),
- M('Under New York Times v. Sullivan (1964), a public official suing for libel must prove...','"Actual malice": the publisher knew it was false or recklessly ignored the truth',['Only that the story was wrong','That the newspaper made money','That they are a public official']),
+ M('What did Loving v. Virginia (1967) decide?','States can\'t ban interracial marriage',['States can ban same-sex marriage','Marriage is a federal power only','States must recognize marriages from other countries']),
+ M('Under New York Times v. Sullivan (1964), a public official suing for libel must prove...','"Actual malice": the publisher knew it was false or recklessly ignored the truth',['Only that the story was false','That the error caused measurable financial harm','That the publisher was negligent in checking facts']),
  M('What did District of Columbia v. Heller (2008) decide?','The Second Amendment protects an individual right to own a gun for self-defense',['Only militias may own guns','Cities can ban all handguns','Gun laws are only for Congress']),
- M('Students for Fair Admissions v. Harvard (2023) ruled that...','Race-conscious college admissions violate the Constitution\'s equal protection guarantee',['Colleges must use quotas','Admissions tests are illegal','Harvard must admit all applicants']),
+ M('Students for Fair Admissions v. Harvard (2023) ruled that...','Race-conscious college admissions violate the Constitution\'s equal protection guarantee',['Colleges must use quotas','Race may be one factor among many in admissions','Admissions tests are unconstitutional']),
  M('What did Bush v. Gore (2000) do?','Stopped the Florida recount, which left George W. Bush the winner',['Ordered a new national election','Gave the presidency to Al Gore','Abolished the Electoral College']),
- M('Shelby County v. Holder (2013) struck down...','The formula deciding which places needed federal approval to change voting rules',['The entire Constitution\'s voting rights','The right of women to vote','All of Congress\'s election laws']),
- M('Rucho v. Common Cause (2019) said partisan gerrymandering claims...','Can\'t be decided by federal courts, leaving them to states and Congress',['Must always be struck down','Are a crime','Can only be heard by the president']),
- M('What did Trump v. United States (2024) decide?','Presidents have immunity from prosecution for official acts, but not for unofficial ones',['Presidents can never be prosecuted for anything','Presidents have no immunity at all','Former presidents can\'t run again'])
+ M('Shelby County v. Holder (2013) struck down...','The formula deciding which places needed federal approval to change voting rules',['The entire Voting Rights Act','The ban on literacy tests','Section 2, which bans discriminatory voting rules nationwide']),
+ M('Rucho v. Common Cause (2019) said partisan gerrymandering claims...','Can\'t be decided by federal courts, leaving them to states and Congress',['Must always be struck down','Are judged under strict scrutiny','Can be heard only by state courts']),
+ M('What did Trump v. United States (2024) decide?','Presidents have immunity from prosecution for official acts, but not for unofficial ones',['Presidents can never be prosecuted for anything','Presidents have no immunity at all','Presidents are immune only while in office'])
 ]},
 
 {id:'u26',s:1,title:'The Parties Today',desc:'Democrats, Republicans, third parties, and what each says it stands for',
@@ -950,18 +1013,18 @@ tips:[
  ['Everyone else',['**Libertarians**: minimal government in both the economy and personal life.','**Greens**: environment, social justice, grassroots democracy. **Working Families**: progressive, uses New York\'s fusion voting.','More Americans call themselves **independents** than Democrats or Republicans.']]
 ],
 q:[
- M('Why does the U.S. tend to have two big parties?','Winner-take-all elections make it hard for smaller parties to win seats',['The Constitution allows only two','Third parties are illegal','The president picks the parties']),
+ M('Why does the U.S. tend to have two big parties?','Winner-take-all elections make it hard for smaller parties to win seats',['The Constitution sets up a two-party system','Federal law gives the two parties automatic ballot access everywhere','Public funding goes only to the two largest parties']),
  M('Which is the oldest major party still active in the U.S.?','The Democratic Party, from 1828',['The Republican Party, from 1854','The Whig Party','The Libertarian Party']),
- M('The Republican Party was founded in 1854 to...','Stop slavery from spreading into new territories',['Support the king','Create a national bank','Win independence from Britain']),
+ M('The Republican Party was founded in 1854 to...','Stop slavery from spreading into new territories',['Defend states\' rights to allow slavery','Create a national bank','Lower tariffs on imported goods']),
  M('What is a party platform?','A statement of the party\'s positions, adopted at its national convention',['The stage where candidates debate','A list of party donors','A law passed by Congress']),
  M('Which party generally favors a larger government role in health care, such as expanding the Affordable Care Act?','The Democratic Party',['The Republican Party','The Libertarian Party','Neither party']),
  M('Which party generally favors lower taxes, fewer business regulations, and stricter immigration enforcement?','The Republican Party',['The Democratic Party','The Green Party','The Working Families Party']),
  M('Which party generally supports abortion rights, and which generally supports restricting abortion?','Democrats support abortion rights; Republicans generally support restrictions',['Both parties support restrictions','Both parties support abortion rights','Neither party takes a position']),
  TF('Each major party has internal factions, such as progressives and moderates among Democrats.',true),
- M('The Libertarian Party wants...','Minimal government in both the economy and personal life',['Government ownership of major industries','A return to monarchy','Higher taxes on everyone']),
- M('The Green Party focuses on...','The environment, social justice, and grassroots democracy',['Cutting all environmental rules','Ending public schools','Expanding the military above all']),
- M('How does the Working Families Party mostly win influence in New York?','Fusion voting: it endorses candidates who also run on another party\'s line',['By winning most governor races','By appointing judges','By running only in Utah']),
- M('Compared with Democrats and Republicans, how many Americans call themselves independents?','More than identify with either party',['Almost none','Exactly half','Fewer than 1%'])
+ M('The Libertarian Party wants...','Minimal government in both the economy and personal life',['Government ownership of major industries','Strict social rules with a small economic role for government','Higher taxes paired with fewer personal freedoms']),
+ M('The Green Party focuses on...','The environment, social justice, and grassroots democracy',['Cutting environmental rules to grow the economy','Shrinking government in both the economy and personal life','Expanding the military above all']),
+ M('How does the Working Families Party mostly win influence in New York?','Fusion voting: it endorses candidates who also run on another party\'s line',['By winning most governor races','By appointing judges','By running separate candidates in every race']),
+ M('Compared with Democrats and Republicans, how many Americans call themselves independents?','More than identify with either party',['About as many as Republicans, but fewer than Democrats','Fewer than either party','Fewer than 10% of Americans'])
 ]},
 
 {id:'u16',s:2,title:'Political Theory',desc:'Hobbes, Locke, Montesquieu, and the Federalist Papers',
@@ -979,7 +1042,7 @@ q:[
  M('Who wrote the Federalist Papers?','Alexander Hamilton, James Madison, and John Jay',['Jefferson, Adams, and Franklin','Washington, Hamilton, and Madison','Madison, Monroe, and Jay']),
  F('"If men were ___, no government would be necessary." (Federalist No. 51)','angels',['equal','free','wise']),
  M('In Federalist No. 10, Madison defines a faction as...','A group united by an interest against others\' rights or the common good',['A political party in Congress','A branch of government','A state militia']),
- M('What was the Anti-Federalists\' biggest demand?','A bill of rights',['A king','Abolishing the states','A stronger President']),
+ M('What was the Anti-Federalists\' biggest demand?','A bill of rights',['Abolishing the Senate','Ending the slave trade immediately','A stronger President']),
  TF('Hamilton called the judiciary the "least dangerous" branch because it has neither the sword nor the purse.',true)
 ]},
 
@@ -1047,14 +1110,14 @@ tips:[
  ['Models of democracy',['**Arend Lijphart**: **majoritarian** (Westminster) vs. **consensus** democracies.','**Juan Linz**: the "**perils of presidentialism**": fixed terms and dual legitimacy can cause deadlock.','**Federal** vs. **unitary** states; **bicameral** vs. **unicameral** legislatures.']]
 ],
 q:[
- M('In a parliamentary system, the head of government is usually...','A prime minister drawn from the legislature',['A directly elected president','A monarch','A Supreme Court justice']),
+ M('In a parliamentary system, the head of government is usually...','A prime minister drawn from the legislature',['A directly elected president','A monarch','A minister chosen by voters separately from parliament']),
  M('A vote of no confidence can...','Bring down a government in a parliamentary system',['Remove a U.S. President','Overturn a court ruling','Cancel an election']),
  M('France, with a powerful elected president and a prime minister, is a...','Semi-presidential system',['Pure parliamentary system','Absolute monarchy','Confederation']),
  M('In proportional representation, parties win seats...','Roughly in proportion to their share of the vote',['Only by winning district pluralities','Based on land area','By lottery']),
  M('Germany and New Zealand use which electoral system?','Mixed-member proportional',['Pure first-past-the-post','An electoral college','Ranked-choice only']),
  M('Ranked-choice voting lets voters...','Rank candidates in order of preference',['Vote more than once','Choose only a party, not a candidate','Skip the general election']),
  M('Arend Lijphart contrasted majoritarian democracies with...','Consensus democracies',['Authoritarian regimes','Direct democracies','Theocracies']),
- M('Juan Linz warned about the "perils of presidentialism" because...','Fixed terms and dual legitimacy can cause deadlock and crises',['Presidents are always dictators','Parliaments can\'t pass laws','Prime ministers serve for life']),
+ M('Juan Linz warned about the "perils of presidentialism" because...','Fixed terms and dual legitimacy can cause deadlock and crises',['Presidents tend to become dictators by design','Presidential systems can\'t hold free elections','Presidents are too weak to set policy']),
  M('A country where the central government holds most power and regions get delegated authority is...','Unitary',['Federal','Confederal','Presidential']),
  TF('The United Kingdom has a single written, codified constitution like the U.S.',false,'The UK\'s constitution is uncodified: statutes, conventions, and court rulings.')
 ]},
@@ -1067,9 +1130,9 @@ tips:[
  ['Spatial models of lawmaking',['**Krehbiel\'s pivotal politics**: the **filibuster pivot** (the 60th vote) and the **veto pivot** (2/3) create a **gridlock interval**.','**Tsebelis\'s veto players**: more veto players, farther apart, means more policy stability.','**Principal–agent** problems: principals can\'t fully monitor the agents they delegate to.']]
 ],
 q:[
- M('In Olson\'s theory, why do large groups struggle to organize?','Members can free-ride on others\' efforts',['They have too much money','They lack opinions','The law forbids it']),
+ M('In Olson\'s theory, why do large groups struggle to organize?','Members can free-ride on others\' efforts',['Large groups disagree too much to agree on goals','Large groups are legally limited in what they can spend','Leaders of large groups lack the authority to act']),
  M('Benefits given only to members who join (like insurance or a magazine) are...','Selective incentives',['Public goods','Externalities','Pork barrel spending']),
- M('In the prisoner\'s dilemma, rational individual choices lead to...','An outcome worse for both players than cooperating',['The best outcome for both','Random outcomes','One player always winning']),
+ M('In the prisoner\'s dilemma, rational individual choices lead to...','An outcome worse for both players than cooperating',['The best outcome for both','The outcome a central planner would choose','One player always winning']),
  M('When majority preferences cycle (A beats B, B beats C, C beats A), it\'s called...','The Condorcet paradox',['Duverger\'s Law','The median voter theorem','Path dependence']),
  M('Arrow\'s impossibility theorem shows that...','No ranked voting rule can meet every fairness condition with 3+ options',['Democracy is impossible','Two parties always form','Majorities never cycle']),
  M('In Krehbiel\'s pivotal politics, the filibuster pivot is...','The senator who casts the 60th vote for cloture',['The Senate Majority Leader','The Vice President','The median House member']),
@@ -1153,7 +1216,7 @@ q:[
  M('King County Metro, the region\'s bus system, is run by...','King County',['The City of Seattle','The State of Washington','The Port of Seattle']),
  M('How is the Port of Seattle governed?','By 5 commissioners elected countywide',['By 9 commissioners appointed by the governor','By the Seattle City Council','By a single appointed director']),
  M('In Washington\'s top-two primary...','The two highest vote-getters advance, regardless of party',['Each party\'s winner advances','Only party members can vote','The top four advance']),
- M('Seattle\'s Democracy Voucher program gives each eligible resident...','Four $25 vouchers to give to qualifying city candidates',['A $100 tax refund for voting','One free campaign ad','A paid day off to vote']),
+ M('Seattle\'s Democracy Voucher program gives each eligible resident...','Four $25 vouchers to give to qualifying city candidates',['A $100 tax refund for voting','Free public funding for any candidate they choose','A $100 credit for donating to state candidates']),
  M('Seattle voters approved ranked-choice voting for city primaries starting in...','2027',['2020','2023','2031']),
  TF('Washington votes almost entirely by mail.',true)
 ]},
@@ -1205,7 +1268,7 @@ tips:[
 q:[
  M('How many members are on the New York City Council?','51',['35','9','100']),
  M('Who leads the New York City Council?','The Speaker, elected by the council members',['The mayor','The Public Advocate','The governor']),
- M('What does New York City\'s mayor do?','Runs city agencies, proposes the budget, and can veto Council bills',['Writes and passes city laws alone','Runs the subway system','Appoints the governor']),
+ M('What does New York City\'s mayor do?','Runs city agencies, proposes the budget, and can veto Council bills',['Writes and passes city laws alone','Runs the subway system','Appoints the borough presidents']),
  TF('New York City\'s subways and buses are run by the mayor\'s office.',false,'The MTA is controlled by New York State.'),
  M('New York City\'s Public Advocate is...','A citywide watchdog who is first in line if the mayor can\'t serve',['The head of the police department','The city\'s top judge','A state senator for the city']),
  M('The New York City Comptroller...','Audits city agencies and manages the city\'s pension funds',['Runs the public schools','Leads the City Council','Prosecutes crimes']),
@@ -1232,7 +1295,7 @@ q:[
  M('How long is a New York governor\'s term?','4 years',['2 years','6 years','8 years']),
  M('New York\'s highest court is the...','Court of Appeals',['Supreme Court','Appellate Division','Court of Claims']),
  TF('New York voters can put their own initiatives on the statewide ballot by gathering signatures, as in Washington.',false),
- M('To amend the New York State Constitution, an amendment must...','Pass two separately elected Legislatures, then win a statewide vote',['Be signed by the governor','Get 1 million signatures','Pass the City Council']),
+ M('To amend the New York State Constitution, an amendment must...','Pass two separately elected Legislatures, then win a statewide vote',['Pass the Legislature once and be signed by the governor','Get 1 million signatures','Pass the Legislature by two-thirds, with no public vote']),
  M('Who controls the MTA, which runs New York City\'s subways?','New York State',['The mayor','The City Council','The federal government'])
 ]},
 
@@ -1244,13 +1307,13 @@ tips:[
 ],
 q:[
  TF('New York City elections are nonpartisan, like Seattle\'s.',false,'NYC candidates run on party lines.'),
- M('Who can vote in a New York party primary?','Only voters enrolled in that party',['Any registered voter','Anyone over 16','Only donors to the party']),
+ M('Who can vote in a New York party primary?','Only voters enrolled in that party',['Any registered voter','Enrolled party members and unaffiliated voters','Only voters who joined the party a year before']),
  M('In New York City primaries for city offices, you can rank up to how many candidates?','5',['2','3','10']),
  M('When did New York City first use ranked-choice voting?','The 2021 primary',['The 2001 primary','The 2016 general election','The 2024 general election']),
  M('New York City\'s matching funds program matches small donations from city residents at...','$8 for every $1',['$1 for every $1','$2 for every $1','$20 for every $1']),
  M('For City Council races, how much of each city resident\'s donation gets matched?','The first $175',['The first $25','The first $1,000','All of it']),
  M('To qualify for matching funds, a City Council candidate must raise...','$5,000 from at least 75 district residents',['$100,000 from anyone','$500 from 5 people','$1 million from 1,000 people']),
- M('How do candidates get on a party primary ballot in New York?','Collect signatures on designating petitions',['Pay a filing fee only','Win a coin toss','Get the mayor\'s approval']),
+ M('How do candidates get on a party primary ballot in New York?','Collect signatures on designating petitions',['Pay a filing fee only','Win the party\'s convention','Get the county party chair\'s approval']),
  M('Community board members are...','Appointed by the Borough President',['Elected in November','Hired by the mayor','Chosen by lottery']),
  M('Which elected party post works at the most local, neighborhood level in New York?','County committee member',['Borough President','State senator','Public Advocate'])
 ]},
@@ -1267,7 +1330,7 @@ q:[
  TF('Salt Lake City council races list candidates as Republicans or Democrats.',false,'City races are nonpartisan.'),
  M('Salt Lake City elects its mayor and council in...','Odd-numbered years',['Even-numbered years, with Congress','Every year','Only in presidential years']),
  TF('Salt Lake City uses ranked-choice voting for its city elections.',true),
- M('Who leads Salt Lake City Council meetings?','A chair the council members choose each year',['The mayor','The governor','The longest-serving member, for life']),
+ M('Who leads Salt Lake City Council meetings?','A chair the council members choose each year',['The mayor','The council\'s longest-serving member','The city recorder']),
  M('How long is a Salt Lake City mayor\'s term?','4 years',['2 years','6 years','No limit, until the council removes them']),
  M('Salt Lake County is led by...','A county mayor and a 9-member county council',['The Salt Lake City mayor','Three county commissioners','The governor']),
  M('Which office runs elections for Salt Lake County voters?','The Salt Lake County Clerk',['The Salt Lake City Council','The Utah Supreme Court','The mayor\'s office']),
@@ -1290,7 +1353,7 @@ q:[
  M('Where does the Utah Legislature meet?','The State Capitol in Salt Lake City',['Provo','Ogden','St. George']),
  M('How long is a Utah governor\'s term?','4 years',['2 years','6 years','8 years']),
  TF('Utah voters can put their own laws on the ballot through citizen initiatives.',true),
- M('To amend the Utah Constitution, a proposal must...','Pass both chambers by two-thirds, then win a statewide vote',['Be signed by the governor only','Win a court ruling','Pass the Salt Lake City Council']),
+ M('To amend the Utah Constitution, a proposal must...','Pass both chambers by two-thirds, then win a statewide vote',['Be signed by the governor only','Pass both chambers by a simple majority','Gather signatures and go straight to voters']),
  M('What did Utah\'s 2018 Proposition 4 do?','Created an independent redistricting commission and banned partisan gerrymandering',['Legalized medical cannabis','Expanded Medicaid','Raised the gas tax']),
  M('What happened to Utah\'s congressional map in November 2025?','A judge picked a new map that includes a district based in Salt Lake County',['The Legislature added a fifth district','Utah switched to at-large elections','Nothing changed'])
 ]},
@@ -1306,11 +1369,11 @@ q:[
  M('Which 2014 law created Utah\'s signature path to the primary ballot?','SB54, the "Count My Vote" compromise',['Proposition 4','HB 267','The Voting Rights Act']),
  M('At Utah neighborhood caucus meetings, party members elect...','Delegates to the party convention and precinct leaders',['The governor','City council members','Judges']),
  TF('To run for the Utah Legislature as a Republican or Democrat, you must win your party\'s convention.',false,'You can also qualify by gathering signatures.'),
- M('Who can vote in Utah\'s Republican primary?','Only registered Republicans',['Any registered voter','Only convention delegates','Only people over 25']),
+ M('Who can vote in Utah\'s Republican primary?','Only registered Republicans',['Any registered voter','Only convention delegates','Registered Republicans and unaffiliated voters']),
  M('Utah\'s Democratic primary is...','Open to any registered voter',['Closed to Democrats only','Held only at the convention','Decided by the governor']),
  M('How much can one person donate to a Utah state legislative candidate?','There is no limit, but donations must be disclosed',['$100','$1,000','$5,000 per year']),
- M('In a ranked-choice race, if no one wins a majority of first choices...','The last-place candidate is cut and their votes move to those voters\' next choices',['The oldest candidate wins','The council picks the winner','A new election is held next year']),
- M('In 2025, Chris Wharton won Salt Lake City Council District 3 in...','The third round of ranked-choice counting',['The first round','A coin toss','A runoff in December']),
+ M('In a ranked-choice race, if no one wins a majority of first choices...','The last-place candidate is cut and their votes move to those voters\' next choices',['The candidate with the most first choices wins','The top two advance to a runoff','The council picks the winner']),
+ M('In 2025, Chris Wharton won Salt Lake City Council District 3 in...','The third round of ranked-choice counting',['The first round','The second round','A runoff in December']),
  M('Salt Lake City\'s community councils are...','Volunteer neighborhood groups that give the city input',['Paid city departments','Courts for neighborhood disputes','Part of the state Legislature'])
 ]},
 
@@ -1322,12 +1385,12 @@ tips:[
 ],
 q:[
  M('Under Robert\'s Rules, after a member makes a motion, what usually happens before debate?','Another member seconds it',['The chair votes','Everyone signs it','It goes to committee automatically']),
- M('A quorum is...','The minimum number of members needed to do official business',['A two-thirds vote','The meeting\'s agenda','The group\'s treasurer']),
+ M('A quorum is...','The minimum number of members needed to do official business',['A two-thirds vote','The meeting\'s agenda','A majority of those present']),
  M('The official record of what a meeting decided is the...','Minutes',['Bylaws','Agenda','Charter']),
  M('The rules that govern how an organization runs itself are its...','Bylaws',['Minutes','Ordinances','Treaties']),
  M('In organizing, a one-on-one is...','A conversation to build a relationship and learn what someone cares about',['A debate between two candidates','A secret ballot','A vote of no confidence']),
  M('Power mapping helps a campaign figure out...','Who has the power to decide an issue and who influences them',['Where to hold the meeting','How to draw district lines','Which bills are on the calendar']),
- M('In a campaign, the target is...','A specific person with the power to grant the demand',['The campaign\'s logo','Any voter','The opposing organization']),
+ M('In a campaign, the target is...','A specific person with the power to grant the demand',['The organization you\'re pressuring as a whole','Any voter','The press']),
  M('To undo a decision adopted at an earlier meeting, Robert\'s Rules lets members move to...','Rescind or amend something previously adopted',['Filibuster','Override','Impeach the chair']),
  TF('Moving the "previous question" ends debate and usually needs a two-thirds vote.',true),
  M('DSA\'s National Political Committee is elected at...','The national convention, held every two years',['Each chapter\'s monthly meeting','A national primary election','A vote of Congress'])
@@ -1388,7 +1451,7 @@ q:[
  P('Match each local official to their job.',[['Erin Mendenhall','Salt Lake City Mayor'],['Jenny Wilson','Salt Lake County Mayor'],['Sim Gill','County District Attorney'],['Ale Puy','City Council Chair']]),
  M('Who is Utah\'s governor?','Spencer Cox',['Gary Herbert','Mike Lee','Deidre Henderson']),
  M('Who is Utah\'s lieutenant governor?','Deidre Henderson',['Spencer Cox','Derek Brown','Jenny Wilson']),
- M('In Utah, the lieutenant governor\'s office also...','Oversees elections',['Runs the state prisons','Writes the state budget alone','Appoints the mayor']),
+ M('In Utah, the lieutenant governor\'s office also...','Oversees elections',['Runs the state prisons','Writes the state budget alone','Appoints county clerks']),
  M('Who is Utah\'s attorney general?','Derek Brown',['Sean Reyes','Stuart Adams','Sim Gill']),
  M('Who is president of the Utah State Senate?','Stuart Adams',['Mike Schultz','Spencer Cox','John Curtis']),
  M('Who is Speaker of the Utah House?','Mike Schultz',['Stuart Adams','Ben McAdams','Mike Lee']),
@@ -1404,12 +1467,12 @@ tips:[
  ['Laws from 2025',['**Laken Riley Act** (January): the first bill signed in Trump\'s second term; requires detaining certain undocumented immigrants charged with crimes like theft.','**TAKE IT DOWN Act** (May): criminalizes sharing nonconsensual intimate images, including AI deepfakes. **GENIUS Act** (July): first federal rules for **stablecoins**.','**One Big Beautiful Bill Act** (signed July 4): a reconciliation law that extended the 2017 tax cuts and changed Medicaid and other programs.']]
 ],
 q:[
- M('The CHIPS and Science Act (2022) mainly aimed to...','Boost U.S. computer-chip manufacturing and research',['Ban potato chips in schools','Regulate social media','Fund the Space Force']),
+ M('The CHIPS and Science Act (2022) mainly aimed to...','Boost U.S. computer-chip manufacturing and research',['Regulate social media platforms','Fund NASA\'s return to the Moon','Ban Chinese-made phones']),
  M('The Inflation Reduction Act (2022) avoided a Senate filibuster by using...','Budget reconciliation',['A discharge petition','Unanimous consent','An executive order']),
  M('Which 2022 law made clear the Vice President only has a ceremonial role in counting electoral votes?','Electoral Count Reform Act',['CHIPS and Science Act','Respect for Marriage Act','Inflation Reduction Act']),
  M('Under the Electoral Count Reform Act, an objection to a state\'s electoral votes needs support from...','One-fifth of each chamber',['One member of each chamber','A majority of the House','Two-thirds of the Senate']),
  M('The Respect for Marriage Act (2022) requires...','Recognition of valid same-sex and interracial marriages performed in other states',['A national marriage license','A minimum marriage age of 21','Religious ceremonies']),
- M('The Infrastructure Investment and Jobs Act (2021) paid for...','Roads, bridges, broadband, water systems, and transit',['Only military bases','Student loan forgiveness','A new Capitol building']),
+ M('The Infrastructure Investment and Jobs Act (2021) paid for...','Roads, bridges, broadband, water systems, and transit',['Only military bases','Student loan forgiveness','Clean energy tax credits']),
  M('The Laken Riley Act (January 2025) was notable as...','The first bill Trump signed in his second term',['A constitutional amendment','A Supreme Court case','A treaty']),
  M('The TAKE IT DOWN Act (2025) targets...','Nonconsensual intimate images, including AI deepfakes',['Taxes on social media','Election advertising','Foreign ownership of apps']),
  M('The GENIUS Act (2025) created the first federal rules for...','Stablecoins, a kind of cryptocurrency',['Artificial intelligence','Self-driving cars','Space tourism']),
@@ -1428,7 +1491,7 @@ q:[
  M('How long does one Congress last?','2 years',['1 year','4 years','6 years']),
  M('The 119th Congress runs from...','2025 to 2027',['2023 to 2025','2021 to 2023','2027 to 2029']),
  TF('A bill that doesn\'t pass by the end of a Congress has to be reintroduced in the next one.',true),
- M('The official government website for tracking federal bills is...','Congress.gov',['Senate.org','Bills.com','Laws.net']),
+ M('A bill passes the House in 2026 but the Senate never votes on it before January 2027. What happens?','It dies when the Congress ends and must be reintroduced and passed again by both chambers',['It carries over and the Senate can vote on it in 2027','It becomes law automatically after 10 days','It goes to the President for a pocket veto']),
  M('Virginia ratified the Equal Rights Amendment in 2020 as the 38th state. Why isn\'t it in the Constitution?','The deadline Congress set had passed and the Archivist hasn\'t certified it',['The President vetoed it','The Supreme Court struck it down','Virginia withdrew its vote']),
  M('The National Popular Vote Interstate Compact takes effect when...','States with at least 270 electoral votes join',['Congress passes an amendment','All 50 states join','The Supreme Court approves it']),
  M('Which proposal would cap how many terms members of Congress can serve?','A congressional term limits amendment',['The 22nd Amendment','The Balanced Budget Amendment','The Equal Rights Amendment'],'The 22nd Amendment limits Presidents, not members of Congress.'),
@@ -1473,7 +1536,7 @@ q:[
  M('Which 2026 NYC proposal got the most support, about 72%?','Proposal 5, setting targets for the city\'s rainy day fund',['Proposal 1, sidewalk cafes','Proposal 2, city purchasing','Proposal 3, street safety']),
  M('NYC\'s 2026 Proposal 4 created...','One central hub for construction permits',['A new borough','A city-run grocery store','A congestion toll']),
  V('NYC Proposal 1 (Nov. 2026): Public space and sidewalk cafes','Streamlines the rules and approvals for sidewalk cafes, plazas, and other uses of public space, moving decisions to fewer agencies.',['Makes it faster and cheaper for small businesses to open outdoor seating.','Cuts red tape that spans several agencies.'],['Neighbors and community boards may get less say over what goes on their block.','More cafes can mean more crowding on narrow sidewalks.'],'Passed with about 63% yes in unofficial results.'),
- M('New York\'s statewide Proposal 1 in 2025 was about...','Using Adirondack forest preserve land for the Mount Van Hoevenberg ski and sports area',['Legalizing sports betting','Raising the minimum wage','Ending the MTA']),
+ M('New York\'s statewide Proposal 1 in 2025 was about...','Using Adirondack forest preserve land for the Mount Van Hoevenberg ski and sports area',['Legalizing sports betting','Raising the minimum wage','Expanding casino licenses upstate']),
  M('How did statewide Proposal 1 do in 2025?','It passed narrowly, with about 52%',['It failed badly','It passed with 80%','It was struck from the ballot']),
  TF('In 2026, New Yorkers voted on a statewide initiative put on the ballot by gathering signatures.',false,'New York has no citizen initiatives. Only the Legislature can send questions to voters.'),
  V('NYC Proposal 5 (Nov. 2026): Rainy day fund targets','Sets targets for how much the city saves in its rainy day fund, so there is money to draw on in a recession or emergency.',['Protects schools and services from deep cuts in a downturn.','Ratings agencies reward cities with healthy reserves.'],['Money set aside can\'t be spent on needs today.','Future leaders may face rules that don\'t fit a new crisis.'],'Passed with about 72% yes in unofficial results.')
@@ -1494,10 +1557,73 @@ q:[
  M('What did Utah\'s 2025 law HB 267 do?','Banned collective bargaining for public-sector unions like teachers and firefighters',['Raised teacher pay','Created a state union','Banned private-sector unions']),
  M('What happened to HB 267?','After more than 320,000 people signed for a referendum, lawmakers repealed it in December 2025',['Voters upheld it in 2026','A court struck it down in 2025','It is still in effect']),
  V('HB 267 referendum (was set for Nov. 2026): Ban public-union bargaining','A Yes vote would have kept the 2025 law ending collective bargaining for public employees. A No vote would have repealed it.',['Supporters said it gives elected officials more control over public budgets.','They argued unions should not bargain with the governments that fund them.'],['Opponents said teachers, police, and firefighters deserve a collective voice.','Over 320,000 Utahns signed to put it to a vote.'],'Never voted on. Lawmakers repealed the law in December 2025.'),
- M('What did Salt Lake County voters approve in November 2026?','A $128 million bond for parks and recreation',['A new sales tax for light rail','A ban on new housing','A $1 billion stadium']),
+ M('What did Salt Lake County voters approve in November 2026?','A $128 million bond for parks and recreation',['A new sales tax for light rail','A bond for a new county jail','A $1 billion stadium']),
  M('About what share voted yes on the 2026 county recreation bond?','About 61%',['About 51%','About 80%','About 40%']),
  M('Amendments A and B grew out of a fight between the Legislature and...','Citizen initiatives, especially after courts enforced Prop 4',['The federal government','Salt Lake City\'s mayor','Neighboring states']),
  V('Salt Lake County recreation bond (Nov. 2026)','Lets the county borrow $128 million over about 10 years for parks and recreation, replacing a bond that is ending.',['Builds and fixes parks, trails, and rec centers.','The county says the tax rate won\'t rise because an old bond is ending.'],['Property owners keep paying instead of seeing the old bond drop off.','Debt adds interest costs.'],'Passed with about 61% yes (unofficial).')
+]},
+/* ---------------- THINK TANK ---------------- */
+{id:'tt1',s:6,title:'Why the Framers Did It',desc:'The reasons behind the rules, and what breaks if you change them',
+tips:[
+ ['Built-in compromises',['Two chambers settled the fight between **big and small states**.','Six-year, staggered Senate terms were meant to add **stability**.','Judges serve for life so they can rule **without fear of losing their jobs**.']],
+ ['Who controls what',['Tax bills start in the **House**, the chamber closest to voters.','The **Electoral College** was a compromise between election by Congress and by the people.','Amending is hard on purpose: changes need **broad, lasting agreement**.']],
+ ['What if it were different?',['Without **judicial review**, nothing could stop an unconstitutional law.','Without the **veto**, Congress would face no check from the president.','The original Constitution never mentions **political parties**.']]
+],
+q:[
+ M('Why does Congress have two chambers?','To settle the fight between big states (who wanted seats by population) and small states (who wanted equal seats)',['To copy Parliament\'s House of Lords and House of Commons','So one chamber could check the other\'s spending','To keep the President from controlling Congress']),
+ M('Why did the framers give senators 6-year terms, with only a third up at a time?','To make the Senate a steadier, slower check on quick swings in public mood',['So senators could build expertise on foreign treaties','To match the terms of state governors','To give the President a stable partner for two terms']),
+ M('Why do federal judges serve "during good behavior," usually for life?','So they can rule without fear of losing their jobs over unpopular decisions',['So judges would be bound to the President who appointed them','Because the British judges also served for life, by royal grant','To save the cost of judicial elections']),
+ M('Why must bills to raise money start in the House?','The House is closest to the voters, so the power to tax starts with the people\'s chamber',['The Senate was meant to focus only on foreign affairs','Taxes were a state matter, and the House represented states','The Treasury reports to the House']),
+ M('Why did the framers create the Electoral College?','As a compromise between having Congress pick the president and a direct popular vote',['So state legislatures could control who became president','To give small states equal votes for president','To keep political parties out of presidential races']),
+ M('Why is the Constitution so hard to amend?','So changes need broad, lasting agreement, not a passing majority',['Because the framers expected no changes would be needed','So that Congress alone controls changes','To protect the slave trade permanently']),
+ M('What changed when the 17th Amendment (1913) took Senate elections away from state legislatures?','Voters began electing senators directly',['Governors began appointing senators','States got Senate seats by population','Senators began serving 4-year terms']),
+ M('If courts had no power of judicial review, what would happen?','No court could strike down a law that breaks the Constitution',['Congress would need a two-thirds vote to pass laws','States could ignore any federal law they disliked','The President would decide which laws are valid']),
+ M('Why did the First Congress add a Bill of Rights in 1789?','Anti-Federalists feared a strong national government would trample individual rights',['Federalists insisted on it as a condition of ratification','To limit state governments','The Articles of Confederation required it']),
+ M('Article VI bans religious tests for federal office. What does that mean?','No one can be required to hold a certain faith to serve',['States may not have official churches','Congress may not fund religious schools','Officials may not take an oath on a holy book']),
+ TF('The original Constitution says how political parties should work.',false,'It never mentions parties. Washington warned against them in his Farewell Address.'),
+ M('If the president had no veto power, what would change?','Congress could pass any law with no check from the president',['Congress could no longer pass laws','Courts would lose judicial review','States would gain a veto'])
+]},
+
+{id:'tt2',s:6,title:'What If? Scenarios',desc:'Ties, vetoes, deadlocks, and succession: puzzle out what the rules say',
+tips:[
+ ['Tie votes and vetoes',['A Senate tie goes to the **vice president**. A tie with no tiebreaker **fails**.','Overriding a veto takes **two-thirds of both chambers**.','A bill left unsigned for **10 days** (Sundays excepted) becomes law, unless Congress has adjourned.']],
+ ['When elections deadlock',['With no Electoral College majority, the **House** picks the president, **one vote per state**.','The **Senate** picks the vice president.','A **4-4** Supreme Court tie leaves the lower court\'s ruling in place.']],
+ ['Succession and conflicts',['If the president dies, the **vice president** becomes president.','A VP vacancy is filled by a **presidential nominee** confirmed by both chambers.','Valid federal law beats state law under the **Supremacy Clause**.']]
+],
+q:[
+ M('The Senate splits 50-50 on a bill. What happens?','The vice president can cast the tie-breaking vote',['The Speaker breaks the tie','The bill passes automatically','The Supreme Court decides']),
+ M('The Senate splits 50-50 and the vice president isn\'t there to vote. What happens?','The bill fails, because a tie is not a majority',['The bill passes','The vote is held again until it passes','The president casts the deciding vote']),
+ M('The president vetoes a bill. The House overrides 300-135, but the Senate votes only 60-40. What happens?','The veto stands, since the Senate fell short of two-thirds',['The bill becomes law','The House can override alone','The Supreme Court decides']),
+ M('The president neither signs nor vetoes a bill for 10 days (Sundays excepted) while Congress is in session. What happens?','It becomes law without the president\'s signature',['It dies automatically','It goes to the Supreme Court','Congress must vote again']),
+ M('Same as before, but Congress adjourns during those 10 days. What happens?','It dies: a pocket veto',['It becomes law anyway','The vice president signs it','It waits until next year']),
+ M('No candidate wins a majority in the Electoral College. Who picks the president?','The House, with each state delegation casting one vote',['The Senate, by majority','The Supreme Court','The candidate with the most popular votes']),
+ M('In that deadlock, who picks the vice president?','The Senate',['The House','The new president','The governors']),
+ M('The president dies in office. Who becomes president?','The vice president',['The Speaker of the House','The Chief Justice','The Secretary of State']),
+ M('The vice presidency is vacant. How is it filled?','The president nominates someone, and both the House and Senate confirm by majority vote',['A special national election','The Senate picks alone','It stays empty until the next election']),
+ M('A state passes a law that directly conflicts with a valid federal law. Which wins?','The federal law, under the Supremacy Clause',['The state law, under the 10th Amendment','Whichever was passed first','The governor decides']),
+ M('One justice sits out, and the Supreme Court splits 4-4. What happens?','The lower court\'s ruling stands, but sets no national precedent',['The Chief Justice breaks the tie','The case is dismissed forever','The president decides']),
+ M('Under current Senate rules, how many votes does it take to end a filibuster on most bills?','60',['51','67','100'])
+]},
+
+{id:'tt3',s:6,title:'Great Debates',desc:'The filibuster, the Electoral College, and campaign money: the best case for each side',
+tips:[
+ ['The filibuster',['Ending debate on most bills takes **60 votes** (cloture).','In 2013 and 2017 the Senate cut that to a **simple majority for nominations**.','**Budget reconciliation** bills also pass with a simple majority.']],
+ ['The Electoral College',['There are **538 electors**. It takes **270** to win.','**48 states** plus D.C. give all their electors to the statewide winner. **Maine and Nebraska** split theirs.','In **2000** and **2016**, the popular-vote loser won.']],
+ ['Money in politics',['Individuals can give a federal candidate **$3,500 per election** (2025–26).','Super PACs disclose donors, but some nonprofits **don\'t have to**: "dark money."','Overturning Citizens United would take a **new ruling or an amendment**.']]
+],
+q:[
+ M('How many senators must vote for cloture to end a filibuster on most bills?','60',['51','67','100']),
+ M('What did the Senate change in 2013 and 2017, often called the "nuclear option"?','It let nominations, including Supreme Court justices, advance with a simple majority',['It abolished the filibuster for all bills','It raised cloture to 67 votes','It banned talking filibusters']),
+ M('Which kind of bill can pass the Senate with a simple majority, avoiding a filibuster?','Budget reconciliation bills about taxes and spending',['Constitutional amendments','Treaties','Any bill the president likes']),
+ D('Should the Senate keep the legislative filibuster?','Today, most bills need 60 votes to end debate. Ending the filibuster would let a simple majority of 51 pass them.',['It forces the majority to win over some of the minority, so laws are more durable.','It protects whichever party is out of power, and both parties have relied on it.'],['It lets a minority block bills that most senators, and most voters, support.','It is used far more today than in the past, causing gridlock.'],'Keeping it means slower, more bipartisan lawmaking but more gridlock. Ending it means faster action, and bigger swings each time control changes.'),
+ M('How many electoral votes does it take to win the presidency?','270 of 538',['218 of 435','51 of 100','300 of 538']),
+ M('How do Maine and Nebraska differ from the other states?','They can split their electoral votes, partly by congressional district',['They have no electors','Their legislatures pick the president','They vote a week earlier']),
+ M('Which two most recent elections were won by the candidate who lost the national popular vote?','2000 and 2016',['1992 and 2008','2004 and 2012','2020 and 2024']),
+ D('Should the U.S. replace the Electoral College with a national popular vote?','A Yes means the candidate with the most votes nationwide wins. A No keeps state-by-state electors. A full switch would take a constitutional amendment, though some states have joined a compact to get there another way.',['Every vote would count equally, wherever you live.','Campaigns would court voters everywhere, not just in a few swing states.'],['It protects the role of states and smaller states in a federal system.','Close results stay contained to a state, instead of forcing a national recount.'],'Keeping it rewards winning across many states but can elect the popular-vote loser. Switching guarantees majority rule but shifts attention to big population centers.'),
+ M('How much can one person give a federal candidate per election in 2025–26?','$3,500',['$100','$35,000','No limit']),
+ M('What is "dark money"?','Political spending by groups, often nonprofits, that don\'t have to disclose their donors',['Cash found in a campaign office','Money from foreign governments only','Public funding for candidates']),
+ M('What would it take to overturn Citizens United?','A new Supreme Court ruling or a constitutional amendment',['A vote of the FEC','An executive order','A majority vote in one chamber']),
+ D('Should the Constitution be amended to let governments limit independent election spending?','A Yes would let Congress and states cap spending by corporations, unions, and super PACs, reversing the core of Citizens United.',['Big donors and groups drown out ordinary voters.','Limits would reduce the appearance of corruption.'],['Spending on political speech is protected free speech.','Limits could favor incumbents and silence advocacy groups.'],'Amending would curb outside money but give governments power to limit political speech. Keeping the status quo protects speech but lets a few big spenders shape races.')
 ]}
 ];
 
@@ -1525,11 +1651,11 @@ const TEACH={
 /* u2 The Constitution, Article by Article */
 'u2-0':'The original Constitution is short: just **7 articles**. Everything else was added later as amendments.',
 'u2-1':'The **Preamble** opens with "We the People" and lists six goals, in this order:',
-'u2-2':'Notice what the Preamble\'s six goals don\'t include: things like **guaranteeing everyone a job**. Its goals are union, justice, tranquility, defense, welfare, and liberty.',
+'u2-2':'The Preamble lists six goals: union, justice, tranquility, defense, welfare, and liberty. It does **not** mention property, even though Locke and many framers prized it. **Protect the rights of private property** shows up later, in the 5th Amendment.',
 'u2-3':'The first three articles set up the three branches. Article V is the "how to change this" article.',
-'u2-4':'**Article I**, about **Congress**, is the **longest article**. The Framers saw Congress as the heart of the government, so they wrote the most about it.',
+'u2-4':'Article I is the longest article for a reason. **The framers listed Congress\'s powers, and the limits on them, so it couldn\'t claim powers it wasn\'t given.** Section 8 lists what Congress may do. Section 9 lists what it may not.',
 'u2-5':'Inside Article I, **Section 8** is the famous one: it **lists the powers of Congress**, like taxing, borrowing, and declaring war.',
-'u2-6':'Article III names only **one court: the Supreme Court**. Every lower federal court was created later by Congress passing a law.',
+'u2-6':'Article III names only **one court: the Supreme Court**. Every lower federal court exists because **Congress created them by law, starting with the Judiciary Act of 1789**. That\'s why Congress can also reshape or abolish them.',
 'u2-7':'Fun fact: **treason** is the **only crime the Constitution defines**. Article III says it means waging war against the U.S. or giving its enemies aid and comfort.',
 'u2-8':'Article IV\'s **Full Faith and Credit Clause** means states must **respect each other\'s public records and court rulings**. A marriage or court judgment in Washington counts in Texas too.',
 'u2-9':'Article VI says **no religious test** can ever be required to **hold a federal office**. It also makes the Constitution the **supreme law of the land**.',
@@ -1576,7 +1702,7 @@ const TEACH={
 /* u5 How a Bill Becomes a Law */
 'u5-0':'Here\'s the journey of a bill, start to finish:',
 'u5-1':'Anyone can suggest a law, even the President, but **only a member of Congress** can officially **introduce a bill**.',
-'u5-2':'In the House, a new bill literally gets dropped into a wooden box called the **hopper**.',
+'u5-2':'Thousands of bills are introduced each Congress, but only a few get a vote. **Committees and chamber leaders decide which bills move, and most are never taken up.** That gatekeeping is where much of Congress\'s real power sits.',
 'u5-3':'Bills get labels. **"H.R."** means it started in **the House of Representatives**. Senate bills start with **"S."**',
 'u5-4':'The Constitution (Article I, Section 7) says **bills that raise taxes (revenue bills) must start in the House**, the chamber closest to the voters.',
 'u5-5':'After it\'s introduced, a bill usually goes **to a committee** first: a small group of members who specialize in that topic.',
@@ -2069,7 +2195,7 @@ Object.assign(TEACH,{
 'l2-0':'**One Congress lasts 2 years**, matching the House election cycle.',
 'l2-1':'The **119th Congress** runs from **2025 to 2027**.',
 'l2-2':'When a Congress ends, unpassed bills die. **They have to be reintroduced in the next Congress** and start over.',
-'l2-3':'To track any federal bill, use **Congress.gov**, the official site. You can see text, sponsors, and votes.',
+'l2-3':'Each Congress lasts two years. When it ends, any bill not yet passed by both chambers **dies when the Congress ends and must be reintroduced and passed again by both chambers**. Track bills on Congress.gov.',
 'l2-4':'**Virginia** ratified the **Equal Rights Amendment** in 2020 as the 38th state. It\'s still not in the Constitution because **the deadline Congress set had passed and the Archivist hasn\'t certified it**.',
 'l2-5':'The **National Popular Vote Interstate Compact** would give a state\'s electors to the national vote winner. It **takes effect when states with at least 270 electoral votes join**.',
 'l2-6':'Want to cap how long members of Congress serve? That would take **a congressional term limits amendment**. The 22nd Amendment only limits Presidents.',
@@ -2101,13 +2227,46 @@ Object.assign(TEACH,{
 'l3-8':'Seattle\'s November 2026 **Prop. 1** **raises the city transit sales tax from 0.15% to 0.3% for 10 years** to **buy more bus service** from King County Metro.',
 'l3-9':'Prop. 1 passed easily, with **about 73%** voting yes.',
 'l3-10':'Statewide, **Initiative 638** bars transgender girls from girls\' school sports regulated by the WIAA. It was **approved by about 56% of voters**.',
+'tt1-0':'Big states wanted seats by population. Small states wanted equal seats. Two chambers were the fix: **to settle the fight between big states (who wanted seats by population) and small states (who wanted equal seats)**. The House follows population, and the Senate gives each state two.',
+'tt1-1':'Senators serve 6 years, and only a third face voters at once. The goal: **to make the Senate a steadier, slower check on quick swings in public mood**. Madison called it a guard against "temporary errors."',
+'tt1-2':'Federal judges serve "during good behavior," which in practice means for life. That\'s deliberate: **so they can rule without fear of losing their jobs over unpopular decisions**. Hamilton defends this in Federalist No. 78.',
+'tt1-3':'The Origination Clause says revenue bills start in the House. Why? **The House is closest to the voters, so the power to tax starts with the people\'s chamber**. The Senate can still amend them.',
+'tt1-4':'The framers argued over who should pick the president. The Electoral College was the middle ground: **as a compromise between having Congress pick the president and a direct popular vote**.',
+'tt1-5':'An amendment needs two-thirds of Congress and three-fourths of the states. The point: **so changes need broad, lasting agreement, not a passing majority**. Only 27 amendments have made it.',
+'tt1-6':'Before 1913, state legislatures chose senators. After the 17th Amendment, **voters began electing senators directly**. It followed deadlocks and bribery scandals in some legislatures.',
+'tt1-7':'Judicial review comes from Marbury v. Madison (1803), not the text. Without it, **no court could strike down a law that breaks the Constitution**. The Constitution\'s limits would depend on Congress policing itself.',
+'tt1-8':'The original Constitution had few explicit rights. **Anti-Federalists feared a strong national government would trample individual rights**, so Madison drafted amendments that the First Congress sent to the states in 1789.',
+'tt1-9':'Article VI says "no religious Test shall ever be required" for federal office. That means **no one can be required to hold a certain faith to serve**. Several states had such tests at the time.',
+'tt1-10':'Here\'s a surprise: the Constitution **never mentions political parties**. That makes this statement **False**. Parties grew up anyway in the 1790s, despite Washington\'s warning.',
+'tt1-11':'The veto is the President\'s main check on Congress. Without it, **Congress could pass any law with no check from the president**. Overriding a veto takes two-thirds of both chambers.',
+'tt2-0':'The Vice President is President of the Senate but votes only to break a tie. So in a 50-50 split, **the vice president can cast the tie-breaking vote**.',
+'tt2-1':'A bill needs a majority, and 50-50 isn\'t one. With no Vice President voting, **the bill fails, because a tie is not a majority**.',
+'tt2-2':'Overriding a veto takes two-thirds of **both** chambers. The House cleared it, but 60-40 is short of 67 in the Senate. So **the veto stands, since the Senate fell short of two-thirds**.',
+'tt2-3':'If the President holds a bill for 10 days (Sundays excepted) while Congress is in session, **it becomes law without the president\'s signature**. Presidents sometimes do this to avoid owning a bill.',
+'tt2-4':'If Congress adjourns during those 10 days, the President can\'t return the bill. So **it dies: a pocket veto**. Congress would have to start over.',
+'tt2-5':'Under the 12th Amendment, if no one wins 270 electoral votes, **the House, with each state delegation casting one vote**, picks the president. Wyoming and California count the same.',
+'tt2-6':'In the same deadlock, **the Senate** picks the Vice President, with each senator voting. That means the two could come from different parties.',
+'tt2-7':'Under the 25th Amendment, if the President dies, resigns, or is removed, **the vice president** becomes president. Next come the Speaker and the President pro tempore.',
+'tt2-8':'The 25th Amendment also fills a VP vacancy: **the president nominates someone, and both the House and Senate confirm by majority vote**. Gerald Ford became VP this way in 1973.',
+'tt2-9':'Article VI makes federal law "the supreme Law of the Land." When the two truly conflict, **the federal law, under the Supremacy Clause** wins, as long as Congress acted within its powers.',
+'tt2-10':'If the Court splits 4-4, **the lower court\'s ruling stands, but sets no national precedent**. It\'s as if the Supreme Court never took the case.',
+'tt2-11':'Senate Rule XXII sets cloture for most bills at three-fifths of senators: **60** votes. That\'s why the minority can block most bills.',
+'tt3-0':'To end a filibuster on most bills, the Senate needs cloture: **60** votes, three-fifths of the full Senate.',
+'tt3-1':'In 2013 (lower-court and executive nominees) and 2017 (Supreme Court), the majority changed the rules. Now **it let nominations, including Supreme Court justices, advance with a simple majority**. Critics on both sides call it the "nuclear option."',
+'tt3-2':'The 1974 Budget Act caps debate on **budget reconciliation bills about taxes and spending**, so they can pass with 51 votes. That\'s how both parties have passed major tax and health laws.',
+'tt3-4':'There are 538 electors: one per House seat and senator, plus 3 for D.C. A candidate needs a majority: **270 of 538**.',
+'tt3-5':'Almost every state gives all its electors to the statewide winner. Maine and Nebraska are different: **they can split their electoral votes, partly by congressional district**.',
+'tt3-6':'The popular-vote loser has won five times. The two most recent were **2000 and 2016**.',
+'tt3-8':'Federal limits rise with inflation. For 2025–26, one person can give a federal candidate **$3,500** per election. Primaries and generals count separately.',
+'tt3-9':'Super PACs must report their donors. But some nonprofits that spend on politics don\'t. That\'s "dark money": **political spending by groups, often nonprofits, that don\'t have to disclose their donors**.',
+'tt3-10':'Citizens United was a constitutional ruling, so Congress can\'t undo it by statute. It would take **a new Supreme Court ruling or a constitutional amendment**.',
 });
 (function(){
 'use strict';
 /* ---------- helpers ---------- */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*(.+?)\*/g,'<i>$1</i>');
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,(m,t)=>{const k=typeof glossKey==='function'&&glossKey(t);return k?'<button class="term" data-a="term" data-k="'+k+'">'+t+'</button>':'<b>'+t+'</b>'}).replace(/\*(.+?)\*/g,'<i>$1</i>');
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const shuffleR=(a,r)=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const pad=n=>String(n).padStart(2,'0');
@@ -2130,7 +2289,7 @@ function applyRegion(){const r=region();UNITS.length=0;ALL_UNITS.forEach(u=>{if(
 function visQ(id){const u=id.slice(0,id.lastIndexOf('-'));return !!QMAP[id]&&UNITS.some(x=>x.id===u)}
 function setRegion(r){st.region=r;save();applyRegion();buildNodes();openNode=-1}
 const PAL=['blue','green','purple','gold','red','teal','punk'];
-const SECCOL=['blue','purple','teal','gold','punk','red'];
+const SECCOL=['blue','purple','teal','gold','punk','red','green'];
 const ucol=u=>{const n=PAL[UNITS.indexOf(u)%PAL.length];return '--c:var(--'+n+');--cd:var(--'+n+'-d)'};
 const scol=s=>{const n=SECCOL[s%SECCOL.length];return '--c:var(--'+n+');--cd:var(--'+n+'-d)'};
 
@@ -2294,21 +2453,23 @@ function railHTML(){
 /* ---------- views ---------- */
 const OFF=[0,46,72,46,0,-46,-72,-46];
 const VIEWS={};
-VIEWS.learn=function(){computeCur();let h='<div class="howcard"><b>How levels work</b><p>Each level covers <b>different topics</b>, and each one builds on the one before. Go in order: <b>8th Grade, then High School, College, and Graduate</b>. Inside a level, do the units top to bottom. <b>'+esc(SECTIONS[4].level)+'</b> and <b>Live Desk</b> are side tracks you can do anytime. Already know the basics? Every level is open, so you can jump ahead.</p></div><div class="lvlchips">'+SECTIONS.map(s=>'<button class="lvlchip" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+'">'+esc(s.level)+'</button>').join('')+'</div>';
+VIEWS.learn=function(){computeCur();let h='<div class="howcard"><b>How levels work</b><p>Each level covers <b>different topics</b>, and each one builds on the one before. Go in order: <b>8th Grade, then High School, College, and Graduate</b>. Inside a level, do the units top to bottom. <b>'+esc(SECTIONS[4].level)+'</b>, <b>Live Desk</b>, and <b>Think Tank</b> are side tracks you can do anytime. Already know a unit? Tap <b>Test out</b> on it to skip ahead.</p><button class="btn ghost sm" data-a="tab" data-t="map" style="margin-top:10px">'+ic('book',18)+'See the full course map</button></div><div class="lvlchips">'+SECTIONS.map(s=>'<button class="lvlchip" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+'">'+esc(s.level)+'</button>').join('')+'</div>';
  if(st.streak>0&&st.lastDay!==today())h+='<div class="banner-risk">'+ruckus('wow',54)+'<div>Your '+st.streak+'-day streak is at risk. One lesson keeps it alive.</div></div>';
  {const d=weakDue().length;if(d)h+='<button class="banner-risk" data-a="prac" data-k="weak" style="--flame:var(--red);width:100%;text-align:left">'+ic('redo',30,'style="color:var(--red)"')+'<div><b>'+d+' weak spot'+(d>1?'s':'')+' due today.</b> A quick review locks them in.</div></button>'}
  SECTIONS.forEach(s=>{const units=UNITS.filter(u=>u.s===s.id);const firstIdx=NODES.findIndex(n=>n.s===s.id);const locked=nodeState(firstIdx)==='lock';
   const doneU=units.filter(unitDone).length;
   h+='<section class="sec" id="sec'+s.id+'"><div class="sec-head '+(locked?'locked':'')+'" style="'+scol(s.id)+'">'+
    '<span class="lvl">'+(s.live?'<span class="live-dot" style="background:#fff"></span>':'')+esc(s.level)+'</span><h2>'+esc(s.title)+'</h2>'+(s.how?'<p class="how">'+esc(s.how)+'</p>':'')+'<p class="muted">'+esc(s.blurb)+'</p>'+
-   (s.live?'<span class="live-tag"><span class="live-dot"></span>'+esc(s.updated)+'</span>':s.open?'<span class="live-tag" style="color:var(--c)">'+esc(s.updated)+'</span><button class="btn sm" data-a="prac" data-k="reps" style="justify-self:start;'+scol(s.id)+'">'+ic('user',18)+'See my reps</button>':'')+
+   (s.live?'<span class="live-tag"><span class="live-dot"></span>'+esc(s.updated)+'</span>':s.id===4?'<span class="live-tag" style="color:var(--c)">'+esc(s.updated)+'</span><button class="btn sm" data-a="prac" data-k="reps" style="justify-self:start;'+scol(s.id)+'">'+ic('user',18)+'See my reps</button>':'')+
    '<div class="bar" style="'+scol(s.id)+'"><i style="width:'+(doneU/units.length*100)+'%"></i></div><small class="muted num" style="font-weight:800">'+doneU+' of '+units.length+' units complete</small>'+
    '</div>';
+  const BU=beaUnit();
   units.forEach((u,ui)=>{const uIdx=NODES.findIndex(n=>n.u===u);const ulock=nodeState(uIdx)==='lock';const flip=UNITS.indexOf(u)%2===1;
-   h+='<div class="unit-banner tilt '+(ulock?'locked':'')+'" style="'+ucol(u)+'"><div><small>'+esc(s.level)+' · Unit '+(ui+1)+'</small><h3>'+esc(u.title)+'</h3><p>'+esc(u.desc)+'</p></div><button class="guide" data-a="guide" data-u="'+u.id+'">'+ic('book',26)+'GUIDE</button></div>';
+   h+='<div class="unit-banner tilt '+(ulock?'locked':'')+'" id="unit-'+u.id+'" style="'+ucol(u)+'"><div><small>'+esc(s.level)+' · Unit '+(ui+1)+'</small><h3>'+esc(u.title)+'</h3><p>'+esc(u.desc)+'</p>'+(!unitDone(u)&&!s.live?'<button class="testout" data-a="testout" data-u="'+u.id+'">'+ic('trophy',16)+'Test out</button>':'')+'</div><button class="guide" data-a="guide" data-u="'+u.id+'">'+ic('book',26)+'GUIDE</button></div>';
    h+='<div class="path">';
    const moods=['smirk','cheer','wow'];
    const here=(()=>{const j=CUR['s'+curSection()];return j>=0&&NODES[j]&&NODES[j].u===u})();h+='<div class="path-mascot '+(ulock?'':'mascot-bob')+(here?' talk':'')+(flip?' flip':'')+'" style="'+(flip?'left:calc(50% + 70px)':'left:calc(50% - 175px)')+';'+(ulock?'filter:grayscale(1);opacity:.5':'')+'"'+(here?' data-a="quip" role="button" aria-label="Ruckus says something"':'')+'>'+(here?'<span class="pquip">'+esc(PATHQ||(PATHQ=quip('path')))+'</span>':'')+ruckus(moods[UNITS.indexOf(u)%3],100)+'</div>';
+   if(u===BU&&!here&&!ulock)h+='<div class="path-mascot bea talk mascot-bob'+(flip?'':' flip')+'" style="'+(flip?'left:calc(50% - 175px)':'left:calc(50% + 70px)')+'" data-a="bea" role="button" aria-label="Bea the bison says something"><span class="pquip beaq">'+esc(BEAQ||(BEAQ=st.metBea?beaLine('path'):'Hi, I\'m Bea! Tap me.'))+'</span>'+bison('smirk',100)+'</div>';
    for(let k=0;k<=u.L;k++){const i=uIdx+k;h+=nodeHTML(i,(flip?-1:1)*OFF[k%8],u)}
    h+='</div>'});
   if(!openSec(s.id)){const i=NODES.findIndex(n=>n.type==='cp'&&n.s===s.id);h+='<div class="path">'+nodeHTML(i,0,null)+'</div>'}
@@ -2367,7 +2528,8 @@ VIEWS.practice=function(){const mc=st.mistakes.length;
  pcard('lightning','Lightning Round','Answer as many as you can in 60 seconds. Best: '+st.stats.lightning+'.','clock','var(--gold)')+
  pcard('reps','My reps',region()==='ny'?'See who represents you in New York, from City Hall to Albany to Congress.':region()==='ut'?'See who represents you in Salt Lake City and Utah, from City Hall to the Capitol to Congress.':'Pick your districts and see exactly who represents you, from City Council to Congress.','user','var(--purple)')+
  pcard('local',esc(SECTIONS[4].level),'Local government, running for office, and running great meetings.','capitol','var(--teal)')+
- pcard('livedesk','Live Desk','New laws and amendments to watch, updated over time.','news','var(--punk)')}
+ pcard('livedesk','Live Desk','New laws and amendments to watch, updated over time.','news','var(--punk)')+
+ pcard('thinktank','Think Tank','Why the rules exist, what-if scenarios, and the best case on each side of big debates.','book','var(--green)')}
 function pcard(k,t,p,icon,c,dis){return '<button class="practice-card tilt" data-a="prac" data-k="'+k+'" '+(dis?'disabled style="opacity:.55"':'')+'><span class="pc-ic" style="background:'+c+'">'+ic(icon,38)+'</span><div><h3>'+t+'</h3><p>'+p+'</p></div></button>'}
 
 VIEWS.me=function(){const acc=st.stats.answered?Math.round(100*st.stats.correct/st.stats.answered):0;const joined=parseD(st.created);
@@ -2506,8 +2668,204 @@ function weekRow(ws,days){return '<div class="week">'+days.map((d,i)=>{const ds=
 function heartsModal(fromLesson){heartsTick();
  modal('<div style="color:var(--red)">'+ic('heart',72)+'</div><h2>'+(st.unlimited?'Unlimited hearts are on':st.hearts+' of 5 hearts')+'</h2><p class="muted" style="font-weight:700">'+(st.unlimited?'You won\'t lose hearts for mistakes.':st.hearts>=5?'You\'re full. Every wrong answer in a lesson costs a heart.':'Next heart in '+nextHeartIn()+' minutes. Practice sessions also earn hearts back.')+'</p>'+
  '<div class="row">'+(!st.unlimited&&st.hearts<5?'<button class="btn ghost" data-a="prac" data-k="review">Practice to earn hearts</button>':'')+'<button class="btn '+(st.unlimited||st.hearts>=5?'':'ghost')+'" data-a="close">Close</button></div>')}
-function levelsModal(){modal(ruckus('cheer',90)+'<h2>Pick a level</h2><p class="muted" style="font-weight:700">Each level covers different topics and builds on the one before, so the best path is top to bottom. '+esc(SECTIONS[4].level)+' and Live Desk are side tracks for anytime. Progress in each is saved separately.</p><div class="row">'+SECTIONS.map(s=>{const us=UNITS.filter(u=>u.s===s.id);const d=us.filter(unitDone).length;return '<button class="btn wide" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+';--cd:color-mix(in srgb,var(--c) 70%,#000);justify-content:space-between"><span>'+esc(s.level)+'</span><small class="num" style="opacity:.85">'+d+' / '+us.length+' units</small></button>'}).join('')+'</div>')}
-function guideModal(u){modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('smirk',64)+'<div style="text-align:left"><small class="eyebrow muted">Guidebook</small><h2>'+esc(u.title)+'</h2></div></div>'+u.tips.map((t,k)=>learnCard(t)+'<details class="gfacts"><summary>'+ic('book',16)+'Every fact in lesson '+(k+1)+'</summary>'+graded(u.q.slice(k*chunkSize(u),(k+1)*chunkSize(u))).map(q=>'<div class="tcard">'+teachBody(q)+'</div>').join('')+'</details>').join('')+'<div class="row"><button class="btn wide" data-a="close">Close</button></div>','guidebook')}
+/* ---------- primary sources, news tie-ins, recap, course map ---------- */
+const SRC={con:['The Constitution (full text)','https://www.archives.gov/founding-docs/constitution-transcript'],
+ dec:['The Declaration of Independence','https://www.archives.gov/founding-docs/declaration-transcript'],
+ fed:['The Federalist Papers (full text)','https://guides.loc.gov/federalist-papers/full-text'],
+ senrules:['Standing Rules of the Senate','https://www.rules.senate.gov/rules-of-the-senate'],
+ fec:['FEC contribution limits','https://www.fec.gov/help-candidates-and-committees/candidate-taking-receipts/contribution-limits/'],
+ bor:['The Bill of Rights (full text)','https://www.archives.gov/founding-docs/bill-of-rights-transcript'],
+ am:['Amendments 11 to 27 (full text)','https://www.archives.gov/founding-docs/amendments-11-27'],
+ brown:['Brown v. Board of Education (1954)','https://supreme.justia.com/cases/federal/us/347/483/'],
+ tinker:['Tinker v. Des Moines (1969)','https://supreme.justia.com/cases/federal/us/393/503/'],
+ buckley:['Buckley v. Valeo (1976)','https://supreme.justia.com/cases/federal/us/424/1/'],
+ heller:['D.C. v. Heller (2008)','https://supreme.justia.com/cases/federal/us/554/570/'],
+ shelby:['Shelby County v. Holder (2013)','https://supreme.justia.com/cases/federal/us/570/529/'],
+ nixon:['United States v. Nixon (1974)','https://supreme.justia.com/cases/federal/us/418/683/'],
+ lopez:['United States v. Lopez (1995)','https://supreme.justia.com/cases/federal/us/514/549/'],
+ bushgore:['Bush v. Gore (2000)','https://supreme.justia.com/cases/federal/us/531/98/'],
+ sullivan:['New York Times v. Sullivan (1964)','https://supreme.justia.com/cases/federal/us/376/254/'],
+ loving:['Loving v. Virginia (1967)','https://supreme.justia.com/cases/federal/us/388/1/'],
+ marbury:['Marbury v. Madison (1803)','https://supreme.justia.com/cases/federal/us/5/137/'],
+ cu:['Citizens United v. FEC (2010)','https://supreme.justia.com/cases/federal/us/558/310/'],
+ dobbs:['Dobbs v. Jackson (2022)','https://supreme.justia.com/cases/federal/us/597/19-1392/'],
+ trump:['Trump v. United States (2024)','https://supreme.justia.com/cases/federal/us/603/23-939/']};
+const SOURCES={u1:['dec','con','fed'],u2:['con'],u3:['con','fed'],u4:['con'],u5:['con','senrules'],u6:['con','am'],u7:['con','marbury'],u8:['bor'],u25:['con'],
+ u9:['con','fed','lopez'],u10:['con'],u11:['con','senrules'],u12:['con','nixon','fed'],u13:['am'],u14:['con','am','fec'],u15:['brown','tinker','cu','dobbs'],u27:['buckley','sullivan','loving','heller','bushgore','shelby','trump'],u26:['fec'],
+ u16:['fed','dec'],u17:['senrules'],u18:['con','trump'],u20:['con'],u23:['con','bor','am','heller'],l1:['con'],l2:['con','senrules','cu'],
+ tt1:['con','fed'],tt2:['con','am','senrules'],tt3:['senrules','con','cu','fec']};
+function srcLinks(u){const s=(SOURCES[u.id]||[]).map(k=>SRC[k]).filter(Boolean);if(!s.length)return '';
+ return '<div class="deeper"><b>'+ic('book',18)+'Go deeper: read the source</b>'+s.map(x=>'<a href="'+x[1]+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>').join('')+'</div>'}
+/* what each news item hinges on: [text, source key or url] */
+const HINGE={
+ 'l1-1':['Budget reconciliation comes from the Congressional Budget Act of 1974. Senate debate on it is capped, so a filibuster can\'t block it.','senrules'],
+ 'l1-9':['Budget reconciliation comes from the Congressional Budget Act of 1974. Senate debate on it is capped, so a filibuster can\'t block it.','senrules'],
+ 'l1-2':['The 12th Amendment, which says electoral votes are opened before Congress and counted, without saying who resolves disputes.','am'],
+ 'l1-3':['The 12th Amendment, which says electoral votes are opened before Congress and counted, without saying who resolves disputes.','am'],
+ 'l1-4':['Obergefell v. Hodges (2015), plus the Full Faith and Credit Clause in Article IV. The law is a backstop in case Obergefell is ever overturned.','con'],
+ 'l2-4':['Article V, which sets the amendment process. Congress has put ratification deadlines in amendments since the 18th.','con'],
+ 'l2-5':['Article II, Section 1, which lets each state legislature decide how to appoint its electors.','con'],
+ 'l2-6':['Article V. Term limits for Congress need an amendment, since U.S. Term Limits v. Thornton (1995) barred states from imposing them.','con'],
+ 'l2-7':['Article I, Section 5: each chamber makes its own rules. The 60-vote threshold is in Senate Rule XXII, not the Constitution.','senrules'],
+ 'l2-8':['Article V. Most proposals would also need a supermajority to waive the rule in a war or recession.','con'],
+ 'l2-9':['Citizens United v. FEC (2010), which held that independent political spending is protected by the First Amendment.','cu'],
+ 'l3-3':['Washington\'s levy lid lift law: cities can raise property taxes beyond the usual 1% yearly limit only with voter approval.',''],
+ 'l3-7':['Article VII of the Washington Constitution, which requires property taxes to be uniform. Courts have treated income as property since Culliton v. Chase (1933), so expect a court fight.',''],
+ 'l3-11':['Washington\'s transportation benefit district law, which lets cities ask voters for a sales tax for transit.',''],
+ 'n5-3':['NYC Charter Section 197-c, which sets up ULURP, the city\'s 7-month land use review.',''],
+ 'n5-7':['The NYC Charter. Charter changes like this one must be approved by city voters.',''],
+ 'n5-11':['The NYC Charter. Charter changes like this one must be approved by city voters.',''],
+ 'ut5-3':['Article VI, Section 1 of the Utah Constitution, which reserves the initiative power to the people.',''],
+ 'ut5-7':['Article VI, Section 1 of the Utah Constitution, which also reserves the power to refer laws to the ballot.',''],
+ 'ut5-11':['Utah law requires voter approval before a county issues general obligation bonds.',''],
+ 'tt3-3':['Article I, Section 5 lets the Senate set its own rules. Cloture is Senate Rule XXII.','senrules'],
+ 'tt3-7':['Article II, Section 1 and the 12th Amendment, which set up the Electoral College.','am'],
+ 'tt3-11':['Citizens United v. FEC (2010) and the First Amendment.','cu']};
+function hingeHTML(id){const h=HINGE[id];if(!h)return '';const s=SRC[h[1]];
+ return '<p class="hinge">'+ic('capitol',16)+'<span><b>Hinges on:</b> '+esc(h[0])+(s?' <a href="'+s[1]+'" target="_blank" rel="noopener">Read it</a>':'')+'</span></p>'}
+function recapHTML(items){if(!items||!items.length)return '';
+ return '<div class="recap"><h3>'+ic('check',18)+'What you learned</h3><ul>'+items.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>'}
+function recapItems(u,k){const size=chunkSize(u);return graded(u.q.slice(k*size,(k+1)*size)).map(q=>{
+ if(q.t==='fill')return esc(q.p).replace('___','<b>'+esc(q.a)+'</b>');
+ if(q.t==='tf')return esc(q.p)+' <b>'+q.a+'.</b>';
+ return esc(q.p)+' <b>'+esc(answerText(q))+'</b>'})}
+function unitStatus(u){const p=pr(u);if(p.t)return ['done','Unit test passed'];if(p.d>0)return ['cur','Lesson '+Math.min(p.d+1,u.L)+' of '+u.L+(p.d>=u.L?' · test next':'')];
+ const i=NODES.findIndex(n=>n.u===u);return nodeState(i)==='lock'?['lock','Locked · or test out']:['cur','Ready to start']}
+VIEWS.map=function(){computeCur();const all=UNITS.length,done=UNITS.filter(unitDone).length;
+ let h='<div class="pagehead">'+ruckus('wow',72)+'<div><h1>Course map</h1><p class="muted">'+done+' of '+all+' units done. Tap any unit to jump to it.</p></div></div><button class="btn ghost sm" data-a="tab" data-t="learn" style="margin-bottom:16px">'+ic('capitol',18)+'Back to the path</button>';
+ SECTIONS.forEach(s=>{const us=UNITS.filter(u=>u.s===s.id);if(!us.length)return;const d=us.filter(unitDone).length;
+  h+='<section class="mapsec" style="'+scol(s.id)+'"><div class="maphd"><span class="lvl">'+esc(s.level)+'</span><h2>'+esc(s.title)+'</h2><small class="num">'+d+' / '+us.length+' units'+(st.cp[s.id]?' · Checkpoint cleared':'')+'</small></div>'+
+  us.map(u=>{const [k,t]=unitStatus(u);return '<button class="maprow '+k+'" data-a="gounit" data-u="'+u.id+'"><span class="mapic">'+ic(k==='done'?'check':k==='lock'?'lock':'star',18)+'</span><span><b>'+esc(u.title)+'</b><small>'+esc(t)+'</small></span><span class="mapbar"><i style="width:'+(pr(u).t?100:pr(u).d/u.L*90)+'%"></i></span></button>'}).join('')+'</section>'});
+ return h};
+function testOutModal(u){modal(ruckus('smirk',90)+'<h2>Test out of '+esc(u.title)+'?</h2><p class="muted" style="font-weight:700">You\'ll get 10 questions from the whole unit, with no teaching first. Score 75% or better and the unit counts as done, so you can skip its lessons. No hearts at stake.</p><div class="row"><button class="btn wide green" data-a="testout-go" data-u="'+u.id+'">Start the test</button><button class="linkbtn" data-a="close">Not now</button></div>')}
+function testOutLevelModal(s){const sc=SECTIONS[s];modal(ruckus('cheer',90)+'<h2>Test out of '+esc(sc.level)+'?</h2><p class="muted" style="font-weight:700">This is the level\'s checkpoint: 16 questions from every unit. Score 75% or better and the whole level, plus every level before it, counts as cleared.</p><div class="row"><button class="btn wide green" data-a="testout-lvl-go" data-s="'+s+'">Start the placement test</button><button class="linkbtn" data-a="close">Not now</button></div>')}
+/* ---------- tappable glossary for highlighted terms ---------- */
+// t: title, d: what it means, src: where it comes from, ex: an example, l: source link key (SRC)
+const GLOSSARY={
+ 'commerce clause':{t:'Commerce Clause',d:'Gives Congress power to regulate trade with other countries, among the states, and with Native American tribes. It\'s the basis for much of modern federal law.',src:'Article I, Section 8, Clause 3: Congress may "regulate Commerce with foreign Nations, and among the several States, and with the Indian Tribes."',ex:'The Civil Rights Act of 1964 banned segregation in hotels and restaurants under this clause, because they serve interstate travelers.',l:'con',a:['interstate commerce']},
+ 'habeas corpus':{t:'Habeas corpus',d:'Latin for "you have the body." A court order making the government bring a jailed person before a judge and justify holding them.',src:'Article I, Section 9: it "shall not be suspended, unless when in Cases of Rebellion or Invasion the public Safety may require it."',ex:'Lincoln suspended it during the Civil War. In Boumediene v. Bush (2008), the Court said Guantánamo detainees could use it.',l:'con',a:['writ of habeas corpus']},
+ 'bills of attainder':{t:'Bill of attainder',d:'A law that declares a specific person or group guilty and punishes them without a trial. The Constitution bans them for Congress and the states.',src:'Article I, Sections 9 and 10: "No Bill of Attainder or ex post facto Law shall be passed."',ex:'In United States v. Lovett (1946), the Court struck down a law cutting off the pay of three named federal employees accused of disloyalty.',l:'con',a:['bill of attainder']},
+ 'ex post facto':{t:'Ex post facto law',d:'A law that punishes something that was legal when it was done, or increases the punishment after the fact. Banned for both Congress and the states.',src:'Article I, Sections 9 and 10.',ex:'A state can\'t raise the sentence for a crime and apply it to someone who committed it before the change.',l:'con',a:['ex post facto law','ex post facto laws']},
+ 'necessary and proper clause':{t:'Necessary and Proper Clause',d:'Lets Congress make laws needed to carry out its listed powers. Also called the Elastic Clause, because it stretches federal power.',src:'Article I, Section 8, Clause 18.',ex:'McCulloch v. Maryland (1819) used it to uphold a national bank, even though "bank" isn\'t in the Constitution.',l:'con',a:['elastic clause']},
+ 'supremacy clause':{t:'Supremacy Clause',d:'Makes the Constitution, federal laws, and treaties the highest law. When a valid federal law truly conflicts with a state law, the federal law wins.',src:'Article VI, Clause 2: "the supreme Law of the Land."',ex:'Federal immigration law overrode parts of Arizona\'s immigration law in Arizona v. United States (2012).',l:'con',a:['supreme law of the land','supreme law','article vi']},
+ 'full faith and credit':{t:'Full Faith and Credit Clause',d:'States must respect each other\'s public records and court judgments.',src:'Article IV, Section 1.',ex:'A court judgment for money won in Ohio can be enforced against the debtor in Texas.',l:'con',a:['full faith and credit clause']},
+ 'judicial review':{t:'Judicial review',d:'The power of courts to strike down laws or government actions that violate the Constitution. It isn\'t written in the text.',src:'Established by Marbury v. Madison (1803). Hamilton defended the idea in Federalist No. 78.',ex:'In Brown v. Board (1954), the Court used it to strike down school segregation laws.',l:'marbury'},
+ 'power of the purse':{t:'Power of the purse',d:'Congress controls taxing and spending. No money leaves the Treasury unless Congress approves it.',src:'Article I, Section 8 (taxing and spending) and Section 9: "No Money shall be drawn from the Treasury, but in Consequence of Appropriations made by Law."',ex:'Government shutdowns happen when Congress doesn\'t pass funding bills on time.',l:'con'},
+ 'veto':{t:'Veto',d:'The President\'s power to reject a bill. Congress can override with two-thirds of both chambers.',src:'Article I, Section 7.',ex:'Presidents have vetoed about 2,600 bills. Congress has overridden only about 4% of them.',l:'con'},
+ 'pocket veto':{t:'Pocket veto',d:'If Congress adjourns within 10 days (Sundays excepted) of sending a bill and the President doesn\'t sign it, the bill dies. Congress can\'t override it.',src:'Article I, Section 7.',ex:'Presidents have used it hundreds of times, often on bills sent right before a session ends.',l:'con'},
+ 'filibuster':{t:'Filibuster',d:'Using the Senate\'s unlimited debate to delay or block a vote. Ending it takes cloture.',src:'Not in the Constitution. It comes from Senate rules, and Article I, Section 5 lets each chamber set its own.',ex:'Strom Thurmond spoke for over 24 hours against the Civil Rights Act of 1957.',l:'senrules'},
+ 'cloture':{t:'Cloture',d:'The vote that ends debate in the Senate. For most bills it takes 60 votes. For nominations, a simple majority since 2013 and 2017.',src:'Senate Rule XXII, adopted in 1917.',ex:'A bill with 55 supporters can still stall if it can\'t reach 60 for cloture.',l:'senrules',a:['60 votes']},
+ 'budget reconciliation':{t:'Budget reconciliation',d:'A fast-track process for bills about taxes, spending, and the debt limit. Senate debate is capped, so it can\'t be filibustered.',src:'Congressional Budget Act of 1974. The Byrd rule keeps out provisions that aren\'t mainly budgetary.',ex:'The 2017 tax cuts, the 2022 Inflation Reduction Act, and the 2025 One Big Beautiful Bill Act all used it.',l:'senrules',a:['reconciliation']},
+ 'byrd rule':{t:'Byrd rule',d:'Bars "extraneous" provisions from reconciliation bills, meaning ones that don\'t mainly change spending or revenue.',src:'Named for Sen. Robert Byrd. Now part of the Congressional Budget Act.',ex:'In 2021, the Senate parliamentarian ruled a $15 minimum wage couldn\'t ride in a reconciliation bill.',l:'senrules'},
+ 'great compromise':{t:'Great Compromise',d:'The 1787 deal that created a House based on population and a Senate with two seats per state. Also called the Connecticut Compromise.',src:'Proposed by Roger Sherman and Oliver Ellsworth at the Constitutional Convention. Written into Article I.',ex:'Wyoming and California each have 2 senators, but California has 52 House seats to Wyoming\'s 1.',l:'con',a:['connecticut compromise']},
+ 'popular sovereignty':{t:'Popular sovereignty',d:'The idea that government\'s power comes from the people.',src:'The Preamble opens "We the People." The Declaration says governments derive "their just powers from the consent of the governed."',ex:'Ratifying the Constitution through state conventions, instead of state legislatures, was meant to reflect this.',l:'dec'},
+ 'separation of powers':{t:'Separation of powers',d:'Splitting government into legislative, executive, and judicial branches so no one holds all power.',src:'Montesquieu\'s The Spirit of the Laws (1748). Built into Articles I, II, and III.',ex:'Congress writes laws, the President enforces them, and courts interpret them.',l:'fed'},
+ 'checks and balances':{t:'Checks and balances',d:'Each branch can limit the others, so power is not just divided but contested.',src:'Federalist No. 51: "Ambition must be made to counteract ambition."',ex:'The President nominates judges, but the Senate must confirm them.',l:'fed'},
+ 'federalism':{t:'Federalism',d:'Power is divided between the national government and the states.',src:'The structure of the whole Constitution, plus the 10th Amendment.',ex:'States set most criminal law and run elections. The federal government coins money and handles foreign policy.',l:'con'},
+ 'electoral college':{t:'Electoral College',d:'The 538 electors who formally choose the President. A candidate needs 270.',src:'Article II, Section 1 and the 12th Amendment. The 23rd Amendment gave D.C. 3 electors.',ex:'In 2000 and 2016, the winner lost the national popular vote.',l:'am'},
+ 'bill of rights':{t:'Bill of Rights',d:'The first 10 amendments, ratified in 1791. They protect individual rights from the federal government, and most now apply to states too.',src:'Drafted by James Madison and passed by the First Congress in 1789.',ex:'The 1st Amendment protects speech. The 4th limits searches. The 6th guarantees a lawyer.',l:'bor'},
+ 'due process':{t:'Due process',d:'The government must follow fair procedures before taking your life, liberty, or property. Courts also read it to protect some basic rights.',src:'5th Amendment (federal) and 14th Amendment (states).',ex:'You get notice and a hearing before the government can take your property.',l:'am',a:['due process clause']},
+ 'equal protection':{t:'Equal Protection Clause',d:'States can\'t deny any person "the equal protection of the laws."',src:'14th Amendment, Section 1 (1868).',ex:'Brown v. Board (1954) used it to end legal school segregation.',l:'am',a:['equal protection clause']},
+ 'double jeopardy':{t:'Double jeopardy',d:'You can\'t be tried twice for the same crime by the same government after an acquittal or conviction.',src:'5th Amendment.',ex:'Because states and the federal government are separate, both can charge the same act. That\'s the "dual sovereignty" exception.',l:'bor'},
+ 'exclusionary rule':{t:'Exclusionary rule',d:'Evidence gathered illegally can\'t be used against you in a criminal trial.',src:'Mapp v. Ohio (1961) applied it to the states, based on the 4th Amendment.',ex:'If police search a home without a warrant or a valid exception, what they find may be thrown out.',l:'bor'},
+ 'prior restraint':{t:'Prior restraint',d:'Government stopping speech or publication before it happens. Courts treat it as the most serious kind of censorship.',src:'Near v. Minnesota (1931) and the Pentagon Papers case (1971), under the 1st Amendment.',ex:'The Nixon administration couldn\'t stop newspapers from printing the Pentagon Papers.',l:'bor'},
+ 'stare decisis':{t:'Stare decisis',d:'Latin for "to stand by things decided." Courts generally follow precedent.',src:'A common-law tradition, not a constitutional rule. The Court decides when to overrule its own cases.',ex:'Dobbs (2022) overruled Roe v. Wade, and the justices argued over how much stare decisis should count.',l:'dobbs'},
+ 'strict scrutiny':{t:'Strict scrutiny',d:'The toughest test courts use. A law must serve a compelling interest and be narrowly tailored.',src:'Grew out of footnote 4 of United States v. Carolene Products (1938).',ex:'Laws that classify people by race get strict scrutiny, and most fail it.',l:'am'},
+ 'selective incorporation':{t:'Selective incorporation',d:'Applying Bill of Rights protections to the states, one right at a time, through the 14th Amendment\'s Due Process Clause.',src:'Built case by case since Gitlow v. New York (1925).',ex:'McDonald v. Chicago (2010) applied the 2nd Amendment to states and cities.',l:'am',a:['incorporation']},
+ 'originalism':{t:'Originalism',d:'Reading the Constitution by its public meaning when it was ratified.',src:'A judicial philosophy linked to Justices Scalia, Thomas, and others.',ex:'Heller (2008) leaned on 18th-century meanings of "keep and bear arms."',l:'heller'},
+ 'gerrymandering':{t:'Gerrymandering',d:'Drawing district lines to favor a party or group.',src:'Named for Gov. Elbridge Gerry, who signed a salamander-shaped Massachusetts map in 1812.',ex:'Rucho v. Common Cause (2019) said federal courts can\'t hear partisan gerrymandering claims. State courts and commissions still can.',l:'con'},
+ 'one person, one vote':{t:'One person, one vote',d:'Districts must have roughly equal populations, so each vote weighs about the same.',src:'Baker v. Carr (1962), Reynolds v. Sims (1964), and Wesberry v. Sanders (1964).',ex:'Every state redraws districts after each census to keep them balanced.',l:'am'},
+ 'reapportionment':{t:'Reapportionment',d:'Dividing the 435 House seats among the states after each census.',src:'Article I, Section 2 and the 14th Amendment, Section 2.',ex:'After 2020, Texas gained 2 seats and New York lost 1.',l:'con'},
+ 'census':{t:'Census',d:'The count of everyone living in the U.S., every 10 years. It decides House seats and much federal funding.',src:'Article I, Section 2: an "actual Enumeration" every ten years.',ex:'The next census is in 2030.',l:'con'},
+ 'executive privilege':{t:'Executive privilege',d:'A President\'s claim to keep some internal communications confidential.',src:'Not in the text. United States v. Nixon (1974) recognized it but said it isn\'t absolute.',ex:'Nixon had to turn over the Watergate tapes.',l:'nixon'},
+ 'executive orders':{t:'Executive order',d:'A President\'s directive on how the executive branch should carry out the law. It can\'t override a statute or the Constitution.',src:'Drawn from Article II\'s executive power and from laws Congress passes.',ex:'Youngstown v. Sawyer (1952) struck down Truman\'s order seizing steel mills.',l:'con',a:['executive order']},
+ 'advice and consent':{t:'Advice and consent',d:'The Senate\'s power to approve treaties (by two-thirds) and confirm top appointments (by majority).',src:'Article II, Section 2.',ex:'The Senate rejected the Treaty of Versailles in 1919.',l:'con'},
+ 'impeachment':{t:'Impeachment',d:'The House charges an official by majority vote. The Senate holds the trial, and removal takes two-thirds.',src:'Article I, Sections 2 and 3, and Article II, Section 4: "Treason, Bribery, or other high Crimes and Misdemeanors."',ex:'Three presidents have been impeached: Andrew Johnson, Bill Clinton, and Donald Trump (twice). None was removed.',l:'con',a:['impeach']},
+ 'writ of certiorari':{t:'Writ of certiorari',d:'The order the Supreme Court issues when it agrees to hear a case. Four justices must vote to grant it.',src:'Set by Congress, mainly in the Judges\' Bill of 1925.',ex:'The Court gets thousands of petitions a year and hears about 60 cases.',l:'con',a:['certiorari']},
+ 'original jurisdiction':{t:'Original jurisdiction',d:'A court\'s power to hear a case first, before any other court.',src:'Article III, Section 2: the Supreme Court has it in cases involving ambassadors and states.',ex:'When two states sue each other over water rights, the case starts at the Supreme Court.',l:'con'},
+ 'amicus curiae':{t:'Amicus curiae',d:'Latin for "friend of the court." An outside group files a brief to share its view.',src:'Supreme Court Rule 37.',ex:'Big cases can draw over 100 amicus briefs from groups on both sides.',l:''},
+ 'treason':{t:'Treason',d:'The only crime defined in the Constitution: making war against the U.S. or aiding its enemies.',src:'Article III, Section 3. It requires two witnesses to the same act, or a confession in open court.',ex:'Only a few dozen people have ever been charged with federal treason.',l:'con'},
+ '22nd amendment':{t:'22nd Amendment',d:'Limits a President to two elected terms.',src:'Ratified in 1951, after FDR won four elections.',ex:'Someone who serves more than two years of another President\'s term can be elected only once.',l:'am'},
+ '25th amendment':{t:'25th Amendment',d:'Covers presidential succession and disability, and filling a vice presidential vacancy.',src:'Ratified in 1967, after the Kennedy assassination.',ex:'Gerald Ford became VP under it in 1973, then President in 1974.',l:'am'},
+ '17th amendment':{t:'17th Amendment',d:'Voters, not state legislatures, elect senators.',src:'Ratified in 1913.',ex:'Before it, some legislatures deadlocked and left Senate seats empty for months.',l:'am'},
+ 'equal rights amendment':{t:'Equal Rights Amendment',d:'A proposed amendment banning sex discrimination. Congress passed it in 1972 with a ratification deadline.',src:'Proposed under Article V.',ex:'Virginia became the 38th state to ratify in 2020, after the deadline, so it hasn\'t been certified.',l:'con'},
+ 'anti-federalists':{t:'Anti-Federalists',d:'Opponents of ratifying the Constitution. They feared a powerful central government and demanded a bill of rights.',src:'Writers like "Brutus" and "Federal Farmer," plus leaders like Patrick Henry and George Mason.',ex:'Their pressure is why the Bill of Rights exists.',l:'fed'},
+ 'federalist papers':{t:'The Federalist Papers',d:'85 essays by Hamilton, Madison, and Jay urging New York to ratify the Constitution.',src:'Published in 1787–88 under the pen name "Publius."',ex:'No. 10 is on factions. No. 51 is on checks and balances. No. 78 is on the courts.',l:'fed'},
+ 'unalienable rights':{t:'Unalienable rights',d:'Rights people have by nature that government can\'t take away.',src:'The Declaration of Independence: "Life, Liberty and the pursuit of Happiness."',ex:'The idea comes from John Locke, who listed life, liberty, and property.',l:'dec'},
+ 'super pacs':{t:'Super PAC',d:'A group that can raise and spend unlimited money on elections, as long as it doesn\'t coordinate with candidates.',src:'Grew out of Citizens United (2010) and SpeechNow.org v. FEC (2010).',ex:'Super PACs now spend billions in each presidential cycle.',l:'cu',a:['super pac']},
+ 'citizens united v. fec':{t:'Citizens United v. FEC (2010)',d:'The Court ruled 5-4 that the government can\'t ban independent political spending by corporations and unions.',src:'558 U.S. 310, based on the 1st Amendment.',ex:'It led to super PACs and more outside spending.',l:'cu',a:['citizens united']},
+ 'marbury v. madison':{t:'Marbury v. Madison (1803)',d:'Established judicial review: courts can strike down laws that conflict with the Constitution.',src:'5 U.S. 137. Chief Justice John Marshall wrote it.',ex:'Marshall ruled a piece of the Judiciary Act of 1789 unconstitutional.',l:'marbury'},
+ 'mcculloch v. maryland':{t:'McCulloch v. Maryland (1819)',d:'Congress could create a national bank under the Necessary and Proper Clause, and states couldn\'t tax it.',src:'17 U.S. 316: "the power to tax involves the power to destroy."',ex:'It set the broad reading of federal power that still shapes the law.',l:'con'},
+ 'u.s. v. lopez':{t:'United States v. Lopez (1995)',d:'The first time in decades the Court said Congress went too far under the Commerce Clause.',src:'514 U.S. 549.',ex:'It struck down a federal ban on guns near schools, since gun possession isn\'t economic activity.',l:'lopez'},
+ 'national popular vote interstate compact':{t:'National Popular Vote Interstate Compact',d:'States agree to give their electors to the national popular vote winner, once states with 270 electoral votes join.',src:'Relies on Article II, Section 1, which lets each state choose how to appoint electors.',ex:'States with about 209 electoral votes had joined as of 2025.',l:'con'},
+ 'ranked-choice voting':{t:'Ranked-choice voting',d:'Voters rank candidates. If no one has a majority, the last-place candidate is cut and those votes move to the next choice, until someone wins.',src:'Used in Maine, Alaska, NYC primaries, and coming to Seattle primaries in 2027.',ex:'NYC\'s 2021 mayoral primary took 8 rounds of counting.',l:''},
+ "duverger's law":{t:'Duverger\'s Law',d:'Winner-take-all, single-member districts tend to produce two big parties.',src:'Maurice Duverger, Political Parties (1951).',ex:'Third parties in the U.S. rarely win, since voters fear "wasting" votes.',l:''},
+ 'median voter theorem':{t:'Median voter theorem',d:'With two candidates and one issue dimension, both are pulled toward the voter in the middle.',src:'Duncan Black (1948) and Anthony Downs (1957).',ex:'Candidates often move to the center after winning a primary.',l:''},
+ "prisoner's dilemma":{t:'Prisoner\'s dilemma',d:'Each player\'s best individual move leads to a worse outcome for both than cooperating.',src:'Game theory, formalized at RAND in 1950.',ex:'Arms races: both countries would be better off not building, but each builds anyway.',l:''},
+ 'plural executive':{t:'Plural executive',d:'Voters elect several top state officials separately, instead of the governor appointing them.',src:'Set out in many state constitutions, including Washington\'s.',ex:'Washington\'s governor and attorney general can be from different parties.',l:''},
+ 'top-two primary':{t:'Top-two primary',d:'All candidates run on one primary ballot, and the two highest vote-getters advance, whatever their party.',src:'Adopted by Washington voters in Initiative 872 (2004). Upheld in 2008.',ex:'Two Democrats can face each other in a Seattle general election.',l:''},
+ 'levy':{t:'Levy',d:'A voter-approved property tax for a set purpose and number of years.',src:'Washington state law limits regular property tax growth, so many local programs rely on levies.',ex:'Seattle\'s FEPP levy pays for preschool and Seattle Promise.',l:''},
+ 'quorum':{t:'Quorum',d:'The minimum number of members needed to do official business.',src:'Set in a group\'s bylaws. Robert\'s Rules uses a majority if the bylaws don\'t say.',ex:'Without a quorum, a meeting can talk but can\'t vote.',l:''},
+};
+const GLOSS_IDX={};Object.keys(GLOSSARY).forEach(k=>{GLOSS_IDX[k]=k;(GLOSSARY[k].a||[]).forEach(a=>GLOSS_IDX[a]=k)});
+function glossKey(txt){let t=txt.toLowerCase().replace(/&amp;/g,'&').replace(/&#39;|&#x27;/g,"'").replace(/\s*\(\d{4}\)\s*$/,'').replace(/[.:]$/,'').trim();
+ return GLOSS_IDX[t]||GLOSS_IDX[t.replace(/s$/,'')]||null}
+function glossModal(k){const g=GLOSSARY[k];if(!g)return;const s=SRC[g.l];
+ modal('<div class="gloss"><small class="eyebrow muted">Term</small><h2>'+esc(g.t)+'</h2><p class="gd">'+esc(g.d)+'</p><div class="gsrc"><b>'+ic('book',16)+'Where it comes from</b><p>'+esc(g.src)+'</p></div><div class="gex"><b>'+ic('bolt',16)+'Example</b><p>'+esc(g.ex)+'</p></div>'+(s?'<a class="glink" href="'+s[1]+'" target="_blank" rel="noopener">Go deeper: '+esc(s[0])+'</a>':'')+'</div><div class="row"><button class="btn wide" data-a="close">Got it</button></div>','glossm')}
+/* ---------- Bea the Bison: a progressive guest character with opinions of her own ---------- */
+function bison(mood,size){mood=mood||'smirk';size=size||120;
+ const cheer=mood==='cheer',sad=mood==='sad',wow=mood==='wow';
+ let eyes,mouth,brows;
+ if(cheer){eyes='<path d="M52 58 q6 -7 12 0" stroke="#1C1A22" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M76 58 q6 -7 12 0" stroke="#1C1A22" stroke-width="3.2" fill="none" stroke-linecap="round"/>';mouth='<path d="M61 84 Q70 95 79 84 Z" fill="#B3123E"/>';brows='<path d="M50 44 L64 46"/><path d="M90 44 L76 46"/>'}
+ else if(sad){eyes='<circle cx="58" cy="59" r="3.4" fill="#1C1A22"/><circle cx="82" cy="59" r="3.4" fill="#1C1A22"/>';mouth='<path d="M63 89 Q70 84 77 89" stroke="#2A1A10" stroke-width="2" fill="none" stroke-linecap="round"/>';brows='<path d="M50 50 L64 45"/><path d="M90 50 L76 45"/>'}
+ else if(wow){eyes='<circle cx="58" cy="57" r="5.5" fill="#fff"/><circle cx="58" cy="57" r="3.2" fill="#1C1A22"/><circle cx="82" cy="57" r="5.5" fill="#fff"/><circle cx="82" cy="57" r="3.2" fill="#1C1A22"/>';mouth='<ellipse cx="70" cy="88" rx="3.6" ry="3.2" fill="#B3123E"/>';brows='<path d="M50 42 L64 41"/><path d="M90 42 L76 41"/>'}
+ else{eyes='<circle cx="58" cy="58" r="5" fill="#fff"/><circle cx="59" cy="58.5" r="3" fill="#1C1A22"/><path d="M76 58 q6 -5 12 0" stroke="#1C1A22" stroke-width="3" fill="none" stroke-linecap="round"/>';mouth='<path d="M61 86 Q70 92 80 84" stroke="#2A1A10" stroke-width="2" fill="none" stroke-linecap="round"/>';brows='<path d="M50 45 L64 48"/><path d="M90 42 L76 46"/>'}
+ return '<svg viewBox="0 0 140 152" width="'+size+'" height="'+Math.round(size*152/140)+'" aria-label="Bea the bison" role="img">'+
+ '<ellipse cx="70" cy="146" rx="40" ry="5" fill="#000" opacity=".12"/>'+
+ '<rect x="44" y="134" width="18" height="11" rx="4" fill="#2A1C14"/><rect x="78" y="134" width="18" height="11" rx="4" fill="#2A1C14"/>'+
+ '<path d="M30 96 C26 112 26 128 33 140 L107 140 C114 128 114 112 110 96 C98 84 42 84 30 96 Z" fill="#3E63A8"/>'+
+ '<path d="M56 92 L70 120 L84 92 Z" fill="#F4F1EA"/>'+
+ '<path d="M56 92 L44 114 L60 116 L70 120 Z" fill="#2F4E88"/><path d="M84 92 L96 114 L80 116 L70 120 Z" fill="#2F4E88"/>'+
+ '<path d="M36 104 v30 M104 104 v30" stroke="#6D8CC9" stroke-width="1.6" stroke-dasharray="3 3"/>'+
+ '<g transform="translate(92 122)"><path d="M0 4 v9" stroke="#2E8B57" stroke-width="2"/><path d="M0 9 l4 -3" stroke="#2E8B57" stroke-width="2"/><circle r="6" fill="#E23B3B"/><path d="M-3 -1 q3 -4 6 0 q-3 4 -6 0" fill="#B81F2C"/></g>'+
+ '<rect x="40" y="117" width="24" height="11" rx="2" fill="#FFB320" transform="rotate(-6 52 122)"/><text x="52" y="125" text-anchor="middle" font-size="7" font-weight="900" font-family="Nunito,Arial,sans-serif" fill="#24212D" transform="rotate(-6 52 122)">UNION</text>'+
+ '<path d="M46 90 Q70 102 94 90 L91 99 Q70 109 49 99 Z" fill="#E23B3B"/><path d="M66 100 l4 10 l4 -10 z" fill="#C42A2A"/>'+
+ '<path d="M36 44 C20 42 12 30 16 16 C22 28 30 33 42 34 Z" fill="#F1E8D4" stroke="#C9B994" stroke-width="1.5"/><path d="M104 44 C120 42 128 30 124 16 C118 28 110 33 98 34 Z" fill="#F1E8D4" stroke="#C9B994" stroke-width="1.5"/>'+
+ '<ellipse cx="33" cy="62" rx="9" ry="6" fill="#6B4428" transform="rotate(-20 33 62)"/><ellipse cx="107" cy="62" rx="9" ry="6" fill="#6B4428" transform="rotate(20 107 62)"/>'+
+ '<path d="M38 70 C34 46 46 26 70 26 C94 26 106 46 102 70 C100 86 88 96 70 96 C52 96 40 86 38 70 Z" fill="#7A4E2E"/>'+
+ '<path d="M40 52 C38 30 54 16 70 18 C86 16 102 30 100 52 C94 44 90 48 86 42 C82 48 76 40 70 46 C64 40 58 48 54 42 C50 48 46 44 40 52 Z" fill="#4A2E1A"/>'+
+ '<g fill="#4A2E1A"><circle cx="50" cy="26" r="7"/><circle cx="62" cy="20" r="8"/><circle cx="78" cy="20" r="8"/><circle cx="90" cy="26" r="7"/></g>'+
+ '<path d="M58 92 C60 104 66 110 70 112 C74 110 80 104 82 92 Z" fill="#4A2E1A"/>'+
+ '<ellipse cx="70" cy="80" rx="18" ry="12" fill="#A9774F"/><ellipse cx="64" cy="78" rx="2.6" ry="2" fill="#2A1A10"/><ellipse cx="76" cy="78" rx="2.6" ry="2" fill="#2A1A10"/>'+
+ '<g stroke="#2A1A10" stroke-width="4" stroke-linecap="round" fill="none">'+brows+'</g>'+
+ eyes+
+ '<g stroke="#1C1A22" stroke-width="2.6" fill="none"><circle cx="58" cy="58" r="9"/><circle cx="82" cy="58" r="9"/><path d="M67 57 q3 -2 6 0 M49 56 l-8 -2 M91 56 l8 -2"/></g>'+
+ mouth+
+ (sad?'<path d="M50 66 q-2 5 1 8" stroke="#5FB4FF" stroke-width="3" fill="none" stroke-linecap="round"/>':'')+
+ '</svg>'}
+const BEA={
+ path:['Health care is a human right. Also, have you done your lesson?','Solidarity means we study together. Mostly you, right now.','Like your weekends? Thank a union.','Democracy shouldn\'t stop at the office door.','I\'m a bison. We move in herds. Collective action is kind of my thing.','Housing is for living in. Discuss amongst yourselves.','Ruckus says he\'s nonpartisan. I say tax the rich, then do your streak.','Public libraries are socialism, and everybody loves them.','Organize your notes. Then organize your workplace.','We were nearly wiped out in the 1800s. Now we\'re the national mammal. Never count out a movement.','A living wage for workers, and one lesson a day for you.','Strong unions, strong democracy, strong streak.','You can\'t change a system you don\'t understand. Keep going.'],
+ result:['Knowledge is power. Shared knowledge is people power.','Nice work. That one\'s for the collective.','Every movement started as a meeting. Every expert started as a beginner.','Look at you, building power one lesson at a time.','Solidarity forever, streak forever.'],
+ takes:{'tt3-3':'My take: scrap it. A 60-vote rule lets a minority block things most people want, like paid family leave.',
+  'tt3-7':'My take: one person, one vote. A voter in Wyoming shouldn\'t count more than one in Brooklyn.',
+  'tt3-11':'My take: amend it. Democracy should be one person, one vote, not one dollar, one vote.',
+  'l3-7':'My take: tax the millionaires and fund the schools. Next question.',
+  'l3-11':'My take: more buses! Good transit is freedom with a fare card.',
+  'ut5-7':'My take: workers deserve a seat at the table. This one\'s personal.',
+  'ut5-3':'My take: initiatives are people power. Don\'t raise the bar on voters.',
+  'n5-3':'My take: build more homes, but make sure working people can afford them.'}};
+const BQSEEN={};
+function beaLine(k){const a=BEA[k];const seen=BQSEEN[k]||(BQSEEN[k]=[]);let pool=a.map((_,i)=>i).filter(i=>!seen.includes(i));if(!pool.length){seen.length=0;pool=a.map((_,i)=>i)}const i=pool[Math.floor(Math.random()*pool.length)];seen.push(i);if(seen.length>Math.floor(a.length/2))seen.shift();return a[i]}
+const BEA_NOTE='Bea is a character with opinions. The lessons stay balanced, and you make your own call.';
+function beaTake(id){const t=BEA.takes[id];if(!t)return '';
+ return '<div class="beatake"><div class="beafig">'+bison('smirk',58)+'</div><div><b>Bea\'s take</b><p>'+esc(t)+'</p><small>'+BEA_NOTE+'</small></div></div>'}
+/* Bea drops by one unit on the path each day, on a different unit than Ruckus is standing at */
+function beaUnit(){const vis=UNITS.filter(u=>{const i=NODES.findIndex(n=>n.u===u);return i>=0&&nodeState(i)!=='lock'});if(vis.length<2)return null;
+ const j=CUR['s'+curSection()];const here=j>=0&&NODES[j]?NODES[j].u:null;const pool=vis.filter(u=>u!==here);return pool[hash(today()+'bea')%pool.length]}
+let BEAQ='';
+function beaModal(){st.metBea=true;save();modal('<div style="display:flex;gap:14px;align-items:center;width:100%">'+bison('cheer',96)+'<div style="text-align:left"><small class="eyebrow muted">Guest character</small><h2>Meet Bea the Bison</h2></div></div><p style="font-weight:700;text-align:left">Bea is a progressive bison and a proud democratic socialist. She loves unions, public transit, public libraries, and a good picket line. She drops by now and then, and she will tell you what she thinks.</p><p class="muted" style="font-weight:700;text-align:left">Ruckus keeps the lessons and answers nonpartisan. Bea\'s lines are her opinions, not the answer key.</p><div class="bubble" style="text-align:left">'+esc(beaLine('path'))+'</div><div class="row"><button class="btn wide" data-a="close">Solidarity!</button></div>')}
+function levelsModal(){modal(ruckus('cheer',90)+'<h2>Pick a level</h2><p class="muted" style="font-weight:700">Each level covers different topics and builds on the one before, so the best path is top to bottom. '+esc(SECTIONS[4].level)+' and Live Desk are side tracks for anytime. Progress in each is saved separately.</p><div class="row">'+SECTIONS.map(s=>{const us=UNITS.filter(u=>u.s===s.id);const d=us.filter(unitDone).length;return '<button class="btn wide" data-a="golevel" data-s="'+s.id+'" style="'+scol(s.id)+';--cd:color-mix(in srgb,var(--c) 70%,#000);justify-content:space-between"><span>'+esc(s.level)+'</span><small class="num" style="opacity:.85">'+d+' / '+us.length+' units</small></button>'}).join('')+'</div>'+(()=>{const t=SECTIONS.filter(s=>!openSec(s.id)&&!st.cp[s.id]);return t.length?'<p class="muted" style="font-weight:800;margin-top:14px">Already know a level? Take its placement test to skip it.</p><div class="chiprow">'+t.map(s=>'<button class="btn ghost sm" data-a="testout-lvl" data-s="'+s.id+'" style="'+scol(s.id)+'">'+ic('trophy',16)+esc(s.level)+'</button>').join('')+'</div>':''})()+'<button class="linkbtn" data-a="tab" data-t="map" style="margin-top:10px">See the full course map</button>')}
+function guideModal(u){modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('smirk',64)+'<div style="text-align:left"><small class="eyebrow muted">Guidebook</small><h2>'+esc(u.title)+'</h2></div></div>'+u.tips.map((t,k)=>learnCard(t)+'<details class="gfacts"><summary>'+ic('book',16)+'Every fact in lesson '+(k+1)+'</summary>'+graded(u.q.slice(k*chunkSize(u),(k+1)*chunkSize(u))).map(q=>'<div class="tcard">'+teachBody(q)+'</div>').join('')+'</details>').join('')+srcLinks(u)+'<div class="row"><button class="btn wide" data-a="close">Close</button></div>','guidebook')}
 function learnCard(t){return '<div class="learn"><h3>'+md(t[0])+'</h3><ul>'+t[1].map(b=>'<li><span>'+md(b)+'</span></li>').join('')+'</ul></div>'}
 function showNotices(){const n=notices.shift();if(!n)return;
  if(n.type==='freeze')modal('<div style="color:var(--teal)">'+ic('snow',80)+'</div><h2>Streak Freeze used</h2><p class="muted" style="font-weight:700">You missed '+n.n+' day'+(n.n>1?'s':'')+', but your '+st.streak+'-day streak survived.</p><div class="row"><button class="btn wide" data-a="close-next">Phew</button></div>');
@@ -2546,12 +2904,13 @@ function quip(k){const a=QUIPS[k];if(!a||!a.length)return '';const seen=QSEEN[k]
  let pool=a.map((_,i)=>i).filter(i=>!seen.includes(i));const i=pool[Math.floor(Math.random()*pool.length)];seen.push(i);while(seen.length>keep)seen.shift();return a[i]}
 const TEACH_MOOD=['smirk','wow','cheer','smirk'],TEACH_LEAD=QUIPS.teach;
 function startSession(o){closeModal();
- S=Object.assign({queue:[],idx:0,base:0,done:0,correct:0,wrong:0,combo:0,maxCombo:0,start:Date.now(),checked:false,learn:null,v:null},o);
+ S=Object.assign({queue:[],idx:0,base:0,done:0,correct:0,wrong:0,combo:0,maxCombo:0,start:Date.now(),checked:false,learn:null,v:null,wrongIds:[]},o);
  const k=o.kind;
  if(k==='lesson'){S.queue=lessonQs(o.u,o.k,!o.replay);if(!o.replay)S.learn=o.u.tips[o.k]}
  else if(k==='test')S.queue=shuffle(graded(o.u.q)).slice(0,10);
  else if(k==='cp'){const us=UNITS.filter(u=>u.s===o.s);const per=Math.max(2,Math.ceil(16/us.length));let qs=[];us.forEach(u=>{qs=qs.concat(shuffle(graded(u.q)).slice(0,per))});S.queue=shuffle(qs).slice(0,16)}
  else if(k==='review'){let pool=[];UNITS.forEach(u=>{pool=pool.concat(taughtQs(u))});S.queue=shuffle(pool).slice(0,10)}
+ else if(k==='missed'){S.queue=shuffle(o.ids.map(id=>QMAP[id]).filter(Boolean))}
  else if(k==='weak'){S.queue=shuffle(weakDue().map(id=>QMAP[id])).slice(0,12);S.missed={}}
  else if(k==='lightning'){let pool=[];UNITS.forEach(u=>{pool=pool.concat(taughtQs(u).filter(q=>q.t==='mc'||q.t==='tf'||q.t==='fill'))});S.pool=pool;S.queue=shuffle(pool);S.endAt=Date.now()+60000;S.learn=null}
  if(!S.queue.length){S=null;toast('Finish a lesson first. I only quiz you on what I\'ve taught you.');return}
@@ -2580,7 +2939,7 @@ function renderSession(){if(!S)return;const ov=$('#overlay');let body,foot;
   body='<div class="lin'+(S.fresh?'':' still')+'"><span class="qtype newword">'+ic('book',18)+'New fact '+it.n+' of '+it.of+'</span><div class="speak"><div class="mascot-react idle">'+ruckus(TEACH_MOOD[r%4],84)+'</div><div class="bubble">'+TEACH_LEAD[r%TEACH_LEAD.length]+'</div></div><div class="tcard">'+teachBody(q)+'</div></div>';
   foot='<div class="lfoot"><div class="in"><p class="muted" style="font-weight:800;margin:0">'+(it.n%2===0||it.n===it.of?'Quiz on this next.':'One more fact, then a quick check.')+'</p><button class="btn green" data-a="taught" style="min-width:200px">Got it</button></div></div>'}
  else if(S.queue[S.idx]&&S.queue[S.idx].t==='vote'){const q=S.queue[S.idx],v=S.v;
-  body='<div class="lin'+(S.fresh?'':' still')+'"><span class="qtype newword">'+ic('news',18)+'Your vote</span><div class="speak"><div class="mascot-react idle">'+ruckus('wow',84)+'</div><div class="bubble">No right answer here. How would <i>you</i> vote, and why?</div></div><div class="tcard vcard"><h3>'+esc(q.p)+'</h3><p class="tfact" style="font-size:17px">'+esc(q.what)+'</p><div class="vsides"><div><b class="yes">Supporters say</b><ul>'+q.pro.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div><b class="no">Opponents say</b><ul>'+q.con.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div><p class="tmore">'+ic('check',16)+'<span>Result: '+esc(q.result)+'</span></p></div>'+
+  body='<div class="lin'+(S.fresh?'':' still')+'"><span class="qtype newword">'+ic('news',18)+(q.debate?'Great debate':'Your vote')+'</span><div class="speak"><div class="mascot-react idle">'+ruckus('wow',84)+'</div><div class="bubble">'+(q.debate?'Here\'s the strongest case on each side. Where do you land, and why?':'No right answer here. How would <i>you</i> vote, and why?')+'</div></div><div class="tcard vcard"><h3>'+esc(q.p)+'</h3><p class="tfact" style="font-size:17px">'+esc(q.what)+'</p><div class="vsides"><div><b class="yes">'+(q.debate?'Case for':'Supporters say')+'</b><ul>'+q.pro.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div><b class="no">'+(q.debate?'Case against':'Opponents say')+'</b><ul>'+q.con.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div><p class="tmore">'+ic('check',16)+'<span>'+(q.debate?'<b>The tradeoff:</b> ':'Result: ')+esc(q.result)+'</span></p>'+hingeHTML(q.id)+beaTake(q.id)+'</div>'+
   '<div class="opts tf">'+['Yes','No'].map(o=>'<button class="opt '+(v.vote===o?'sel':'')+'" data-a="vopt" data-v="'+o+'">'+(o==='Yes'?ic('check',26):ic('x',22))+'<span>I\'d vote '+o+'</span></button>').join('')+'</div>'+
   '<label class="vwhy"><span>Why? Make your case in a sentence or two, like you would at a candidate forum.</span><textarea class="typein" id="whyin" data-in="why" maxlength="600" placeholder="I\'d vote '+(v.vote||'...')+' because...">'+esc(v.why)+'</textarea></label></div>';
   const okv=v.vote&&v.why.trim().length>=10;
@@ -2605,11 +2964,11 @@ function fbQuip(ok){const k=(S?S.idx:0)+'|'+ok+'|'+(S?S.queue.length:0);if(!S.fq
 const PRAISE=['Nice!','Correct!','Great job!','Excellent!','Nailed it!','Sharp!','Rebel scholar!'];
 function answerText(q){if(q.t==='order')return q.a.map((s,i)=>(i+1)+'. '+s).join('   ');if(q.t==='match')return q.pairs.map(p=>p[0]+' = '+p[1]).join('; ');return q.a}
 function footHTML(q){if(S.kind==='lightning')return '<div class="lfoot '+(S.checked?(S.result?'ok':'bad'):'')+'"><div class="in"><p class="muted" style="font-weight:800">'+(S.checked?(S.result?'Correct!':'Answer: '+esc(q.a)):'Tap an answer. Speed counts.')+'</p></div></div>';
- if(!S.checked){if(q.t==='match')return '<div class="lfoot"><div class="in"><p class="muted" style="font-weight:800">Tap a card on the left, then its match on the right.</p>'+((S.kind==='lesson'||S.kind==='review'||S.kind==='weak')?'<button class="btn ghost hintbtn" data-a="hint">'+ic('book',18)+'Hint</button>':'')+'</div></div>';
-  const hint=(S.kind==='lesson'||S.kind==='review'||S.kind==='weak')&&TEACH[q.id]?'<button class="btn ghost hintbtn" data-a="hint">'+ic('book',18)+'Hint</button>':'';
+ if(!S.checked){if(q.t==='match')return '<div class="lfoot"><div class="in"><p class="muted" style="font-weight:800">Tap a card on the left, then its match on the right.</p>'+((S.kind==='lesson'||S.kind==='review'||S.kind==='weak'||S.kind==='missed')?'<button class="btn ghost hintbtn" data-a="hint">'+ic('book',18)+'Hint</button>':'')+'</div></div>';
+  const hint=(S.kind==='lesson'||S.kind==='review'||S.kind==='weak'||S.kind==='missed')&&TEACH[q.id]?'<button class="btn ghost hintbtn" data-a="hint">'+ic('book',18)+'Hint</button>':'';
   return '<div class="lfoot"><div class="in" style="justify-content:'+(hint?'space-between':'flex-end')+'">'+hint+'<button class="btn green" data-a="check" style="min-width:200px" '+(canCheck(q,S.v)?'':'disabled')+'>Check</button></div></div>'}
  const ok=S.result;const why=q.ex?'<p class="why">'+esc(q.ex)+'</p>':(TEACH[q.id]&&q.t!=='match'&&q.t!=='order'?'<p class="why">'+md(TEACH[q.id])+'</p>':'');
- return '<div class="lfoot '+(ok?'ok':'bad')+'"><div class="in"><div class="fb"><span class="badge" style="color:'+(ok?'var(--green)':'var(--red)')+'">'+ic(ok?'check':'x',30)+'</span><div><h3>'+(ok?PRAISE[Math.floor(Math.random()*PRAISE.length)]:(q.t==='match'?'Close. Watch those pairs.':'Correct answer:'))+'</h3>'+(ok?'':(q.t==='match'?'':'<p>'+esc(answerText(q))+'</p>'))+'<p class="quip">'+esc(fbQuip(ok))+'</p>'+why+'</div></div><button class="btn '+(ok?'green':'red')+'" data-a="cont" style="min-width:200px">Continue</button></div></div>'}
+ return '<div class="lfoot '+(ok?'ok':'bad')+'"><div class="in"><div class="fb"><span class="badge" style="color:'+(ok?'var(--green)':'var(--red)')+'">'+ic(ok?'check':'x',30)+'</span><div><h3>'+(ok?PRAISE[Math.floor(Math.random()*PRAISE.length)]:(q.t==='match'?'Close. Watch those pairs.':'Correct answer:'))+'</h3>'+(ok?'':(q.t==='match'?'':'<p>'+esc(answerText(q))+'</p>'))+'<p class="quip">'+esc(fbQuip(ok))+'</p>'+why+hingeHTML(q.id)+'</div></div><button class="btn '+(ok?'green':'red')+'" data-a="cont" style="min-width:200px">Continue</button></div></div>'}
 function check(){const q=S.queue[S.idx],v=S.v;let ok;
  if(q.t==='order')ok=v.picked.every((ix,i)=>ix===i);
  else if(q.t==='type')ok=q.acc.some(a=>norm(a)===norm(v.text));
@@ -2617,8 +2976,8 @@ function check(){const q=S.queue[S.idx],v=S.v;let ok;
  grade(ok)}
 function grade(ok){const q=S.queue[S.idx];S.checked=true;S.result=ok;S.justChecked=true;if(ok)S.bump=true;else if(S.kind==='lesson'&&!st.unlimited)S.hurt=true;st.stats.answered++;
  if(ok){S.correct++;S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);S.done++;st.stats.correct++;st.daily.correct++;st.daily.combo=Math.max(st.daily.combo,S.combo);st.stats.bestCombo=Math.max(st.stats.bestCombo,S.combo);sfx('ok');if([3,5,10,15,20].includes(S.combo))comboToast(S.combo);if(S.kind==='weak'&&!S.missed[q.id])srsRight(q.id)}
- else{S.wrong++;S.combo=0;addMistake(q.id);if(S.kind==='weak')S.missed[q.id]=1;sfx('bad');if(S.kind==='lesson'){loseHeart()}
-  if(S.kind==='lesson'||S.kind==='weak'||S.kind==='review')S.queue.push(q);else if(S.kind!=='lightning')S.done++}
+ else{S.wrong++;S.combo=0;addMistake(q.id);if(!S.wrongIds.includes(q.id))S.wrongIds.push(q.id);if(S.kind==='weak')S.missed[q.id]=1;sfx('bad');if(S.kind==='lesson'){loseHeart()}
+  if(S.kind==='lesson'||S.kind==='weak'||S.kind==='review'||S.kind==='missed')S.queue.push(q);else if(S.kind!=='lightning')S.done++}
  save();renderSession()}
 function comboToast(n){const d=document.createElement('div');d.className='combo';d.innerHTML=ic('flame',20)+n+' in a row!';document.body.appendChild(d);setTimeout(()=>d.remove(),1500);if(n>=5)sfx('fire')}
 function cont(){if(S.kind==='lesson'&&!st.unlimited&&st.hearts<=0){outOfHearts();return}S.idx++;
@@ -2644,7 +3003,7 @@ function finish(){clearInterval(lightTimer);const k=S.kind;const answered=S.corr
   else xp=5}
  else if(k==='lightning'){xp=S.correct;gems=Math.floor(S.correct/3);st.stats.lightning=Math.max(st.stats.lightning,S.correct);st.daily.lessons++}
  else{xp=10;gems=3;st.daily.lessons++}
- if(k==='review'||k==='weak'||k==='lightning'){if(!st.unlimited&&st.hearts<5){st.hearts++;heart=true}}
+ if(k==='review'||k==='weak'||k==='lightning'||k==='missed'){if(!st.unlimited&&st.hearts<5){st.hearts++;heart=true}}
  xp*=boost;
  const before=st.daily.xp;st.xp+=xp;st.daily.xp+=xp;st.days[today()]=(st.days[today()]||0)+xp;
  let ext=false;if(xp>0&&st.lastDay!==today()){st.streak=(st.lastDay===addDays(today(),-1))?st.streak+1:1;st.lastDay=today();st.longest=Math.max(st.longest,st.streak);ext=true;if(st.streak%7===0&&st.freezes<2){st.freezes++;setTimeout(()=>toast(ic('snow',20)+'7-day streak! You earned a Streak Freeze.'),1500)}}
@@ -2652,7 +3011,7 @@ function finish(){clearInterval(lightTimer);const k=S.kind;const answered=S.corr
  const achs=newAchievements();
  save();
  const screens=[{t:'result'}];if(ext)screens.push({t:'streak'});if(goalHit)screens.push({t:'goal'});if(unlock)screens.push({t:'unlock',u:unlock});achs.forEach(a=>screens.push({t:'ach',a:a}));
- R={screens:screens,i:0,d:{k:k,xp:xp,gems:gems,acc:acc,secs:secs,passed:passed,perfect:perfect,heart:heart,score:S.correct,total:S.base,boost:boost,unitId:S.u&&S.u.id,s:S.s}};
+ R={screens:screens,i:0,d:{k:k,xp:xp,gems:gems,acc:acc,secs:secs,passed:passed,perfect:perfect,heart:heart,score:S.correct,total:S.base,boost:boost,unitId:S.u&&S.u.id,s:S.s,missed:k==='lightning'||k==='missed'?[]:S.wrongIds.slice(),recap:k==='lesson'&&!S.replay?recapItems(S.u,S.k):null,bea:k==='lesson'&&Math.random()<.3?beaLine('result'):''}};
  S=null;renderResult()}
 function renderResult(){const sc=R.screens[R.i];const d=R.d;const ov=$('#overlay');let body='';const good=d.passed;
  if(sc.t==='result'){
@@ -2660,16 +3019,17 @@ function renderResult(){const sc=R.screens[R.i];const d=R.d;const ov=$('#overlay
   if(d.k==='lightning'){title=d.score+' correct!';sub=d.score>=st.stats.lightning&&d.score>0?'That\'s your best Lightning Round.':'Best so far: '+st.stats.lightning+'.'}
   else if(d.k==='test'||d.k==='cp'){title=good?(d.k==='cp'?'Checkpoint cleared!':'Test passed!'):'Not quite yet';sub='You scored '+d.score+' of '+d.total+'. '+(good?'':'You need 75% to pass. Review the guidebook and try again.')}
   else if(d.k==='lesson'){title=d.perfect?'Perfect lesson!':'Lesson complete!';sub=d.rq||(d.rq=quip(d.perfect?'perfect':'done'))}
+  else if(d.k==='missed'){title='Mistakes reviewed!';sub='Each one also stays in Weak spots, and comes back on a schedule until it sticks.'}
   else{title='Practice complete!';sub=d.heart?'You earned back a heart.':'Keep that brain sharp.'}
   const mm=Math.floor(d.secs/60)+':'+pad(d.secs%60);
   body='<div class="result"><div class="hero">'+(good?'<div class="burst"></div>':'')+ruckus(good?'cheer':'sad',150)+'</div>'+'<h1 class="'+(good?'':'fail')+'">'+title+'</h1><p class="muted" style="font-weight:700;max-width:420px">'+sub+'</p><div class="tiles">'+
-   tile('Total XP'+(d.boost>1?' ×2':''),'var(--gold)',ic('bolt',22),d.xp)+(d.k==='lightning'?'':tile(good?(d.acc>=90?'Amazing':'Accuracy'):'Accuracy','var(--green)',ic('target',22),d.acc,'%'))+tile('Time','var(--blue)',ic('clock',22),mm,'',true)+'</div></div>'}
+   tile('Total XP'+(d.boost>1?' ×2':''),'var(--gold)',ic('bolt',22),d.xp)+(d.k==='lightning'?'':tile(good?(d.acc>=90?'Amazing':'Accuracy'):'Accuracy','var(--green)',ic('target',22),d.acc,'%'))+tile('Time','var(--blue)',ic('clock',22),mm,'',true)+'</div>'+(d.bea?'<div class="beacameo">'+bison('cheer',64)+'<div class="bubble"><b>Bea:</b> '+esc(d.bea)+'</div></div>':'')+recapHTML(d.recap)+(d.k==='lesson'&&d.unitId?srcLinks(UNITS.find(x=>x.id===d.unitId)||{}):'')+'</div>'}
  else if(sc.t==='streak'){const ws=weekStart();body='<div class="result"><div class="hero"><div class="burst flame"></div><div class="bigflame" style="color:var(--flame)">'+ic('flame',120)+'</div></div><div class="bignum num">'+st.streak+'</div><h1 style="color:var(--flame)">day streak!</h1>'+weekRow(ws,['M','T','W','T','F','S','S'])+'<p class="muted" style="font-weight:700;max-width:380px">'+(st.streak===1?'Day one. Come back tomorrow to build it.':'Come back tomorrow so your streak doesn\'t reset.')+'</p></div>'}
  else if(sc.t==='goal'){body='<div class="result"><div class="hero"><div class="burst"></div>'+goalRing(150)+'</div>'+'<h1>Daily goal reached!</h1><p class="muted" style="font-weight:700">You earned '+st.daily.xp+' XP today. Ruckus approves.</p></div>'}
  else if(sc.t==='unlock'){body='<div class="result"><div class="hero"><div class="burst"></div><div style="color:var(--gold)" class="bigflame">'+ic(sc.u.icon,120)+'</div></div><h1>'+esc(sc.u.t)+'</h1><p class="muted" style="font-weight:700;max-width:420px">'+esc(sc.u.p)+'</p></div>'}
  else if(sc.t==='ach'){const a=sc.a.a;body='<div class="result"><div class="hero"><div class="burst"></div><span class="pc-ic" style="width:120px;height:120px;border-radius:32px;background:'+a.col+'">'+ic(a.icon,64)+'</span></div><h1>Achievement unlocked</h1><h2>'+a.name+' · Level '+sc.a.l+'</h2><p class="muted" style="font-weight:700">'+a.d.replace('{n}',a.lv[sc.a.l-1])+'</p></div>'}
  const retry=sc.t==='result'&&(d.k==='test'||d.k==='cp')&&!good;
- ov.innerHTML='<div class="screen">'+body+'<div class="rfoot"><div class="in">'+(retry?'<button class="btn ghost wide" data-a="res-guide">Open guidebook</button>':'')+'<button class="btn wide '+(good?'green':'')+'" data-a="res-next">Continue</button></div></div></div>';
+ ov.innerHTML='<div class="screen">'+body+'<div class="rfoot"><div class="in">'+(retry?'<button class="btn ghost wide" data-a="res-guide">Open guidebook</button>':'')+(sc.t==='result'&&d.missed&&d.missed.length?'<button class="btn ghost wide" data-a="res-missed">'+ic('redo',18)+'Review my '+d.missed.length+' mistake'+(d.missed.length>1?'s':'')+'</button>':'')+'<button class="btn wide '+(good?'green':'')+'" data-a="res-next">Continue</button></div></div></div>';
  if(sc.t==='result'){if(good){sfx('done');confetti()}else sfx('fail');countUp()}
  if(sc.t==='streak'){sfx('fire');confetti()}
  if(sc.t==='goal'||sc.t==='unlock'||sc.t==='ach'){sfx('coin');confetti()}}
@@ -2705,6 +3065,8 @@ const A={
  levels:()=>levelsModal(),
  golevel:el=>{closeModal();const id=+el.dataset.s;const go=()=>{const sec=$('#sec'+id);if(!sec)return;const cur=sec.querySelector('.node.cur');(cur||sec).scrollIntoView({block:cur?'center':'start',behavior:reduceMotion()?'auto':'smooth'})};if(tab!=='learn'){setTab('learn');scrollPending=false;setTimeout(go,120)}else go()},
  close:()=>closeModal(),
+ bea:()=>{sfx('tap');if(!st.metBea){beaModal();$('#view').innerHTML=VIEWS.learn();return}BEAQ=beaLine('path');const b=document.querySelector('.beaq');if(b){b.textContent=BEAQ;b.classList.remove('pop-in');void b.offsetWidth;b.classList.add('pop-in')}},
+ term:el=>{sfx('tap');glossModal(el.dataset.k)},
  'close-next':()=>{closeModal();showNotices()},
  'modal-bg':(el,e)=>{if(e.target===el)closeModal()},
  'learn-go':()=>{S.learn=null;S.fresh=true;sfx('tap');renderSession()},
@@ -2728,6 +3090,12 @@ const A={
  'ooh-practice':()=>{closeSession();startSession({kind:'review'})},
  'ooh-end':()=>closeSession(),
  'res-next':()=>{R.i++;if(R.i>=R.screens.length){const d=R.d;closeSession();scrollPending=true;if(tab!=='learn'&&(d.k==='lesson'||d.k==='test'||d.k==='cp'))setTab('learn');else render()}else renderResult()},
+ 'res-missed':()=>{const ids=R.d.missed.slice();closeSession();startSession({kind:'missed',ids})},
+ testout:el=>{const u=UNITS.find(x=>x.id===el.dataset.u);if(u)testOutModal(u)},
+ 'testout-go':el=>{const u=UNITS.find(x=>x.id===el.dataset.u);if(u)startSession({kind:'test',u,testout:true})},
+ 'testout-lvl':el=>testOutLevelModal(+el.dataset.s),
+ 'testout-lvl-go':el=>startSession({kind:'cp',s:+el.dataset.s,testout:true}),
+ gounit:el=>{const id=el.dataset.u;setTab('learn');scrollPending=false;setTimeout(()=>{const b=$('#unit-'+id);if(b)b.scrollIntoView({block:'start',behavior:reduceMotion()?'auto':'smooth'})},120)},
  'res-guide':()=>{const d=R.d;const u=d.unitId?UNITS.find(x=>x.id===d.unitId):UNITS.find(x=>x.s===d.s);closeSession();if(u)guideModal(u)},
  set:el=>{const k=el.dataset.k;st[k]=!st[k];save();if(k==='sound'&&st.sound)sfx('ok');render()},
  reset:()=>modal(ruckus('wow',100)+'<h2>Reset everything?</h2><p class="muted" style="font-weight:700">This deletes your '+st.streak+'-day streak, '+st.xp+' XP, and all lesson progress on this device. It can\'t be undone.</p><label class="repsel" style="width:100%"><span>Type RESET to confirm</span><input class="textin" id="resetIn" data-in="resetconf" autocomplete="off" autocapitalize="characters" placeholder="RESET" aria-label="Type RESET to confirm"></label><div class="row"><button class="btn ghost wide" data-a="close">Cancel, keep my progress</button><button class="btn red wide" data-a="reset-yes" id="resetGo" disabled>Delete everything</button></div>'),
@@ -2742,6 +3110,7 @@ const A={
  'region-pick':el=>{setRegion(el.dataset.r);closeModal();render();showNotices()},
  'ob-region':el=>{OB.region=el.dataset.r;sfx('tap');renderOB()},
  prac:el=>{const k=el.dataset.k;closeModal();if(k==='reps'){setTab('reps');return}if(k==='local'){setTab('learn');setTimeout(()=>{const s=$('#sec4');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}
+ if(k==='thinktank'){setTab('learn');setTimeout(()=>{const s=$('#sec6');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}
  if(k==='livedesk'){setTab('learn');setTimeout(()=>{const s=$('#sec5');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}startSession({kind:k})},
  'ob-next':()=>{if(OB.step===1){const n=$('#obName');OB.name=n?n.value:''}OB.step++;sfx('tap');renderOB()},
  'ob-goal':el=>{OB.goal=+el.dataset.g;sfx('tap');renderOB()},
@@ -2789,6 +3158,7 @@ document.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse'||reduceMo
 
 /* ---------- boot ---------- */
 load();applyRegion();buildNodes();ensureDaily();checkStreak();heartsTick();newAchievements();save();lbPush();remInit();
+window.__cq={startSession,closeSession,setTab,levelsModal,QMAP,get S(){return S},get st(){return st},get tab(){return tab}};
 const h0=location.hash.slice(1);if(VIEWS[h0])tab=h0;
 render();
 if(!st.onboarded)onboarding();else if(!st.region)regionModal();else showNotices();
