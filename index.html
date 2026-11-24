@@ -481,6 +481,16 @@ details.danger summary{cursor:pointer;font-weight:800;color:var(--ink-2);padding
 
 .pop{translate:calc(-1 * var(--nx,0px)) 0}
 .pop::before{left:calc(50% + var(--nx,0px))}
+
+.lfoot .quip{font-weight:800;opacity:.9;margin-top:2px}
+.path-mascot.talk{pointer-events:auto;cursor:pointer}
+.pquip{position:absolute;bottom:calc(100% + 6px);left:-6px;width:max-content;max-width:170px;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:14px;padding:8px 10px;font-weight:800;font-size:13px;line-height:1.3;box-shadow:0 3px 0 var(--line);text-align:left}
+.pquip::after{content:"";position:absolute;top:100%;left:30px;border:7px solid transparent;border-top-color:var(--line)}
+.path-mascot.flip .pquip{left:auto;right:-6px}.path-mascot.flip .pquip::after{left:auto;right:30px}
+.pquip.pop-in{animation:popin .2s ease-out}
+.path-mascot.talk{z-index:4}
+.pquip{max-width:150px}
+.lfoot .quip{font-style:italic}
 #modal{position:fixed;inset:0;z-index:75;pointer-events:none}#modal>*{pointer-events:auto}</style>
 <div id="app"><aside class="side" id="side"></aside><div class="mainwrap"><header class="topbar" id="top"></header><main class="view" id="view"></main></div><aside class="rail" id="rail"></aside><nav class="tabs" id="tabs"></nav></div>
 <div id="overlay"></div><div id="modal"></div><div id="toast"></div><canvas id="confetti"></canvas>
@@ -2232,7 +2242,7 @@ function srsRight(id){const r=st.srs[id];if(!r)return;r.b++;if(r.b>=SRS_GAP.leng
 function removeMistake(id){st.mistakes=st.mistakes.filter(x=>x!==id);delete st.srs[id]}
 
 /* ---------- course structure ---------- */
-let NODES=[];
+let NODES=[],PATHQ='',PRACQ='';
 function buildNodes(){NODES=[];SECTIONS.forEach(s=>{UNITS.filter(u=>u.s===s.id).forEach(u=>{for(let k=0;k<u.L;k++)NODES.push({type:'lesson',u:u,k:k,s:s.id});NODES.push({type:'test',u:u,s:s.id})});if(!openSec(s.id))NODES.push({type:'cp',s:s.id})})}
 const pr=u=>st.prog[u.id]||{d:0,t:false};
 function nodeDone(n){if(n.type==='lesson')return pr(n.u).d>n.k;if(n.type==='test')return !!pr(n.u).t;return !!st.cp[n.s]}
@@ -2298,7 +2308,7 @@ VIEWS.learn=function(){computeCur();let h='<div class="howcard"><b>How levels wo
    h+='<div class="unit-banner tilt '+(ulock?'locked':'')+'" style="'+ucol(u)+'"><div><small>'+esc(s.level)+' · Unit '+(ui+1)+'</small><h3>'+esc(u.title)+'</h3><p>'+esc(u.desc)+'</p></div><button class="guide" data-a="guide" data-u="'+u.id+'">'+ic('book',26)+'GUIDE</button></div>';
    h+='<div class="path">';
    const moods=['smirk','cheer','wow'];
-   h+='<div class="path-mascot '+(ulock?'':'mascot-bob')+'" style="'+(flip?'left:calc(50% + 70px)':'left:calc(50% - 175px)')+';'+(ulock?'filter:grayscale(1);opacity:.5':'')+'">'+ruckus(moods[UNITS.indexOf(u)%3],100)+'</div>';
+   const here=(()=>{const j=CUR['s'+curSection()];return j>=0&&NODES[j]&&NODES[j].u===u})();h+='<div class="path-mascot '+(ulock?'':'mascot-bob')+(here?' talk':'')+(flip?' flip':'')+'" style="'+(flip?'left:calc(50% + 70px)':'left:calc(50% - 175px)')+';'+(ulock?'filter:grayscale(1);opacity:.5':'')+'"'+(here?' data-a="quip" role="button" aria-label="Ruckus says something"':'')+'>'+(here?'<span class="pquip">'+esc(PATHQ||(PATHQ=quip('path')))+'</span>':'')+ruckus(moods[UNITS.indexOf(u)%3],100)+'</div>';
    for(let k=0;k<=u.L;k++){const i=uIdx+k;h+=nodeHTML(i,(flip?-1:1)*OFF[k%8],u)}
    h+='</div>'});
   if(!openSec(s.id)){const i=NODES.findIndex(n=>n.type==='cp'&&n.s===s.id);h+='<div class="path">'+nodeHTML(i,0,null)+'</div>'}
@@ -2351,7 +2361,7 @@ VIEWS.reps=function(){if(region()==='ny')return repsNY();if(region()==='ut')retu
   (r.cong?repCard('U.S. House, WA-'+r.cong,r.cong==='7'?'Pramila Jayapal':'Adam Smith','Votes on federal laws and spending. Serves 2-year terms.'):repCard('U.S. House, your district','Pick your district above','Votes on federal laws and spending.'))+'</div>';
  return h+'<p class="muted" style="margin-top:16px;font-weight:700;font-size:14px">Officeholders change after elections. New legislators take office in January 2027.</p>'};
 VIEWS.practice=function(){const mc=st.mistakes.length;
- return '<div class="pagehead">'+ruckus('smirk',72)+'<div><h1>Practice</h1><p class="muted">Each practice session earns back 1 heart.</p></div></div>'+
+ return '<div class="pagehead">'+ruckus('smirk',72)+'<div><h1>Practice</h1><p class="muted">'+esc(PRACQ||(PRACQ=quip('practice')))+'</p></div></div>'+
  (()=>{const d=weakDue().length,l=weakLater();return pcard('weak','Weak spots'+(d?' · '+d+' due today':''),d?'Questions you missed, brought back on a schedule: 1, 3, 7, 14, then 30 days later. Get one right each time and it graduates.':(l?'Nothing due today. '+l+' more coming back on schedule.':'Questions you miss land here, then come back after 1, 3, 7, 14, and 30 days until they stick.'),'redo','var(--red)',!d)})()+
  pcard('review','Review mix','10 questions from everything you\'ve studied so far.','dumbbell','var(--blue)')+
  pcard('lightning','Lightning Round','Answer as many as you can in 60 seconds. Best: '+st.stats.lightning+'.','clock','var(--gold)')+
@@ -2519,7 +2529,22 @@ function teachBody(q){let h='<p class="tfact">'+md(TEACH[q.id]||q.ex||answerText
  if(q.t==='match')h+='<div class="tpairs">'+q.pairs.map(p=>'<div><span>'+esc(p[0])+'</span><b>'+esc(p[1])+'</b></div>').join('')+'</div>';
  if(q.ex&&TEACH[q.id]&&q.t!=='order'&&newInfo(q.ex,TEACH[q.id]))h+='<p class="tmore">'+ic('bolt',16)+'<span>'+esc(q.ex)+'</span></p>';
  return h}
-const TEACH_MOOD=['smirk','wow','cheer','smirk'],TEACH_LEAD=['Listen up, rebel.','Here\'s one to remember.','This one comes up a lot.','Quick briefing.','Pay attention to the bold part.','Ooh, good one.'];
+/* ---------- Ruckus quips (rotated so they don't repeat too soon) ---------- */
+const QUIPS={
+ right:['Nailed it. The Founders would be mildly impressed.','Correct. Put that on a protest sign.','Boom. Checks AND balances.','That answer passed both chambers.','Correct. No filibuster needed.','You just out-civics\'d half of Congress.','Right! Somewhere a civics teacher just smiled.','Sharp. Like a quill pen.','Correct. Motion carries.','Yes! Democracy thanks you.','Right answer. The gavel approves.','You\'re on fire. Legally.','Correct. That\'s self-evident.','Ratified!','Big brain. Small government? Up to you.','Correct. Ruckus is screeching with joy.'],
+ wrong:['Close. Even the Supreme Court splits 5-4 sometimes.','Nope. But dissent is patriotic.','Not quite. Amendments exist for a reason.','Swing and a miss. Shake it off.','Wrong, but you showed up. That\'s half of democracy.','Veto\'d. Try again next session.','Nah. I\'ll bring that one back for a rematch.','Not this time. Even Madison needed drafts.','Overruled. Learn it and appeal.','Miss. Don\'t worry, I won\'t tell your senator.'],
+ teach:['Listen up, rebel.','Here\'s one to remember.','This one comes up a lot.','Quick briefing.','Pay attention to the bold part.','Ooh, good one.','Knowledge is a weapon. Here\'s ammo.','You can\'t fight the system if you don\'t know the system.','Write this on your jacket.','Trivia night just got easier.','This fact is punk rock, trust me.','Read it once. Own it forever.','Plot twist incoming.','The fine print. Read it.'],
+ path:['Question authority. Then look up the answer.','Democracy is a group project. Do your part.','Every law started as somebody\'s idea.','Checks and balances: like a mosh pit with rules.','I don\'t trust power. I study it.','The Constitution is short. Your excuses should be too.','Voting is the loudest thing you can do quietly.','A republic, if you can keep it. Can you?','Read the fine print. Then rewrite it.','Rebellion starts with homework. Sorry.','Your city council has more say over your street than the president.','The best protest is an informed one.','I have opinions. I keep them nonpartisan. It\'s hard.','Power concedes nothing without a lesson streak.','Small lessons, big brain.','Tap me again. I have more where that came from.'],
+ start:['Here\'s the big picture. Next I\'ll teach you each fact, one at a time, before I quiz you on it. No surprises.','Big picture first, then each fact, then a quiz on just those facts. No ambushes.','Briefing time. I teach, then I quiz. Fair is fair.','Read this, then I\'ll walk you through each fact before any questions.'],
+ perfect:['No mistakes. Ruckus is impressed, which is rare.','Flawless. Are you secretly a Supreme Court clerk?','Perfect score. I\'m putting it on a patch.','Zero mistakes. Run for office already.','Clean sweep. Even the opposition would applaud.'],
+ done:['Mistakes are saved in Practice for a rematch.','Done! Your weak spots are waiting in Practice. They\'re not scary.','Lesson down. Every mistake is a rematch in Practice.','Good work. Rome wasn\'t built in a day. Neither was Congress.'],
+ practice:['Each practice session earns back 1 heart.','Reps make rebels. Each session earns back 1 heart.','Practice: where mistakes go to get fixed. Earns back 1 heart.'],
+ quit:['If you quit now, you\'ll lose your progress in this session.','Walking out mid-session? That\'s a filibuster of one. You\'ll lose this session\'s progress.','Quitting now loses this session\'s progress. Even Congress finishes sessions. Usually.']
+};
+const QSEEN={};
+function quip(k){const a=QUIPS[k];if(!a||!a.length)return '';const seen=QSEEN[k]||(QSEEN[k]=[]);const keep=Math.min(a.length-1,Math.max(1,Math.floor(a.length/2)));
+ let pool=a.map((_,i)=>i).filter(i=>!seen.includes(i));const i=pool[Math.floor(Math.random()*pool.length)];seen.push(i);while(seen.length>keep)seen.shift();return a[i]}
+const TEACH_MOOD=['smirk','wow','cheer','smirk'],TEACH_LEAD=QUIPS.teach;
 function startSession(o){closeModal();
  S=Object.assign({queue:[],idx:0,base:0,done:0,correct:0,wrong:0,combo:0,maxCombo:0,start:Date.now(),checked:false,learn:null,v:null},o);
  const k=o.kind;
@@ -2549,7 +2574,7 @@ function headHTML(){const k=S.kind;let pct=Math.min(100,S.done/S.base*100),right
  return '<div class="lhead"><button class="x" data-a="quit" aria-label="Quit">'+ic('x',26)+'</button><div class="bar '+(k==='lightning'?'timer':'')+(S.bump?' bump':'')+'" style="--c:var(--green)"><i id="pbar" style="width:'+pct+'%"></i></div>'+right+'</div>'}
 function renderSession(){if(!S)return;const ov=$('#overlay');let body,foot;
  if(S.learn){
-  body='<div class="lin'+(S.fresh?'':' still')+'"><span class="qtype newword">'+ic('book',18)+'New lesson</span><div class="speak">'+ruckus('smirk',96)+'<div class="bubble">Here\'s the big picture. Next I\'ll teach you each fact, one at a time, before I quiz you on it. No surprises.</div></div>'+learnCard(S.learn)+'</div>';
+  body='<div class="lin'+(S.fresh?'':' still')+'"><span class="qtype newword">'+ic('book',18)+'New lesson</span><div class="speak">'+ruckus('smirk',96)+'<div class="bubble">'+esc(S.sq||(S.sq=quip('start')))+'</div></div>'+learnCard(S.learn)+'</div>';
   foot='<div class="lfoot"><div class="in" style="justify-content:flex-end"><button class="btn green" data-a="learn-go" style="min-width:200px">Let\'s go</button></div></div>'}
  else if(S.queue[S.idx]&&S.queue[S.idx].t==='teach'){const it=S.queue[S.idx],q=it.q,r=hash(q.id);
   body='<div class="lin'+(S.fresh?'':' still')+'"><span class="qtype newword">'+ic('book',18)+'New fact '+it.n+' of '+it.of+'</span><div class="speak"><div class="mascot-react idle">'+ruckus(TEACH_MOOD[r%4],84)+'</div><div class="bubble">'+TEACH_LEAD[r%TEACH_LEAD.length]+'</div></div><div class="tcard">'+teachBody(q)+'</div></div>';
@@ -2576,6 +2601,7 @@ function qHTML(q){const v=S.v,ch=S.checked;let h='<span class="qtype">'+LABEL[q.
  else if(q.t==='match'){h+='<h2 class="prompt">'+esc(q.p)+'</h2><div class="match"><div class="col">'+v.L.map(i=>{const ok=v.okL.includes(i);return '<button class="mt '+(ok?'gone':v.sl===i?(v.bad==='L'+i?'bad':'sel'):'')+'" data-a="ml" data-x="'+i+'">'+esc(q.pairs[i][0])+'</button>'}).join('')+'</div><div class="col">'+v.R.map(i=>{const ok=v.okR.includes(i);return '<button class="mt '+(ok?'gone':v.sr===i?(v.bad==='R'+i?'bad':'sel'):'')+'" data-a="mr" data-x="'+i+'">'+esc(q.pairs[i][1])+'</button>'}).join('')+'</div></div>'}
  else if(q.t==='type'){h+='<h2 class="prompt">'+esc(q.p)+'</h2><textarea class="typein" id="typein" data-in="type" placeholder="Type here" '+(ch?'disabled':'')+' autocomplete="off" autocapitalize="off" spellcheck="false">'+esc(v.text)+'</textarea>'}
  return h}
+function fbQuip(ok){const k=(S?S.idx:0)+'|'+ok+'|'+(S?S.queue.length:0);if(!S.fq||S.fq.k!==k)S.fq={k,t:quip(ok?'right':'wrong')};return S.fq.t}
 const PRAISE=['Nice!','Correct!','Great job!','Excellent!','Nailed it!','Sharp!','Rebel scholar!'];
 function answerText(q){if(q.t==='order')return q.a.map((s,i)=>(i+1)+'. '+s).join('   ');if(q.t==='match')return q.pairs.map(p=>p[0]+' = '+p[1]).join('; ');return q.a}
 function footHTML(q){if(S.kind==='lightning')return '<div class="lfoot '+(S.checked?(S.result?'ok':'bad'):'')+'"><div class="in"><p class="muted" style="font-weight:800">'+(S.checked?(S.result?'Correct!':'Answer: '+esc(q.a)):'Tap an answer. Speed counts.')+'</p></div></div>';
@@ -2583,7 +2609,7 @@ function footHTML(q){if(S.kind==='lightning')return '<div class="lfoot '+(S.chec
   const hint=(S.kind==='lesson'||S.kind==='review'||S.kind==='weak')&&TEACH[q.id]?'<button class="btn ghost hintbtn" data-a="hint">'+ic('book',18)+'Hint</button>':'';
   return '<div class="lfoot"><div class="in" style="justify-content:'+(hint?'space-between':'flex-end')+'">'+hint+'<button class="btn green" data-a="check" style="min-width:200px" '+(canCheck(q,S.v)?'':'disabled')+'>Check</button></div></div>'}
  const ok=S.result;const why=q.ex?'<p class="why">'+esc(q.ex)+'</p>':(TEACH[q.id]&&q.t!=='match'&&q.t!=='order'?'<p class="why">'+md(TEACH[q.id])+'</p>':'');
- return '<div class="lfoot '+(ok?'ok':'bad')+'"><div class="in"><div class="fb"><span class="badge" style="color:'+(ok?'var(--green)':'var(--red)')+'">'+ic(ok?'check':'x',30)+'</span><div><h3>'+(ok?PRAISE[Math.floor(Math.random()*PRAISE.length)]:(q.t==='match'?'Close. Watch those pairs.':'Correct answer:'))+'</h3>'+(ok?'':(q.t==='match'?'':'<p>'+esc(answerText(q))+'</p>'))+why+'</div></div><button class="btn '+(ok?'green':'red')+'" data-a="cont" style="min-width:200px">Continue</button></div></div>'}
+ return '<div class="lfoot '+(ok?'ok':'bad')+'"><div class="in"><div class="fb"><span class="badge" style="color:'+(ok?'var(--green)':'var(--red)')+'">'+ic(ok?'check':'x',30)+'</span><div><h3>'+(ok?PRAISE[Math.floor(Math.random()*PRAISE.length)]:(q.t==='match'?'Close. Watch those pairs.':'Correct answer:'))+'</h3>'+(ok?'':(q.t==='match'?'':'<p>'+esc(answerText(q))+'</p>'))+'<p class="quip">'+esc(fbQuip(ok))+'</p>'+why+'</div></div><button class="btn '+(ok?'green':'red')+'" data-a="cont" style="min-width:200px">Continue</button></div></div>'}
 function check(){const q=S.queue[S.idx],v=S.v;let ok;
  if(q.t==='order')ok=v.picked.every((ix,i)=>ix===i);
  else if(q.t==='type')ok=q.acc.some(a=>norm(a)===norm(v.text));
@@ -2633,13 +2659,13 @@ function renderResult(){const sc=R.screens[R.i];const d=R.d;const ov=$('#overlay
   let title,sub;
   if(d.k==='lightning'){title=d.score+' correct!';sub=d.score>=st.stats.lightning&&d.score>0?'That\'s your best Lightning Round.':'Best so far: '+st.stats.lightning+'.'}
   else if(d.k==='test'||d.k==='cp'){title=good?(d.k==='cp'?'Checkpoint cleared!':'Test passed!'):'Not quite yet';sub='You scored '+d.score+' of '+d.total+'. '+(good?'':'You need 75% to pass. Review the guidebook and try again.')}
-  else if(d.k==='lesson'){title=d.perfect?'Perfect lesson!':'Lesson complete!';sub=d.perfect?'No mistakes. Ruckus is impressed, which is rare.':'Mistakes are saved in Practice for a rematch.'}
+  else if(d.k==='lesson'){title=d.perfect?'Perfect lesson!':'Lesson complete!';sub=d.rq||(d.rq=quip(d.perfect?'perfect':'done'))}
   else{title='Practice complete!';sub=d.heart?'You earned back a heart.':'Keep that brain sharp.'}
   const mm=Math.floor(d.secs/60)+':'+pad(d.secs%60);
   body='<div class="result"><div class="hero">'+(good?'<div class="burst"></div>':'')+ruckus(good?'cheer':'sad',150)+'</div>'+'<h1 class="'+(good?'':'fail')+'">'+title+'</h1><p class="muted" style="font-weight:700;max-width:420px">'+sub+'</p><div class="tiles">'+
    tile('Total XP'+(d.boost>1?' ×2':''),'var(--gold)',ic('bolt',22),d.xp)+(d.k==='lightning'?'':tile(good?(d.acc>=90?'Amazing':'Accuracy'):'Accuracy','var(--green)',ic('target',22),d.acc,'%'))+tile('Time','var(--blue)',ic('clock',22),mm,'',true)+'</div></div>'}
  else if(sc.t==='streak'){const ws=weekStart();body='<div class="result"><div class="hero"><div class="burst flame"></div><div class="bigflame" style="color:var(--flame)">'+ic('flame',120)+'</div></div><div class="bignum num">'+st.streak+'</div><h1 style="color:var(--flame)">day streak!</h1>'+weekRow(ws,['M','T','W','T','F','S','S'])+'<p class="muted" style="font-weight:700;max-width:380px">'+(st.streak===1?'Day one. Come back tomorrow to build it.':'Come back tomorrow so your streak doesn\'t reset.')+'</p></div>'}
- else if(sc.t==='goal'){body='<div class="result"><div class="hero"><div class="burst"></div>'+goalRing(150)+'</div>'+'<h1>Daily goal reached!</h1><p class="muted" style="font-weight:700">You earned '+st.daily.xp+' XP today. Claim your quest reward in Quests.</p></div>'}
+ else if(sc.t==='goal'){body='<div class="result"><div class="hero"><div class="burst"></div>'+goalRing(150)+'</div>'+'<h1>Daily goal reached!</h1><p class="muted" style="font-weight:700">You earned '+st.daily.xp+' XP today. Ruckus approves.</p></div>'}
  else if(sc.t==='unlock'){body='<div class="result"><div class="hero"><div class="burst"></div><div style="color:var(--gold)" class="bigflame">'+ic(sc.u.icon,120)+'</div></div><h1>'+esc(sc.u.t)+'</h1><p class="muted" style="font-weight:700;max-width:420px">'+esc(sc.u.p)+'</p></div>'}
  else if(sc.t==='ach'){const a=sc.a.a;body='<div class="result"><div class="hero"><div class="burst"></div><span class="pc-ic" style="width:120px;height:120px;border-radius:32px;background:'+a.col+'">'+ic(a.icon,64)+'</span></div><h1>Achievement unlocked</h1><h2>'+a.name+' · Level '+sc.a.l+'</h2><p class="muted" style="font-weight:700">'+a.d.replace('{n}',a.lv[sc.a.l-1])+'</p></div>'}
  const retry=sc.t==='result'&&(d.k==='test'||d.k==='cp')&&!good;
@@ -2696,7 +2722,7 @@ const A={
  setrep:el=>{st.reps[el.dataset.k]=el.value;save();render()},
  taught:()=>{if(!S)return;S.done++;S.bump=true;sfx('tap');S.idx++;if(S.idx>=S.queue.length){finish();return}newView();renderSession()},
  hint:()=>{if(!S)return;const q=S.queue[S.idx];if(!q||q.t==='teach')return;sfx('tap');modal('<div style="display:flex;gap:12px;align-items:center;width:100%">'+ruckus('wow',64)+'<div style="text-align:left"><small class="eyebrow muted">Hint</small><h2>Here\'s what I taught you</h2></div></div><div class="tcard" style="text-align:left;width:100%">'+teachBody(q)+'</div><div class="row"><button class="btn wide" data-a="close">Back to the question</button></div>','guidebook')},
- quit:()=>modal(ruckus('sad',100)+'<h2>Wait, don\'t bail!</h2><p class="muted" style="font-weight:700">If you quit now, you\'ll lose your progress in this session.</p><div class="row"><button class="btn wide" data-a="close">Keep learning</button><button class="linkbtn" data-a="quit-yes" style="color:var(--red)">End session</button></div>'),
+ quit:()=>modal(ruckus('sad',100)+'<h2>Wait, don\'t bail!</h2><p class="muted" style="font-weight:700">'+esc(quip('quit'))+'</p><div class="row"><button class="btn wide" data-a="close">Keep learning</button><button class="linkbtn" data-a="quit-yes" style="color:var(--red)">End session</button></div>'),
  'quit-yes':()=>closeSession(),
  'ooh-unl':()=>{st.unlimited=true;save();closeModal();toast(ic('heart',20)+'Unlimited hearts on. Change it any time in Profile.');cont()},
  'ooh-practice':()=>{closeSession();startSession({kind:'review'})},
@@ -2712,6 +2738,7 @@ const A={
  'lb-leave':()=>modal(ruckus('sad',90)+'<h2>Leave the leaderboard?</h2><p class="muted" style="font-weight:700">Your name and stats disappear for everyone. Your own progress stays on this device, and you can join again anytime.</p><div class="row"><button class="btn ghost wide" data-a="close">Stay</button><button class="btn red wide" data-a="lb-leave-yes">Leave</button></div>'),
  'lb-leave-yes':()=>{const id=st.lb.id;st.lb.joined=false;save();closeModal();if(lbOn()&&id){try{fetch(lbURL(id),{method:'DELETE'}).catch(()=>{})}catch(e){}}if(LB.rows)LB.rows=LB.rows.filter(r=>r.id!==id);render()},
  'rem-allow':()=>{remEnable(st.rem.freq)},
+ quip:()=>{PATHQ=quip('path');const b=document.querySelector('.pquip');if(b){b.textContent=PATHQ;b.classList.remove('pop-in');void b.offsetWidth;b.classList.add('pop-in')}sfx('tap')},
  'region-pick':el=>{setRegion(el.dataset.r);closeModal();render();showNotices()},
  'ob-region':el=>{OB.region=el.dataset.r;sfx('tap');renderOB()},
  prac:el=>{const k=el.dataset.k;closeModal();if(k==='reps'){setTab('reps');return}if(k==='local'){setTab('learn');setTimeout(()=>{const s=$('#sec4');if(s)s.scrollIntoView({behavior:'smooth'})},80);return}
