@@ -623,7 +623,7 @@ q:[
  M('How many articles are in the original Constitution?','7',['10','3','27']),
  P('Match each Preamble goal to a modern example of it.',[['Provide for the common defence','Funding the armed forces'],['Establish Justice','Federal courts settling disputes'],['Insure domestic Tranquility','Sending the National Guard to stop a riot'],['Promote the general Welfare','Building interstate highways']]),
  M('Which is NOT one of the Preamble\'s goals?','Protect the rights of private property',['Insure domestic Tranquility','Secure the Blessings of Liberty','Promote the general Welfare']),
- P('Match the article to its subject.',[['Article I','Congress'],['Article II','The President'],['Article III','The courts'],['Article V','Amendments']]),
+ Object.assign(P('Match the article to its subject.',[['Article I','Congress'],['Article II','The President'],['Article III','The courts'],['Article V','Amendments']]),{alt:[[['Article IV','How states treat each other'],['Article V','Amendments'],['Article VI','Federal law is supreme'],['Article VII','Ratification']],[['Article I','Congress'],['Article III','The courts'],['Article IV','How states treat each other'],['Article VI','Federal law is supreme']],[['Article II','The President'],['Article V','Amendments'],['Article VII','Ratification'],['Article III','The courts']]]}),
  M('Why is Article I, on Congress, by far the longest and most detailed article?','The framers listed Congress\'s powers, and the limits on them, so it couldn\'t claim powers it wasn\'t given',['Congress was meant to be the weakest branch, so it needed the most rules','The framers copied it almost word for word from the Articles of Confederation','It also spells out the powers of the President and the courts']),
  M('Article I, Section 8 is famous because it...','Lists the powers of Congress',['Lists the rights of citizens','Creates the Cabinet','Explains impeachment trials']),
  M('The Constitution creates only one court by name, the Supreme Court. How did the federal district courts and courts of appeals come to exist?','Congress created them by law, starting with the Judiciary Act of 1789',['Article III lists them alongside the Supreme Court','The Supreme Court set them up under its own rules','States created them and later handed them to the federal government'],'Congress creates the lower federal courts by law.'),
@@ -1652,7 +1652,7 @@ const TEACH={
 'u2-0':'The original Constitution is short: just **7 articles**. Everything else was added later as amendments.',
 'u2-1':'The **Preamble** opens with "We the People" and lists six goals: a more perfect union, justice, domestic tranquility, the common defence, the general welfare, and liberty. Here\'s what four of them look like today:',
 'u2-2':'The Preamble lists six goals: union, justice, tranquility, defense, welfare, and liberty. It does **not** mention property, even though Locke and many framers prized it. **Protect the rights of private property** shows up later, in the 5th Amendment.',
-'u2-3':'The first three articles set up the three branches. Article V is the "how to change this" article.',
+'u2-3':'Articles I, II, and III set up the three branches. Article IV covers how states treat each other, V is how to amend, VI makes federal law supreme, and VII covers ratification.',
 'u2-4':'Article I is the longest article for a reason. **The framers listed Congress\'s powers, and the limits on them, so it couldn\'t claim powers it wasn\'t given.** Section 8 lists what Congress may do. Section 9 lists what it may not.',
 'u2-5':'Inside Article I, **Section 8** is the famous one: it **lists the powers of Congress**, like taxing, borrowing, and declaring war.',
 'u2-6':'Article III names only **one court: the Supreme Court**. Every lower federal court exists because **Congress created them by law, starting with the Judiciary Act of 1789**. That\'s why Congress can also reshape or abolish them.',
@@ -2877,7 +2877,10 @@ const LABEL={mc:'Select the correct answer',tf:'True or false?',fill:'Fill in th
 function chunkSize(u){return Math.ceil(u.q.length/u.L)}
 function graded(qs){return qs.filter(q=>q.t!=='vote')}
 function taughtQs(u){const p=pr(u);if(p.t||p.d>=u.L)return graded(u.q);return graded(u.q.slice(0,Math.min(u.q.length,p.d*chunkSize(u))))}
-function lessonQs(u,k,teach){const size=chunkSize(u);const all=u.q.slice(k*size,(k+1)*size);const votes=all.filter(q=>q.t==='vote');const chunk=graded(all);const earlier=graded(u.q.slice(0,k*size));const rev=shuffle(earlier).slice(0,k?3:0);
+function varQ(q){if(!q||!q.alt)return q;const all=[q.pairs].concat(q.alt);return Object.assign({},q,{pairs:all[Math.floor(Math.random()*all.length)]})}
+function unseenFirst(pool){const r=new Set(st.recent||[]);return shuffle(pool.filter(q=>!r.has(q.id))).concat(shuffle(pool.filter(q=>r.has(q.id))))}
+function noteSeen(id){const r=st.recent||(st.recent=[]);const i=r.indexOf(id);if(i>=0)r.splice(i,1);r.push(id);if(r.length>80)r.shift()}
+function lessonQs(u,k,teach){const size=chunkSize(u);const all=u.q.slice(k*size,(k+1)*size);const votes=all.filter(q=>q.t==='vote');const chunk=graded(all);const earlier=graded(u.q.slice(0,k*size));const rev=unseenFirst(earlier).slice(0,k?3:0);
  if(!teach)return shuffle(chunk).concat(votes,shuffle(rev));
  let out=[];for(let i=0;i<chunk.length;i+=2){const g=chunk.slice(i,i+2);g.forEach((q,j)=>out.push({t:'teach',q,n:i+j+1,of:chunk.length}));out=out.concat(shuffle(g))}
  return out.concat(votes,shuffle(rev))}
@@ -2907,13 +2910,14 @@ function startSession(o){closeModal();
  S=Object.assign({queue:[],idx:0,base:0,done:0,correct:0,wrong:0,combo:0,maxCombo:0,start:Date.now(),checked:false,learn:null,v:null,wrongIds:[]},o);
  const k=o.kind;
  if(k==='lesson'){S.queue=lessonQs(o.u,o.k,!o.replay);if(!o.replay)S.learn=o.u.tips[o.k]}
- else if(k==='test')S.queue=shuffle(graded(o.u.q)).slice(0,10);
- else if(k==='cp'){const us=UNITS.filter(u=>u.s===o.s);const per=Math.max(2,Math.ceil(16/us.length));let qs=[];us.forEach(u=>{qs=qs.concat(shuffle(graded(u.q)).slice(0,per))});S.queue=shuffle(qs).slice(0,16)}
- else if(k==='review'){let pool=[];UNITS.forEach(u=>{pool=pool.concat(taughtQs(u))});S.queue=shuffle(pool).slice(0,10)}
+ else if(k==='test')S.queue=shuffle(unseenFirst(graded(o.u.q)).slice(0,10));
+ else if(k==='cp'){const us=UNITS.filter(u=>u.s===o.s);const per=Math.max(2,Math.ceil(16/us.length));let qs=[];us.forEach(u=>{qs=qs.concat(unseenFirst(graded(u.q)).slice(0,per))});S.queue=shuffle(qs).slice(0,16)}
+ else if(k==='review'){let pool=[];UNITS.forEach(u=>{pool=pool.concat(taughtQs(u))});S.queue=shuffle(unseenFirst(pool).slice(0,10))}
  else if(k==='missed'){S.queue=shuffle(o.ids.map(id=>QMAP[id]).filter(Boolean))}
  else if(k==='weak'){S.queue=shuffle(weakDue().map(id=>QMAP[id])).slice(0,12);S.missed={}}
  else if(k==='lightning'){let pool=[];UNITS.forEach(u=>{pool=pool.concat(taughtQs(u).filter(q=>q.t==='mc'||q.t==='tf'||q.t==='fill'))});S.pool=pool;S.queue=shuffle(pool);S.endAt=Date.now()+60000;S.learn=null}
  if(!S.queue.length){S=null;toast('Finish a lesson first. I only quiz you on what I\'ve taught you.');return}
+ {const vm={};const V=q=>q&&q.alt?(vm[q.id]||(vm[q.id]=varQ(q))):q;S.queue=S.queue.map(x=>x&&x.t==='teach'?Object.assign({},x,{q:V(x.q)}):V(x))}
  S.base=S.queue.length;newView();$('#overlay').classList.add('on');document.body.style.overflow='hidden';sfx('tap');renderSession();
  if(k==='lightning')startLightTimer()}
 function newView(){const q=S.queue[S.idx];if(!q){S.v=null;return}const v={sel:null};if(q.t==='teach'){S.v=v;S.checked=false;S.result=null;S.fresh=true;return}
@@ -2974,8 +2978,8 @@ function check(){const q=S.queue[S.idx],v=S.v;let ok;
  else if(q.t==='type')ok=q.acc.some(a=>norm(a)===norm(v.text));
  else ok=v.sel===q.a;
  grade(ok)}
-function grade(ok){const q=S.queue[S.idx];S.checked=true;S.result=ok;S.justChecked=true;if(ok)S.bump=true;else if(S.kind==='lesson'&&!st.unlimited)S.hurt=true;st.stats.answered++;
- if(ok){S.correct++;S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);S.done++;st.stats.correct++;st.daily.correct++;st.daily.combo=Math.max(st.daily.combo,S.combo);st.stats.bestCombo=Math.max(st.stats.bestCombo,S.combo);sfx('ok');if([3,5,10,15,20].includes(S.combo))comboToast(S.combo);if(S.kind==='weak'&&!S.missed[q.id])srsRight(q.id)}
+function grade(ok){const q=S.queue[S.idx];noteSeen(q.id);S.checked=true;S.result=ok;S.justChecked=true;if(ok)S.bump=true;else if(S.kind==='lesson'&&!st.unlimited)S.hurt=true;st.stats.answered++;
+ if(ok){S.correct++;S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);S.done++;st.stats.correct++;st.daily.correct++;st.daily.combo=Math.max(st.daily.combo,S.combo);st.stats.bestCombo=Math.max(st.stats.bestCombo,S.combo);sfx('ok');if([3,5,10,15,20].includes(S.combo))comboToast(S.combo);if(S.kind==='weak'&&!S.missed[q.id])srsRight(q.id);if(st.srs[q.id]&&!S.wrongIds.includes(q.id)){const r=st.srs[q.id];r.ok=(r.ok||0)+1;if(r.ok>=2){removeMistake(q.id);toast(ic('check',18)+'Weak spot cleared. You got it right twice.')}}}
  else{S.wrong++;S.combo=0;addMistake(q.id);if(!S.wrongIds.includes(q.id))S.wrongIds.push(q.id);if(S.kind==='weak')S.missed[q.id]=1;sfx('bad');if(S.kind==='lesson'){loseHeart()}
   if(S.kind==='lesson'||S.kind==='weak'||S.kind==='review'||S.kind==='missed')S.queue.push(q);else if(S.kind!=='lightning')S.done++}
  save();renderSession()}
