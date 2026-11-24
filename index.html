@@ -478,6 +478,9 @@ details.danger summary{cursor:pointer;font-weight:800;color:var(--ink-2);padding
 .lbrow .who>small{display:block;line-height:1.35}.lbrow .who>small svg{vertical-align:-2px}.lbrow .who b small{display:inline}
 .lbrow .pts{font-weight:900;font-size:20px;text-align:right}.lbrow .pts small{font-size:12px;margin-left:3px;color:var(--ink-2)}
 .linkbtn{border:0;background:none;color:var(--blue);font:inherit;font-weight:800;text-decoration:underline;cursor:pointer;padding:0}
+
+.pop{translate:calc(-1 * var(--nx,0px)) 0}
+.pop::before{left:calc(50% + var(--nx,0px))}
 #modal{position:fixed;inset:0;z-index:75;pointer-events:none}#modal>*{pointer-events:auto}</style>
 <div id="app"><aside class="side" id="side"></aside><div class="mainwrap"><header class="topbar" id="top"></header><main class="view" id="view"></main></div><aside class="rail" id="rail"></aside><nav class="tabs" id="tabs"></nav></div>
 <div id="overlay"></div><div id="modal"></div><div id="toast"></div><canvas id="confetti"></canvas>
@@ -2306,11 +2309,11 @@ function nodeHTML(i,x,u){const n=NODES[i];const stt=nodeState(i);const col=u?uco
  if(stt==='lock')icon=n.type==='lesson'?'lock':icon;if(stt==='done'&&n.type==='lesson')icon='check';
  const cls='node '+(stt==='done'?'done':stt==='lock'?'lock':'cur')+(n.type==='test'?' test':n.type==='cp'?' cp':'');
  let h='<div class="nodewrap" style="transform:translateX('+x+'px)">';
- if(stt==='cur')h+='<span class="startbub" style="'+col+'">'+(n.type==='lesson'?'START':n.type==='test'?'TEST':'CHECKPOINT')+'</span>';
+ if(stt==='cur'&&openNode!==i)h+='<span class="startbub" style="'+col+'">'+(n.type==='lesson'?'START':n.type==='test'?'TEST':'CHECKPOINT')+'</span>';
  h+='<button class="'+cls+'" style="'+col+'" data-a="node" data-i="'+i+'" aria-label="'+(n.type==='lesson'?'Lesson '+(n.k+1):n.type==='test'?'Unit test':'Checkpoint')+'">';
  if(stt==='cur'){const sz=n.type==='cp'?120:n.type==='test'?108:96;h+='<svg class="ring" viewBox="0 0 100 100" style="inset:-12px;width:calc(100% + 24px);height:calc(100% + 24px)"><circle cx="50" cy="50" r="46" fill="none" stroke="var(--surface-2)" stroke-width="7"/><circle cx="50" cy="50" r="46" fill="none" stroke="var(--c)" stroke-width="7" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="'+(n.type==='lesson'?289*(1-(n.k)/(n.u.L)):200)+'" transform="rotate(-90 50 50)"/></svg>'}
  h+=ic(icon,n.type==='cp'?46:n.type==='test'?38:32)+'</button>';
- if(openNode===i)h+=popHTML(i,stt,col);
+ if(openNode===i)h+=popHTML(i,stt,col+';--nx:'+x+'px');
  return h+'</div>'}
 function popHTML(i,stt,col){const n=NODES[i];let t,sub,btn;
  if(n.type==='lesson'){t=n.u.title;sub='Lesson '+(n.k+1)+' of '+n.u.L;btn=stt==='done'?'Practice +5 XP':'Start +10 XP'}
