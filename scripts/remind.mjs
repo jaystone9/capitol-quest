@@ -1,4 +1,5 @@
-// Sends Capitol Quest play reminders. Run by .github/workflows/remind.yml every 15 minutes.
+// Sends Capitol Quest play reminders. Run by .github/workflows/remind.yml (GitHub's schedule, plus an
+// optional outside pinger that calls workflow_dispatch, because GitHub's own schedule is unreliable).
 // Reads reminder settings from Firestore, sends a Web Push to anyone who is due and hasn't played yet today.
 import webpush from 'web-push';
 
@@ -32,7 +33,9 @@ export function due(r, now) {
   if (!NEED[r.freq] || !r.endpoint) return false;
   if (r.lastSent === now.date) return false;
   const h = Number.isFinite(r.hour) ? r.hour : 19;
-  if (now.hour < h || now.hour >= h + 3) return false;           // only in the chosen hour (plus slack for delayed runs)
+  // GitHub often runs scheduled jobs hours late or skips them, so a run any time from the chosen hour
+  // until 11 PM local still sends. Never before the chosen hour, never late at night.
+  if (now.hour < h || now.hour >= Math.max(h + 1, 23)) return false;
   const since = days(now.date, r.lastPlayed);
   if (since <= 0) return false;                                  // already played today
   let need = NEED[r.freq];
@@ -62,7 +65,7 @@ for (const r of rs) {
     sent++;
   } catch (e) {
     if (e.statusCode === 404 || e.statusCode === 410) await fetch(`${col}/${encodeURIComponent(r.id)}?key=${K}`, { method: 'DELETE' }); // subscription expired
-    else console.log('send failed', e.statusCode || e.message);
+    else console.log('send failed', r.id.slice(0, 6), e.statusCode || '', (e.body || e.message || '').toString().slice(0, 300));
   }
 }
 console.log(`checked ${rs.length}, sent ${sent}`);
