@@ -1047,6 +1047,21 @@ body{background:var(--sky) fixed;background-color:var(--bg);min-height:100vh}
 .beaq{transform:rotate(1.5deg)}
 .pquip::after,.beaq::after{border-top-color:var(--surface)}
 .unit-banner small{border-radius:999px;padding:4px 11px;background:linear-gradient(135deg,var(--punk-2),var(--punk))}
+
+/* ---------- rigged mascots ---------- */
+svg.cqr{overflow:visible;display:block;flex:none;max-width:100%;height:auto}
+.mascot-react,.mascot-react *,.mascot-bob{animation:none!important}
+.cq-duo{display:flex;align-items:flex-end;justify-content:center;gap:0}
+.cq-duo svg+svg{margin-left:-22px}
+.modal .cq-duo{margin-bottom:4px}
+.beacameo .bubble{margin-left:0}
+.path-mascot.cq-walker{z-index:5}
+.cq-say{position:fixed;z-index:90;background:var(--surface);color:var(--ink);border-radius:18px;padding:10px 14px;font-weight:600;font-size:14px;line-height:1.35;box-shadow:var(--soft-lg);pointer-events:none;transform:translateY(-100%);animation:cqsay .35s cubic-bezier(.2,1.6,.4,1)}
+@keyframes cqsay{from{opacity:0;transform:translateY(-80%) scale(.9)}to{opacity:1;transform:translateY(-100%) scale(1)}}
+.fbcast{min-height:118px}
+.fbcast .who{margin-bottom:-10px}
+.fbcast .who+.who{margin-left:-28px}
+.today .tday .tm{margin:-14px -10px -18px 0}
 #modal{position:fixed;inset:0;z-index:75;pointer-events:none}#modal>*{pointer-events:auto}</style>
 <div id="app"><aside class="side" id="side"></aside><div class="mainwrap"><header class="topbar" id="top"></header><main class="view" id="view"></main></div><aside class="rail" id="rail"></aside><nav class="tabs" id="tabs"></nav></div>
 <div id="overlay"></div><div id="modal"></div><div id="toast"></div><canvas id="confetti"></canvas>
@@ -3601,6 +3616,280 @@ Object.assign(TEACH,{
 'pf1-8':'The **Posse Comitatus Act** (1878) generally bars **using federal troops for domestic law enforcement**. The Insurrection Act is the main exception.',
 'pf1-9':'The thread is **who decides**: Congress or the President on spending, tariffs, and firings, and courts or states on limiting federal action.',
 });
+/* ---------- Capitol Quest mascot rig (Nov 2026) ----------
+   Ruckus (sarcastic punk eagle) and Bea (warm bison) are built from layered SVG parts.
+   Every part has a pivot and five spring channels (tx, ty, r, sx, sy). Actions set spring
+   targets on a short timeline, with per-part delays so the body leads and the head,
+   limbs, tail and brows follow. Springs overshoot and settle; nothing is keyframed. */
+const CQR=(function(){
+const SVGNS='http://www.w3.org/2000/svg';
+const CH=['tx','ty','r','sx','sy'];
+const rand=(a,b)=>a+Math.random()*(b-a);
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+let uid=0;
+const api={rigs:new Set(),extras:new Set(),manual:false,reduce:null,t:0};
+api.reduced=()=>api.reduce!=null?api.reduce:!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+/* per-part spring feel [stiffness, damping] and follow delay (ms) */
+const FEEL={root:[170,13],body:[210,15],head:[120,10],hawk:[95,5],tuft:[95,5],tail:[85,6],earL:[120,7],earR:[120,7],
+ wingL:[150,11],wingR:[150,11],armL:[150,12],armR:[150,12],browL:[240,17],browR:[240,17],lidL:[700,38],lidR:[700,38],
+ pupL:[280,22],pupR:[280,22],mouth:[320,20],heart:[160,9],glow:[90,12],shades:[200,12]};
+const DELAY={root:0,body:0,head:70,hawk:120,tuft:120,tail:150,earL:130,earR:150,wingL:90,wingR:110,armL:90,armR:110,
+ browL:60,browR:70,lidL:0,lidR:0,pupL:30,pupR:30,mouth:50,heart:0,glow:0,shades:0};
+
+function Part(el,px,py,name){const f=FEEL[name]||[160,12];this.el=el;this.px=px;this.py=py;this.name=name;this.c={};
+ for(const n of CH){const b=(n==='sx'||n==='sy')?1:0;this.c[n]={x:b,v:0,t:b,d:0,o:0,k:f[0],damp:f[1]}}}
+Part.prototype.apply=function(){const c=this.c,v=n=>c[n].x+c[n].o;
+ this.el.setAttribute('transform','translate('+(this.px+v('tx')).toFixed(2)+' '+(this.py+v('ty')).toFixed(2)+') rotate('+v('r').toFixed(2)+') scale('+v('sx').toFixed(3)+' '+v('sy').toFixed(3)+') translate('+(-this.px)+' '+(-this.py)+')')};
+
+function Rig(svg){this.svg=svg;this.kind=svg.getAttribute('data-rig');const S=SPEC[this.kind];this.S=S;this.p={};
+ svg.querySelectorAll('[data-p]').forEach(el=>{const n=el.getAttribute('data-p');const pv=S.piv[n]||[70,140];this.p[n]=new Part(el,pv[0],pv[1],n)});
+ this.q=[];this.t=0;this.expr={};this.state='idle';this.prevVy=0;this.look=null;this.hold=null;
+ this.nb=rand(800,2600);this.nl=rand(2500,5000);this.nt=rand(3000,6000);
+ this.shadow=svg.querySelector('[data-shadow]');this.rest(true);svg.__rig=this}
+const R=Rig.prototype;
+R.set=function(part,ch,val){const p=this.p[part];if(p&&p.c[ch])p.c[ch].t=val};
+R.kick=function(part,ch,vel){if(api.reduced())return;const p=this.p[part];if(p&&p.c[ch])p.c[ch].v+=vel};
+R.at=function(ms,fn){this.q.push({t:this.t+ms,fn})};
+R.clear=function(){this.q=[]};
+/* to(): move parts toward a pose; each part starts after its follow delay. Reduced motion keeps parts still. */
+R.to=function(map,ms){ms=ms||0;for(const part in map){if(!this.p[part])continue;if(api.reduced()&&!/^(lid|pup|glow|heart|shades)/.test(part))continue;
+  const d=ms+(DELAY[part]||0),vals=map[part];const go=()=>{for(const ch in vals)this.set(part,ch,vals[ch])};d<=0?go():this.at(d,go)}};
+R.ex=function(o,ms){const go=()=>{Object.assign(this.expr,o);this.svg.querySelectorAll('[data-x]').forEach(el=>{const [k,v]=el.getAttribute('data-x').split(':');if(k in o)el.style.display=(this.expr[k]===v)?'':'none'})};ms?this.at(ms,go):go()};
+R.lids=function(a){const h=this.S.lidH;return {lidL:{ty:a*h},lidR:{ty:a*h}}};
+R.restPose=function(){const m={};for(const n in this.p)m[n]={tx:0,ty:0,r:0,sx:1,sy:1};Object.assign(m,this.S.rest(this));return m};
+R.rest=function(now){const m=this.restPose();if(now){for(const n in m)for(const ch in m[n]){const c=this.p[n]&&this.p[n].c[ch];if(c){c.t=c.x=m[n][ch];c.v=0}}}else this.to(m);
+ this.ex(this.S.restExpr);this.state='idle'};
+R.rebind=function(svg){this.svg=svg;svg.__rig=this;svg.querySelectorAll('[data-p]').forEach(el=>{const n=el.getAttribute('data-p');if(this.p[n])this.p[n].el=el});this.shadow=svg.querySelector('[data-shadow]');this.ex(this.expr);for(const n in this.p)this.p[n].apply();this.dead=null;this.vis=null};
+R.unwind=function(part){const c=this.p[part]&&this.p[part].c.r;if(!c)return;const k=Math.round(c.x/360)*360;c.x-=k;c.t-=k};
+R.act=function(name,arg){this.clear();this.look=null;this.hold=null;const f=ACT[this.kind][name]||ACT.common[name];if(f)f.call(this,arg)};
+R.lookAt=function(cx,cy){const m=this.svg.getScreenCTM();if(!m)return;const pt=new DOMPoint(cx,cy).matrixTransform(m.inverse());this.look={x:pt.x,y:pt.y}};
+
+R.tick=function(dt){this.t+=dt;const due=this.q.filter(e=>e.t<=this.t);if(due.length){this.q=this.q.filter(e=>e.t>this.t);due.sort((a,b)=>a.t-b.t).forEach(e=>e.fn())}
+ const rm=api.reduced(),P=this.p,S=this.S,t=this.t;
+ /* idle life */
+ if(!rm){const br=Math.sin(t/3400*2*Math.PI);if(P.body){P.body.c.sy.o=.022*br;P.body.c.sx.o=-.01*br}if(P.head)P.head.c.ty.o=1.1*Math.sin(t/3400*2*Math.PI-.7);
+  if(t>this.nb){this.nb=t+rand(1600,5200);if(this.expr.eyes==='open'){const cur=P.lidL?P.lidL.c.ty.t:0;const blink=()=>{this.set('lidL','ty',S.lidH);this.set('lidR','ty',S.lidH)};const back=()=>{this.set('lidL','ty',cur);this.set('lidR','ty',cur)};
+    blink();this.at(110,back);if(Math.random()<.22){this.at(230,blink);this.at(340,back)}}}
+  if(this.state==='idle'&&!this.look){if(t>this.nl){this.nl=t+rand(3500,8000);const dx=rand(-3,3),dy=rand(-2,1.5);this.to({pupL:{tx:dx,ty:dy},pupR:{tx:dx,ty:dy},head:{r:dx*1.8}});
+     this.at(rand(1100,1800),()=>{if(this.state==='idle'&&!this.look)this.to({pupL:{tx:0,ty:0},pupR:{tx:0,ty:0},head:{r:0}})})}
+   if(t>this.nt){this.nt=t+rand(4000,9000);const tw=pick(S.twitch);this.kick(tw[0],'r',tw[1]*(Math.random()<.5?-1:1))}}}
+ else{for(const n in P){P[n].c.sy.o=P[n].c.sx.o=P[n].c.ty.o=0}}
+ /* eyes follow a point */
+ if(this.look&&P.pupL){const e=S.eyeC;const dx=this.look.x-e[0],dy=this.look.y-e[1],d=Math.hypot(dx,dy)||1,m=Math.min(S.pupMax,d/18);
+  for(const n of ['pupL','pupR']){this.set(n,'tx',dx/d*m);this.set(n,'ty',dy/d*m*.8)}
+  if(!rm){this.set('head','r',clamp(dx*.06,-9,9));this.set('root','r',clamp(dx*.025,-4,4))}}
+ /* physics: semi-implicit Euler in 1/240 s steps */
+ const rootVy=P.root?P.root.c.ty.v:0;
+ if(!rm){if(P.hawk)P.hawk.c.sy.d=clamp(rootVy*.0011,-.3,.3);if(P.tuft)P.tuft.c.sy.d=clamp(rootVy*.0009,-.25,.25);if(P.head)P.head.c.ty.d=clamp(-rootVy*.012,-5,5);
+  if(P.tail)P.tail.c.r.d=clamp(rootVy*.06,-25,25);if(P.earL){P.earL.c.r.d=clamp(rootVy*.05,-25,25);P.earR.c.r.d=-P.earL.c.r.d}}
+ let left=dt/1000;while(left>1e-6){const h=Math.min(left,1/240);left-=h;
+  for(const n in P){const c=P[n].c;for(const ch of CH){const s=c[ch];if(rm){s.x=s.t;s.v=0;continue}const a=-s.k*(s.x-(s.t+s.d))-s.damp*s.v;s.v+=a*h;s.x+=s.v*h}}}
+ for(const n in P)P[n].apply();
+ if(this.shadow&&P.root){const ty=P.root.c.ty.x,k=clamp(1+ty/70,.45,1.15);this.shadow.setAttribute('transform','translate('+(70+P.root.c.tx.x)+' 146) scale('+k.toFixed(3)+') translate(-70 -146)');this.shadow.setAttribute('opacity',clamp(.35+k*.65,0,1).toFixed(2))}};
+
+/* ---------- actions ---------- */
+const ACT={common:{},ruckus:{},bea:{}};
+ACT.common.idle=function(){this.rest()};
+ACT.common.think=function(){this.state='think';this.rest();this.state='think';this.to({root:{sy:.98,r:2},head:{ty:3,r:3},...this.lids(this.S.curiousLid),browL:{ty:-2,r:-4},browR:{ty:-2,r:4}})};
+/* right answer: anticipation squash, jump (and spin when hyped), wing flap or fist pump, squash on landing */
+function jump(r,c){const hype=c>=3,lvl=hype?Math.min(1,(c-2)/6):0,isRk=r.kind==='ruckus';const L=isRk?'wingL':'armL',Rt=isRk?'wingR':'armR';
+ r.ex({eyes:'happy',mouth:'open',shades:hype&&isRk?'on':'off',glow:hype?'on':'off',spark:hype?'on':'off'});
+ const H=(isRk?26:18)+lvl*22,spins=isRk?(c>=8?2:hype?1:0):(c>=6?1:0);
+ r.to({root:{sy:.82,sx:1.14,ty:3},[L]:{r:-12},[Rt]:{r:12},browL:{ty:-2},browR:{ty:-2},glow:{sx:.8+lvl*.6,sy:.8+lvl*.6}});
+ r.to({root:{ty:-H,sy:1.14,sx:.9,r:spins*360},[L]:{r:150},[Rt]:{r:isRk?-150:-160},head:{r:0}},120);
+ r.to({root:{ty:0,sy:1,sx:1}},360);
+ r.to({root:{sy:.84,sx:1.12}},470);r.to({root:{sy:1,sx:1}},560);
+ if(isRk){const flaps=2+Math.round(lvl*3);for(let i=0;i<flaps;i++){r.to({wingL:{r:115},wingR:{r:-115}},560+i*170);r.to({wingL:{r:160},wingR:{r:-160}},645+i*170)}}
+ else{for(let i=0;i<2+Math.round(lvl*2);i++){r.to({armR:{r:-125}},560+i*220);r.to({armR:{r:-160}},670+i*220)}r.to({armL:{r:40}},560)}
+ if(spins)r.at(1300,()=>r.unwind('root'));
+ if(c>=5){r.to({root:{ty:-H*.6,sy:1.1,sx:.92}},900);r.to({root:{ty:0,sy:1,sx:1}},1080);r.to({root:{sy:.86,sx:1.1}},1170);r.to({root:{sy:1,sx:1}},1250)}
+ r.at(2300,()=>{r.rest();r.ex({shades:hype&&isRk?'on':'off',glow:'off',spark:'off'})})}
+ACT.ruckus.right=function(c){jump(this,c||1)};
+ACT.bea.right=function(c){jump(this,c||1)};
+/* wrong answer: Ruckus facepalms or rolls his eyes */
+ACT.ruckus.wrong=function(kind){kind=kind||(Math.random()<.55?'palm':'roll');this.state='wrong';
+ if(kind==='palm'){this.ex({eyes:'squint',mouth:'frown',sweat:'off'},150);
+  this.to({root:{sy:.95,sx:1.04},head:{r:-7,ty:3},wingR:{r:158,tx:0},wingL:{r:4},browL:{r:14,ty:2},browR:{r:-14,ty:2}});
+  this.at(330,()=>this.kick('head','r',-140));
+  [[-13,1250],[-3,1450],[-12,1650],[-5,1850]].forEach(([a,ms])=>this.to({head:{r:a}},ms));
+  this.at(2500,()=>this.rest())}
+ else{this.ex({eyes:'open',mouth:'flat'});
+  this.to({...this.lids(.42),pupL:{tx:-2.5,ty:-4},pupR:{tx:-2.5,ty:-4},browL:{ty:-4,r:-12},head:{r:8}});
+  this.to({pupL:{tx:2,ty:-4.4},pupR:{tx:2,ty:-4.4},head:{r:-5}},260);
+  this.to({pupL:{tx:3,ty:-1},pupR:{tx:3,ty:-1}},520);
+  this.to({body:{sy:.94,sx:1.04},wingL:{r:34},wingR:{r:-34}},650);
+  this.to({body:{sy:1,sx:1},wingL:{r:10},wingR:{r:-10}},1050);
+  this.at(2200,()=>this.rest())}};
+/* wrong answer: Bea winces, then gives a reassuring nod */
+ACT.bea.wrong=function(){this.state='wrong';this.ex({eyes:'squint',mouth:'wince',sweat:'on'});
+ this.to({root:{sy:.92,sx:1.06},head:{ty:3,r:-5},armL:{r:-8},armR:{r:8},earL:{r:-28},earR:{r:28},browL:{r:-12,ty:-1},browR:{r:12,ty:-1}});
+ this.ex({eyes:'open',mouth:'smile',sweat:'off'},700);
+ this.to({root:{sy:1,sx:1},head:{r:4,ty:0},armL:{r:14},armR:{r:-14},earL:{r:0},earR:{r:0},browL:{r:-6,ty:-1},browR:{r:6,ty:-1},...this.lids(.3)},650);
+ [[5,800],[-1,980],[5,1160],[0,1340]].forEach(([y,ms])=>this.to({head:{ty:y}},ms));
+ this.to({armR:{r:-55}},850);this.to({armR:{r:-40}},1050);this.to({armR:{r:-55}},1250);this.to({armR:{r:-14}},1550);
+ this.at(2600,()=>this.rest())};
+/* victory dance: alternating beats, head counter-sways a beat later */
+function dance(r,ms){ms=ms||2600;const isRk=r.kind==='ruckus',L=isRk?'wingL':'armL',Rt=isRk?'wingR':'armR';r.state='dance';
+ r.ex({eyes:'happy',mouth:'open',spark:'on'});const beat=300;
+ for(let i=0,t=0;t<ms;i++,t+=beat){const s=i%2?1:-1;
+  r.to({root:{r:9*s,tx:3*s,ty:-7,sy:1.06,sx:.95},head:{r:-10*s},[L]:{r:s<0?160:40},[Rt]:{r:s<0?-40:-160},tail:{r:22*s},earL:{r:14*s},earR:{r:14*s}},t);
+  r.to({root:{ty:0,sy:.92,sx:1.07}},t+beat*.55)}
+ r.at(ms+50,()=>{r.rest();r.ex({spark:'off'})})}
+ACT.common.dance=function(ms){dance(this,ms)};
+/* unit done: dance, then a big jump with arms up */
+ACT.common.party=function(){dance(this,1800);this.at(1900,()=>{this.state='dance';jump(this,4)})};
+/* out of hearts: Bea comes in for a pat, Ruckus pretends not to care */
+ACT.bea.comfort=function(from){this.state='comfort';this.ex({eyes:'happy',mouth:'smile',heart:'on'});
+ if(from&&!api.reduced()){const c=this.p.root.c.tx;c.x=from;c.v=0}
+ this.to({root:{tx:0},head:{r:-6},earL:{r:-10},earR:{r:-10},heart:{sx:1,sy:1,ty:0}});
+ this.p.heart&&(this.p.heart.c.sx.x=this.p.heart.c.sy.x=0);
+ this.to({armL:{r:96}},500);for(let i=0;i<3;i++){this.to({armL:{r:80}},700+i*320);this.to({armL:{r:98}},860+i*320)}
+ this.to({armL:{r:60},head:{r:-3}},1800);this.at(3400,()=>{this.rest();this.ex({heart:'off'})})};
+ACT.ruckus.aloof=function(){this.state='aloof';this.ex({eyes:'open',mouth:'flat'});
+ this.to({head:{r:-10,tx:-2},...this.lids(.55),pupL:{tx:-3.4,ty:-.5},pupR:{tx:-3.4,ty:-.5},wingL:{r:-48},wingR:{r:48},browL:{ty:-2,r:-6},browR:{ty:-1}});
+ this.to({pupL:{tx:3.4},pupR:{tx:3.4},...this.lids(.3)},1300);
+ this.to({pupL:{tx:-3.4},pupR:{tx:-3.4},...this.lids(.55),head:{r:-14}},1700);this.at(1720,()=>this.kick('head','r',-90));
+ this.ex({mouth:'smirk'},2600);this.at(3400,()=>this.rest())};
+ACT.ruckus.comfort=ACT.ruckus.aloof;
+/* surprised */
+ACT.common.wow=function(){this.ex({mouth:'o',eyes:'open'});this.to({...this.lids(0),browL:{ty:-4,r:0},browR:{ty:-4,r:0},root:{sy:1.08,sx:.94}});this.kick('head','r',120);this.to({root:{sy:1,sx:1}},160);this.at(1600,()=>this.rest())};
+/* tap: a random reaction */
+ACT.common.tap=function(){const r=this,k=pick(['boing','spin','poke','wave']);r.state='tap';
+ if(k==='boing'){r.to({root:{sy:.8,sx:1.16}});r.to({root:{ty:-14,sy:1.1,sx:.92}},100);r.to({root:{ty:0,sy:1,sx:1}},280);r.to({root:{sy:.88,sx:1.08}},380);r.to({root:{sy:1,sx:1}},460)}
+ else if(k==='spin'){r.to({root:{r:360,ty:-10}});r.to({root:{ty:0}},300);r.at(1000,()=>r.unwind('root'))}
+ else if(k==='poke'){r.ex({mouth:'o',eyes:'open'});r.to({...r.lids(0),browL:{ty:-4},browR:{ty:-4}});r.kick('head','r',160);r.kick('root','sx',3)}
+ else{const L=r.kind==='ruckus'?'wingR':'armR';[0,180,360,540].forEach((ms,i)=>r.to({[L]:{r:i%2?-120:-160}},ms));r.ex({mouth:'open',eyes:'happy'})}
+ r.at(1300,()=>r.rest())};
+/* poses for the pose sheet (held, with idle life on top) */
+ACT.common.pose=function(name){const r=this;r.rest(true);r.state='pose';const isRk=r.kind==='ruckus';
+ const P={idle:()=>{},cheer:()=>{r.ex({eyes:'happy',mouth:'open'});r.to(isRk?{wingL:{r:150},wingR:{r:-150},root:{ty:-8}}:{armL:{r:150},armR:{r:-150},root:{ty:-6}})},
+  facepalm:()=>{if(isRk){r.ex({eyes:'squint',mouth:'frown'});r.to({wingR:{r:158},head:{r:-9,ty:3},root:{sy:.96,sx:1.03},browL:{r:14,ty:2},browR:{r:-14,ty:2}})}else{r.ex({eyes:'squint',mouth:'wince',sweat:'on'});r.to({root:{sy:.93,sx:1.05},head:{ty:3,r:-5},armL:{r:-8},armR:{r:8},earL:{r:-28},earR:{r:28},browL:{r:-12},browR:{r:12}})}},
+  hyped:()=>{r.ex({eyes:'happy',mouth:'open',shades:isRk?'on':'off',glow:'on',spark:'on'});r.to(isRk?{wingL:{r:120},wingR:{r:-160},root:{r:-8,ty:-6}}:{armR:{r:-160},armL:{r:40},root:{r:-8,ty:-4}})},
+  comfort:()=>{if(isRk){r.ex({mouth:'flat'});r.to({head:{r:-10},...r.lids(.55),pupL:{tx:-3.4},pupR:{tx:-3.4},wingL:{r:-48},wingR:{r:48}})}else{r.ex({eyes:'happy',mouth:'smile',heart:'on'});r.to({armL:{r:62},armR:{r:-62},head:{r:-5},heart:{sx:1,sy:1}})}},
+  dance:()=>{r.ex({eyes:'happy',mouth:'open',spark:'on'});r.to(isRk?{root:{r:9,tx:3},head:{r:-10},wingL:{r:40},wingR:{r:-160}}:{root:{r:9,tx:3},head:{r:-10},armL:{r:40},armR:{r:-160}})}};
+ (P[name]||P.idle)();for(const n in r.p)for(const ch of CH){const s=r.p[n].c[ch];s.x=s.t;s.v=0}};
+
+/* ---------- drawing ---------- */
+const SPEC={
+ ruckus:{lidH:17.5,eyeC:[71,60],pupMax:3.6,curiousLid:.08,
+  piv:{root:[70,146],body:[70,143],head:[70,92],hawk:[70,34],tail:[88,128],wingL:[44,98],wingR:[96,98],browL:[58,47.5],browR:[84,45.5],lidL:[60,60],lidR:[82,59],pupL:[60,60],pupR:[82,59],mouth:[71,76],glow:[70,88],shades:[71,58]},
+  twitch:[['tail',160],['wingL',120],['wingR',120],['hawk',90]],
+  rest:r=>({wingL:{r:10},wingR:{r:-10},browL:{r:-5,ty:-1},browR:{r:9,ty:1},...r.lids(.32),glow:{sx:.8,sy:.8}}),
+  restExpr:{eyes:'open',mouth:'smirk',shades:'off',sweat:'off',glow:'off',spark:'off'}},
+ bea:{lidH:13.5,eyeC:[70,60],pupMax:2.6,curiousLid:0,
+  piv:{root:[70,146],body:[70,143],head:[70,96],tuft:[70,40],tail:[96,126],earL:[42,60],earR:[98,60],armL:[46,100],armR:[94,100],browL:[58,46],browR:[82,46],lidL:[58,60],lidR:[82,60],pupL:[58,60],pupR:[82,60],mouth:[70,89],heart:[70,10],glow:[70,88]},
+  twitch:[['tail',200],['earL',140],['earR',140],['tuft',80]],
+  rest:r=>({armL:{r:14},armR:{r:-14},...r.lids(.08),heart:{sx:0,sy:0,ty:6},glow:{sx:.8,sy:.8}}),
+  restExpr:{eyes:'open',mouth:'smile',sweat:'off',heart:'off',glow:'off',spark:'off'}}};
+
+const SPARKS=()=>{const s=(x,y,k,c)=>'<path d="M'+x+' '+(y-k)+' Q'+(x+k*.22)+' '+(y-k*.22)+' '+(x+k)+' '+y+' Q'+(x+k*.22)+' '+(y+k*.22)+' '+x+' '+(y+k)+' Q'+(x-k*.22)+' '+(y+k*.22)+' '+(x-k)+' '+y+' Q'+(x-k*.22)+' '+(y-k*.22)+' '+x+' '+(y-k)+'Z" fill="'+c+'"/>';
+ return '<g data-x="spark:on" class="cqr-sparks">'+s(10,54,7,'#FF6B5B')+s(132,36,8,'#FFC53D')+s(136,102,6,'#FFC53D')+s(6,106,5,'#FF6B5B')+s(122,6,5,'#FF6B5B')+'</g>'};
+const G='<g data-p="glow" data-x="glow:on"><circle cx="70" cy="88" r="66" fill="url(#cqg-glow)"/></g>';
+function eye(id,cx,cy,rx,ry,lidFill,lash,pr,side){const lid='<g clip-path="url(#'+id+')"><g data-p="lid'+side+'"><rect x="'+(cx-rx-2)+'" y="'+(cy-ry-22)+'" width="'+(rx*2+4)+'" height="22" fill="'+lidFill+'"/><path d="M'+(cx-rx-1)+' '+(cy-ry+.5)+' Q'+cx+' '+(cy-ry+3)+' '+(cx+rx+1)+' '+(cy-ry+.5)+'" stroke="'+lash+'" stroke-width="2.2" fill="none" stroke-linecap="round"/></g></g>';
+ return '<clipPath id="'+id+'"><ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'"/></clipPath><ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="#fff"/><ellipse cx="'+cx+'" cy="'+(cy+ry*.45)+'" rx="'+(rx*.8)+'" ry="'+(ry*.35)+'" fill="#C9CCDD" opacity=".35"/>'+
+ '<g clip-path="url(#'+id+')"><g data-p="pup'+side+'"><circle cx="'+cx+'" cy="'+(cy+.6)+'" r="'+pr+'" fill="#1C1A22"/><circle cx="'+(cx+pr*.38)+'" cy="'+(cy-pr*.3)+'" r="'+(pr*.36)+'" fill="#fff"/><circle cx="'+(cx-pr*.4)+'" cy="'+(cy+pr*.45)+'" r="'+(pr*.15)+'" fill="#fff" opacity=".8"/></g></g>'+lid+
+ '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="none" stroke="#2A2733" stroke-opacity=".25" stroke-width="1"/>'}
+
+function ruckusSVG(size,key,mood){const id='cqr'+(++uid),w=size||140;
+ const wing='<path d="M-7 0 C-17 6 -19 30 -9 43 C-1 42 6 29 6 9 C6 2 0 -2 -7 0 Z" fill="url(#cqg-rk-wing)"/><path d="M-13 33 C-12 40 -7 44 -3 43 C-6 40 -8 36 -9 31 Z" fill="#2E1C0E" opacity=".55"/><ellipse cx="-6" cy="10" rx="3" ry="7" fill="#fff" opacity=".2" transform="rotate(12)"/>';
+ return '<svg class="cqr rk" data-rig="ruckus"'+(key?' data-key="'+key+'"':'')+(mood?' data-mood="'+mood+'"':'')+' viewBox="-16 -20 172 176" width="'+w+'" height="'+Math.round(w*176/172)+'" role="img" aria-label="Ruckus the punk eagle" overflow="visible">'+
+ '<ellipse data-shadow cx="70" cy="146" rx="34" ry="5.5" fill="url(#cqg-shadow)"/>'+G+
+ '<g data-p="root">'+
+  '<g data-p="tail"><path d="M84 122 C99 119 116 124 125 134 C112 137 98 135 87 131 Z" fill="url(#cqg-rk-wing)"/><path d="M86 128 C99 129 112 135 119 143 C106 144 95 140 86 135 Z" fill="#6A4326"/><path d="M90 124 C104 123 114 127 120 132" stroke="#fff" stroke-opacity=".2" stroke-width="2" fill="none" stroke-linecap="round"/></g>'+
+  '<ellipse cx="58" cy="141" rx="10" ry="4.6" fill="url(#cqg-feet)"/><ellipse cx="82" cy="141" rx="10" ry="4.6" fill="url(#cqg-feet)"/>'+
+  '<g data-p="body"><path d="M40 113 C40 93 54 84 70 84 C86 84 100 93 100 113 C100 133 88 143 70 143 C52 143 40 133 40 113 Z" fill="url(#cqg-rk-vest)"/>'+
+   '<path d="M60 88 Q70 85 80 88 L72 124 Q70 128 68 124 Z" fill="url(#cqg-chest)"/><path d="M60 88 L68 124 L56 112 Z M80 88 L72 124 L84 112 Z" fill="#3A3548" opacity=".9"/>'+
+   '<g fill="#DADEEA"><circle cx="48" cy="99" r="2.3"/><circle cx="46" cy="109" r="2.3"/><circle cx="92" cy="99" r="2.3"/><circle cx="94" cy="109" r="2.3"/></g>'+
+   '<rect x="47" y="119" width="17" height="9" rx="2" fill="#FFB320" transform="rotate(-8 55 123)"/><path d="M50 123.5 h11" stroke="#24212D" stroke-width="1.3" transform="rotate(-8 55 123)"/>'+
+   '<circle cx="86" cy="124" r="7" fill="#fff"/><circle cx="86" cy="124" r="5.3" stroke="#E11D48" stroke-width="1.8" fill="none"/><path d="M82.2 128.6 L86 118.4 L89.8 128.6 M82.8 125.6 H89.2" stroke="#E11D48" stroke-width="1.8" fill="none" stroke-linecap="round"/>'+
+   '<ellipse cx="54" cy="98" rx="9" ry="4.5" fill="#fff" opacity=".16" transform="rotate(-28 54 98)"/></g>'+
+  '<g data-p="head">'+
+   '<g data-p="hawk"><path d="M51 41 L45 7 L58 29 L62 -1 L70 27 L80 1 L82 29 L96 11 L90 42 Z" fill="url(#cqg-rk-hawk)"/><path d="M57 36 L55 17 L63 30 L66 9 L71 30 L78 13 L80 34 Z" fill="#FFB3D6" opacity=".55"/></g>'+
+   '<path d="M37 66 C33 70 33 77 38 79 C38 74 39 70 41 68 Z M103 66 C107 70 107 77 102 79 C102 74 101 70 99 68 Z" fill="#DADDEA"/>'+
+   '<circle cx="70" cy="61" r="34" fill="url(#cqg-rk-head)"/><ellipse cx="56" cy="40" rx="12" ry="6" fill="#fff" opacity=".8" transform="rotate(-24 56 40)"/>'+
+   '<g data-x="eyes:open">'+eye(id+'l',60,60,7.6,8.8,'#E6E8F1','#2A2733',4.7,'L')+eye(id+'r',82,59,7.6,8.8,'#E6E8F1','#2A2733',4.7,'R')+'</g>'+
+   '<g data-x="eyes:happy" stroke="#1C1A22" stroke-width="3.8" fill="none" stroke-linecap="round"><path d="M53 61 Q60 52 67 61"/><path d="M75 60 Q82 51 89 60"/></g>'+
+   '<g data-x="eyes:squint" stroke="#1C1A22" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M54 56 L62 60 L54 64"/><path d="M89 55 L81 59 L89 63"/></g>'+
+   '<g data-p="browL"><path d="M50 47 L66 48" stroke="#2A2733" stroke-width="5.4" stroke-linecap="round"/></g><g data-p="browR"><path d="M92 45 L76 46" stroke="#2A2733" stroke-width="5.4" stroke-linecap="round"/></g>'+
+   '<path d="M88 40 L92 64" stroke="#E7A6A6" stroke-width="2" opacity=".85"/><path d="M88.4 46 l4 -1 M89.4 52 l4 -1 M90.4 58 l4 -1" stroke="#E7A6A6" stroke-width="1.2"/>'+
+   '<circle cx="48.5" cy="44" r="2.6" stroke="#C3C8DA" stroke-width="1.6" fill="none"/>'+
+   '<g data-p="shades" data-x="shades:on"><rect x="47" y="51" width="22" height="14" rx="7" fill="url(#cqg-lens)"/><rect x="73" y="50" width="22" height="14" rx="7" fill="url(#cqg-lens)"/><path d="M69 56 h4" stroke="#0D0B13" stroke-width="3"/><path d="M51 55 l8 0 M77 54 l8 0" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".55"/></g>'+
+   '<path d="M56 68 C58 60 84 60 86 68 C86 74 80 78 74 82 C74 78 70 76 64 76 C60 76 56 73 56 68 Z" fill="url(#cqg-rk-beak)"/><ellipse cx="66" cy="65" rx="7" ry="2.3" fill="#fff" opacity=".6"/>'+
+   '<g data-p="mouth"><g data-x="mouth:smirk"><path d="M64 76 Q71 79 78 73" stroke="#8A5200" stroke-width="1.8" fill="none" stroke-linecap="round"/></g>'+
+    '<g data-x="mouth:open"><path d="M63 76 Q71 92 80 76 Z" fill="#B3123E"/><path d="M66 80 Q71 86 76 80" fill="#FF6F91"/></g>'+
+    '<g data-x="mouth:frown"><path d="M65 79 Q71 75 77 79" stroke="#8A5200" stroke-width="1.8" fill="none" stroke-linecap="round"/></g>'+
+    '<g data-x="mouth:flat"><path d="M65 77 L77 76" stroke="#8A5200" stroke-width="1.8" stroke-linecap="round"/></g>'+
+    '<g data-x="mouth:o"><ellipse cx="71" cy="79" rx="3.6" ry="3.4" fill="#B3123E"/></g></g>'+
+   '<g data-x="sweat:on"><path d="M40 40 q-4 6 0 9 q4 -3 0 -9z" fill="#7CC4FF"/></g>'+
+  '</g>'+
+  '<g data-p="wingL"><g transform="translate(44 98)">'+wing+'</g></g>'+
+  '<g data-p="wingR"><g transform="translate(96 98) scale(-1 1)">'+wing+'</g></g>'+
+ '</g>'+SPARKS()+'</svg>'}
+
+function beaSVG(size,key,mood){const id='cqr'+(++uid),w=size||140;
+ const arm='<path d="M-7 0 C-14 8 -14 24 -6 31 C1 34 8 27 7 16 C6 6 1 -1 -7 0 Z" fill="url(#cqg-bea-fur)"/><ellipse cx="-1" cy="28" rx="5.5" ry="4.2" fill="#3E2614"/><ellipse cx="-5" cy="9" rx="2.5" ry="6" fill="#fff" opacity=".16" transform="rotate(12)"/>';
+ const ear=(x,dir)=>'<ellipse cx="'+x+'" cy="62" rx="9.5" ry="6.5" fill="url(#cqg-bea-fur)" transform="rotate('+(-22*dir)+' '+x+' 62)"/><ellipse cx="'+(x+dir)+'" cy="62" rx="4.5" ry="2.8" fill="#F2A7A7" transform="rotate('+(-22*dir)+' '+(x+dir)+' 62)"/>';
+ return '<svg class="cqr bea" data-rig="bea"'+(key?' data-key="'+key+'"':'')+(mood?' data-mood="'+mood+'"':'')+' viewBox="-16 -20 172 176" width="'+w+'" height="'+Math.round(w*176/172)+'" role="img" aria-label="Bea the bison" overflow="visible">'+
+ '<ellipse data-shadow cx="70" cy="146" rx="37" ry="5.5" fill="url(#cqg-shadow)"/>'+G+
+ '<g data-p="root">'+
+  '<g data-p="tail"><path d="M95 126 C107 125 115 117 117 106" stroke="#5A361C" stroke-width="4.2" fill="none" stroke-linecap="round"/><ellipse cx="118" cy="101" rx="5.5" ry="8" fill="url(#cqg-bea-mane)" transform="rotate(14 118 101)"/></g>'+
+  '<rect x="49" y="134" width="16" height="10" rx="4.5" fill="#2A1C14"/><rect x="75" y="134" width="16" height="10" rx="4.5" fill="#2A1C14"/>'+
+  '<g data-p="body"><path d="M38 115 C38 95 52 87 70 87 C88 87 102 95 102 115 C102 135 90 143 70 143 C50 143 38 135 38 115 Z" fill="url(#cqg-bea-jacket)"/>'+
+   '<path d="M70 104 V140" stroke="#9DB8EC" stroke-width="1.4" stroke-dasharray="3 3"/>'+
+   '<rect x="43" y="116" width="22" height="10" rx="2.5" fill="#FFB320" transform="rotate(-7 54 121)"/><text x="54" y="123.6" text-anchor="middle" font-size="6.4" font-weight="800" font-family="Inter,Arial,sans-serif" fill="#24212D" transform="rotate(-7 54 121)">UNION</text>'+
+   '<g transform="translate(90 120)"><path d="M0 4 v9" stroke="#2E8B57" stroke-width="2"/><path d="M0 9 l4 -3" stroke="#2E8B57" stroke-width="2"/><circle r="6" fill="#E23B3B"/><path d="M-3 -1 q3 -4 6 0 q-3 4 -6 0" fill="#B81F2C"/></g>'+
+   '<ellipse cx="53" cy="100" rx="9" ry="4.5" fill="#fff" opacity=".2" transform="rotate(-28 53 100)"/>'+
+   '<path d="M49 92 Q70 103 91 92 L87 101 Q70 111 53 101 Z" fill="url(#cqg-bea-band)"/><path d="M66 102 l4 11 l4 -11 z" fill="#B0222F"/></g>'+
+  '<g data-p="head">'+
+   '<path d="M41 50 C25 48 16 36 20 21 C26 31 34 37 47 38 Z" fill="url(#cqg-bea-horn)"/><path d="M99 50 C115 48 124 36 120 21 C114 31 106 37 93 38 Z" fill="url(#cqg-bea-horn)"/>'+
+   '<g data-p="earL">'+ear(34,1)+'</g><g data-p="earR">'+ear(106,-1)+'</g>'+
+   '<path d="M57 92 C59 102 65 106 70 108 C75 106 81 102 83 92 Z" fill="url(#cqg-bea-mane)"/>'+
+   '<ellipse cx="70" cy="65" rx="33" ry="30" fill="url(#cqg-bea-fur)"/>'+
+   '<g data-p="tuft"><g fill="url(#cqg-bea-mane)"><circle cx="49" cy="40" r="10"/><circle cx="91" cy="40" r="10"/><circle cx="60" cy="32" r="11"/><circle cx="80" cy="32" r="11"/><circle cx="70" cy="29" r="10.5"/></g><ellipse cx="62" cy="28" rx="7" ry="3.4" fill="#fff" opacity=".18" transform="rotate(-20 62 28)"/></g>'+
+   '<ellipse cx="54" cy="52" rx="9" ry="4.5" fill="#fff" opacity=".2" transform="rotate(-24 54 52)"/>'+
+   '<ellipse cx="46" cy="75" rx="6" ry="3.6" fill="#FF8A8A" opacity=".5"/><ellipse cx="94" cy="75" rx="6" ry="3.6" fill="#FF8A8A" opacity=".5"/>'+
+   '<g data-x="eyes:open">'+eye(id+'l',58,60,6.4,6.9,'#A06E45','#2A1A10',3.9,'L')+eye(id+'r',82,60,6.4,6.9,'#A06E45','#2A1A10',3.9,'R')+'</g>'+
+   '<g data-x="eyes:happy" stroke="#1C1A22" stroke-width="3.2" fill="none" stroke-linecap="round"><path d="M53 62 Q58 55 63 62"/><path d="M77 62 Q82 55 87 62"/></g>'+
+   '<g data-x="eyes:squint" stroke="#1C1A22" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M53 57 L61 60 L53 63"/><path d="M87 57 L79 60 L87 63"/></g>'+
+   '<g stroke="#2A1C14" stroke-width="2.6" fill="none"><circle cx="58" cy="60" r="9.5" fill="#fff" fill-opacity=".1"/><circle cx="82" cy="60" r="9.5" fill="#fff" fill-opacity=".1"/><path d="M67.5 59 q2.5 -2 5 0 M48.5 58 l-8 -2 M91.5 58 l8 -2"/></g>'+
+   '<path d="M52 55 l4 -3" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".7"/><path d="M76 55 l4 -3" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>'+
+   '<g data-p="browL"><path d="M52 46 Q58 43 64 46" stroke="#3A2412" stroke-width="2.8" fill="none" stroke-linecap="round"/></g><g data-p="browR"><path d="M76 46 Q82 43 88 46" stroke="#3A2412" stroke-width="2.8" fill="none" stroke-linecap="round"/></g>'+
+   '<ellipse cx="70" cy="82" rx="17" ry="11" fill="url(#cqg-bea-muzzle)"/><ellipse cx="64" cy="80" rx="2.6" ry="2" fill="#2A1A10"/><ellipse cx="76" cy="80" rx="2.6" ry="2" fill="#2A1A10"/><ellipse cx="66" cy="76" rx="5" ry="1.6" fill="#fff" opacity=".45"/>'+
+   '<g data-p="mouth"><g data-x="mouth:smile"><path d="M62 88 Q70 94 78 88" stroke="#3A2010" stroke-width="2.2" fill="none" stroke-linecap="round"/></g>'+
+    '<g data-x="mouth:open"><path d="M61 87 Q70 100 79 87 Z" fill="#B3123E"/><path d="M65 91 Q70 96 75 91" fill="#FF7E9B"/></g>'+
+    '<g data-x="mouth:wince"><path d="M61 90 q4.5 -3 9 0 q4.5 3 9 0" stroke="#3A2010" stroke-width="2.1" fill="none" stroke-linecap="round"/></g>'+
+    '<g data-x="mouth:o"><ellipse cx="70" cy="90" rx="3.6" ry="3.2" fill="#B3123E"/></g></g>'+
+   '<g data-x="sweat:on"><path d="M42 44 q-4 6 0 9 q4 -3 0 -9z" fill="#7CC4FF"/></g>'+
+  '</g>'+
+  '<g data-p="armL"><g transform="translate(46 100)">'+arm+'</g></g>'+
+  '<g data-p="armR"><g transform="translate(94 100) scale(-1 1)">'+arm+'</g></g>'+
+  '<g data-x="heart:on"><g data-p="heart"><path d="M70 2 C64 -6 52 -4 52 6 C52 14 62 20 70 26 C78 20 88 14 88 6 C88 -4 76 -6 70 2 Z" fill="url(#cqg-heart)"/><ellipse cx="61" cy="3" rx="4" ry="2.4" fill="#fff" opacity=".6" transform="rotate(-30 61 3)"/></g></g>'+
+ '</g>'+SPARKS()+'</svg>'}
+
+/* ---------- engine ---------- */
+api.ruckus=ruckusSVG;api.bea=beaSVG;
+api.keyed={};
+/* scan(): attach rigs to new mascot SVGs. A re-rendered mascot with the same data-key takes over the old rig, so motion carries on. */
+api.scan=function(root){(root||document).querySelectorAll('svg[data-rig]').forEach(s=>{if(s.__rig)return;const key=s.getAttribute('data-key');let r=null,fresh=false;
+  if(key){const list=api.keyed[key]||[];r=list.find(x=>!x.svg.isConnected&&(x.dead==null||api.t-x.dead<1500))||null}
+  if(r){r.rebind(s);api.rigs.add(r)}else{r=new Rig(s);fresh=true;api.rigs.add(r);if(key)(api.keyed[key]=api.keyed[key]||[]).push(r)}
+  if(api.onBind)try{api.onBind(r,s,fresh)}catch(e){}})};
+api.rigOf=el=>el&&el.__rig;
+let vis=0;
+api.tick=function(dt){api.t+=dt;const chk=(vis=(vis+1)%20)===0;
+ for(const r of api.rigs){if(!r.svg.isConnected){api.rigs.delete(r);r.dead=api.t;continue}
+  if(chk||r.vis==null){const b=r.svg.getBoundingClientRect();r.vis=b.width>0&&b.bottom>-80&&b.top<innerHeight+80}
+  if(r.vis||r.q.length)r.tick(dt);else r.t+=dt}
+ if(chk)for(const k in api.keyed){api.keyed[k]=api.keyed[k].filter(r=>r.svg.isConnected||api.t-(r.dead||api.t)<1500);if(!api.keyed[k].length)delete api.keyed[k]}
+ for(const f of api.extras)f(dt)};
+api.advance=function(ms){const st=1000/60;while(ms>0){const d=Math.min(st,ms);api.tick(d);ms-=d}};
+let last=0;function loop(now){const dt=last?Math.min(50,now-last):16;last=now;if(!api.manual&&!document.hidden)api.tick(dt);requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+/* a tiny spring for page elements (sheets, entrances) */
+api.spring=function(from,to,k,c,onv){const s={x:from,v:0,t:to};const f=dt=>{if(api.reduced()){s.x=s.t;s.v=0}else{let left=dt/1000;while(left>0){const h=Math.min(left,1/240);left-=h;s.v+=(-k*(s.x-s.t)-c*s.v)*h;s.x+=s.v*h}}onv(s.x)};api.extras.add(f);s.stop=()=>api.extras.delete(f);return s};
+return api})();
 (function(){
 'use strict';
 /* ---------- helpers ---------- */
@@ -3663,7 +3952,7 @@ const IC={
 const ic=(n,s,extra)=>'<svg class="ic" viewBox="0 0 24 24" width="'+(s||22)+'" height="'+(s||22)+'" fill="currentColor" aria-hidden="true" '+(extra||'')+'>'+IC[n]+'</svg>';
 
 /* ---------- Ruckus, the punk eagle ---------- */
-function ruckus(mood,size){
+function ruckusOld(mood,size){
  mood=mood||'smirk';size=size||120;
  const cheer=mood==='cheer', sad=mood==='sad', wow=mood==='wow';
  const wingL=cheer?'M42 94 C26 82 12 62 14 40 C26 50 36 66 47 86 Z':'M42 92 C26 98 21 118 29 134 C36 125 40 113 45 104 Z';
@@ -3826,7 +4115,7 @@ function todayHTML(){const j=CUR['s'+curSection()];const n=j>=0?NODES[j]:null;co
  if(typeof cqPose==='function'){const g=Math.min(st.daily.xp,st.goal);const bar='<div class="tgoal"><span class="gbar"><i style="width:'+(p*100).toFixed(0)+'%"></i></span><span><b>'+g+'</b> / '+st.goal+' XP today</span></div>';
   if(!n)return '<section class="today" aria-label="Today"><div class="tday"><div><p class="eyebrow">All caught up</p><h2 class="ttl">'+esc(msg)+'</h2></div><div class="tm">'+ruckus('dance',110)+'</div></div>'+bar+'</section>';
   const eb=n.type==='lesson'?'Up next · Lesson '+(n.k+1):n.type==='test'?'Up next · Unit test':'Up next · Checkpoint';const ttl=n.type==='cp'?SECTIONS[n.s].level:n.u.title;const sub=n.type==='cp'?'Final exam covering this whole level.':n.u.desc;
-  return '<section class="today" aria-label="Today"><div class="tday"><div><p class="eyebrow">'+eb+'</p><h2 class="ttl">'+esc(ttl)+'</h2><p class="tsub">'+esc(sub||'')+'</p></div><div class="tm">'+ruckus(st.daily.xp>=st.goal?'cheer':'smirk',112)+'</div></div><button class="todaygo" data-a="start" data-i="'+j+'">'+(st.daily.lessons?'Keep going':'Continue')+ic('arrow',22)+'</button>'+bar+'</section>'}
+  return '<section class="today" aria-label="Today"><div class="tday"><div><p class="eyebrow">'+eb+'</p><h2 class="ttl">'+esc(ttl)+'</h2><p class="tsub">'+esc(sub||'')+'</p></div><div class="tm">'+ruckus(st.daily.xp>=st.goal?'cheer':'smirk',98)+'</div></div><button class="todaygo" data-a="start" data-i="'+j+'">'+(st.daily.lessons?'Keep going':'Continue')+ic('arrow',22)+'</button>'+bar+'</section>'}
  let go='';if(n){const lab=n.type==='lesson'?esc(n.u.title)+' · Lesson '+(n.k+1):n.type==='test'?'Unit test: '+esc(n.u.title):'Checkpoint: '+esc(SECTIONS[n.s].level);go='<button class="todaygo" data-a="start" data-i="'+j+'"><span><small>'+(st.daily.lessons?'Keep going':'Continue')+'</small>'+lab+'</span>'+ic('arrow',22)+'</button>'}
  return '<section class="today" aria-label="Today"><div class="today-top"><div class="tring"><svg viewBox="0 0 72 72" width="72" height="72" aria-hidden="true"><circle cx="36" cy="36" r="'+r+'" fill="none" stroke="var(--track)" stroke-width="8"/><circle cx="36" cy="36" r="'+r+'" fill="none" stroke="var(--punk)" stroke-width="8" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+(c*(1-p))+'" transform="rotate(-90 36 36)"/></svg><b class="num">'+Math.min(st.daily.xp,st.goal)+'<small>/ '+st.goal+' XP</small></b></div><h2>'+esc(msg)+'</h2></div>'+go+'</section>'}
 function nodeHTML(i,x,u){const n=NODES[i];const stt=nodeState(i);const col=u?ucol(u):scol(n.s);
@@ -4177,7 +4466,7 @@ function glossKey(txt){let t=txt.toLowerCase().replace(/&amp;/g,'&').replace(/&#
 function glossModal(k){const g=GLOSSARY[k];if(!g)return;const s=SRC[g.l];
  modal('<div class="gloss"><small class="eyebrow muted">Term</small><h2>'+esc(g.t)+'</h2><p class="gd">'+esc(g.d)+'</p><div class="gsrc"><b>'+ic('book',16)+'Where it comes from</b><p>'+esc(g.src)+'</p></div><div class="gex"><b>'+ic('bolt',16)+'Example</b><p>'+esc(g.ex)+'</p></div>'+(s?'<a class="glink" href="'+s[1]+'" target="_blank" rel="noopener">Go deeper: '+esc(s[0])+'</a>':'')+'</div><div class="row"><button class="btn wide" data-a="close">Got it</button></div>','glossm')}
 /* ---------- Bea the Bison: a progressive guest character with opinions of her own ---------- */
-function bison(mood,size){mood=mood||'smirk';size=size||120;
+function bisonOld(mood,size){mood=mood||'smirk';size=size||120;
  const cheer=mood==='cheer',sad=mood==='sad',wow=mood==='wow';
  let eyes,mouth,brows;
  if(cheer){eyes='<path d="M52 58 q6 -7 12 0" stroke="#1C1A22" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M76 58 q6 -7 12 0" stroke="#1C1A22" stroke-width="3.2" fill="none" stroke-linecap="round"/>';mouth='<path d="M61 84 Q70 95 79 84 Z" fill="#B3123E"/>';brows='<path d="M50 44 L64 46"/><path d="M90 44 L76 46"/>'}
@@ -4337,7 +4626,7 @@ function renderSession(){if(!S)return;const ov=$('#overlay');let body,foot;
 function qHTML(q){const v=S.v,ch=S.checked;let h='<span class="qtype">'+LABEL[q.t]+(st.mistakes.includes(q.id)&&S.kind!=='weak'&&!ch?' <span style="color:var(--red)">· Weak spot</span>':'')+'</span>';
  h+=qExtrasHTML(q);
  const optCls=o=>{if(!ch)return v.sel===o?'sel':'';if(o===q.a)return 'right';if(o===v.sel)return 'wrong';return ''};
- if(q.t==='mc'){h+='<div class="speak"><div class="mascot-react '+(ch?(S.justChecked?(S.result?'hop':'droop'):''):'idle')+(S.combo>=3?' hot':'')+'">'+ruckus(ch?(S.result?'cheer':'sad'):'smirk',84)+'</div><div class="bubble">'+esc(q.p)+'</div></div><div class="opts">'+v.opts.map((o,i)=>'<button class="opt '+optCls(o)+'" data-a="opt" data-i="'+i+'" '+(ch?'disabled':'')+'><span class="k">'+(i+1)+'</span><span>'+esc(o)+'</span></button>').join('')+'</div>'}
+ if(q.t==='mc'){h+='<div class="speak"><div class="mascot-react '+(ch?(S.justChecked?(S.result?'hop':'droop'):''):'idle')+(S.combo>=3?' hot':'')+'">'+ruckus('smirk',96)+'</div><div class="bubble">'+esc(q.p)+'</div></div><div class="opts">'+v.opts.map((o,i)=>'<button class="opt '+optCls(o)+'" data-a="opt" data-i="'+i+'" '+(ch?'disabled':'')+'><span class="k">'+(i+1)+'</span><span>'+esc(o)+'</span></button>').join('')+'</div>'}
  else if(q.t==='tf'){h+='<h2 class="prompt">'+esc(q.p)+'</h2><div class="opts tf">'+v.opts.map((o,i)=>'<button class="opt '+optCls(o)+'" data-a="opt" data-i="'+i+'" '+(ch?'disabled':'')+'>'+(o==='True'?ic('check',26):ic('x',22))+'<span>'+o+'</span></button>').join('')+'</div>'}
  else if(q.t==='fill'){const parts=esc(q.p).split('___');const blankCls=ch?(S.result?'style="color:var(--green)"':'style="color:var(--red)"'):'';
   h+='<p class="fillline">'+parts[0]+'<span class="blank" data-a="blank" '+blankCls+'>'+(v.sel!=null?esc(v.sel):'&nbsp;')+'</span>'+(parts[1]||'')+'</p><div class="chips">'+v.opts.map((o,i)=>'<button class="chipb '+(v.sel===o?'used':'')+'" data-a="chip" data-i="'+i+'" '+(ch?'disabled':'')+'>'+esc(o)+'</button>').join('')+'</div>'}
@@ -4359,8 +4648,8 @@ function footHTML(q){if(S.kind==='lightning')return '<div class="lfoot '+(S.chec
  if(typeof cqPose==='function'){const bc=ok?'':beaCast(q);const pill=ok?(S.combo>=2?S.combo+' in a row':''):(S.kind==='lesson'&&!st.unlimited&&q.t!=='self'?'−1 heart':'');
   const head='<div class="fbhead"><span class="fbi">'+ic(ok?'check':'x',20)+'</span><h3>'+(ok?PRAISE[Math.floor(Math.random()*PRAISE.length)]:(q.t==='match'?'Close. Watch those pairs.':'Not quite'))+'</h3>'+(pill?'<span class="fbpill">'+pill+'</span>':'')+'</div>';
   const ans=ok||q.t==='match'?'':'<p class="fbans">Answer: <b>'+esc(answerText(q))+'</b></p>';
-  const rk='<span class="who">'+ruckus(ok?(S.combo>=6?'hyped':'cheer'):'sad',ok?78:70)+'</span>';
-  const cast=bc?'<div class="fbcast">'+rk+'<span class="who">'+bison('sad',70)+'</span><div class="take bea"><small>Bea says</small>'+esc(bc)+'</div></div>':'<div class="fbcast">'+rk+'<div class="take"><small>Ruckus\'s take</small>'+esc(fbQuip(ok))+'</div></div>';
+  const rk='<span class="who">'+ruckus(ok?(S.combo>=6?'hyped':'cheer'):'sad',ok?118:100)+'</span>';
+  const cast=bc?'<div class="fbcast">'+rk+'<span class="who">'+bison('sad',96)+'</span><div class="take bea"><small>Bea says</small>'+esc(bc)+'</div></div>':'<div class="fbcast">'+rk+'<div class="take"><small>Ruckus\'s take</small>'+esc(fbQuip(ok))+'</div></div>';
   return '<div class="lfoot '+(ok?'ok':'bad')+'"><div class="in"><div class="fb fbx">'+head+ans+why+hingeHTML(q.id)+cast+'</div><button class="btn '+(ok?'green':'red')+'" data-a="cont" style="min-width:200px">Continue</button></div></div>'}
  return '<div class="lfoot '+(ok?'ok':'bad')+'"><div class="in"><div class="fb">'+(q.t==='mc'?'<span class="badge" style="color:'+(ok?'var(--green)':'var(--red)')+'">'+ic(ok?'check':'x',30)+'</span>':'<span class="fbr mascot-react '+(ok?'hop':'droop')+(ok&&S.combo>=3?' hot':'')+'">'+ruckus(ok?'cheer':'sad',64)+'</span>')+'<div><h3>'+(ok?PRAISE[Math.floor(Math.random()*PRAISE.length)]:(q.t==='match'?'Close. Watch those pairs.':'Correct answer:'))+'</h3>'+(ok?'':(q.t==='match'?'':'<p>'+esc(answerText(q))+'</p>'))+'<p class="quip">'+esc(fbQuip(ok))+'</p>'+why+hingeHTML(q.id)+(ok?'':beaComfort(q))+'</div></div><button class="btn '+(ok?'green':'red')+'" data-a="cont" style="min-width:200px">Continue</button></div></div>'}
 function beaCast(q){if(!S||S.kind==='lightning')return '';const k=q.id+'|'+S.idx;if(!S.bc||S.bc.k!==k)S.bc={k,t:hash(q.id+S.idx+today())%3===0?beaLine('comfort'):''};return S.bc.t}
@@ -4384,7 +4673,7 @@ function cont(){if(S.kind==='lesson'&&!st.unlimited&&st.hearts<=0){outOfHearts()
  if(S.kind==='lightning'&&S.idx>=S.queue.length-2)S.queue=S.queue.concat(shuffle(S.pool));
  if(S.idx>=S.queue.length){finish();return}newView();renderSession()}
 function outOfHearts(){
- modal(ruckus('sad',110)+'<h2>You ran out of hearts</h2><p class="muted" style="font-weight:700">Practice to earn a heart back, or turn on unlimited hearts. Your next free heart arrives in '+nextHeartIn()+' minutes.</p><div class="beacameo">'+bison('comfort',64)+'<div class="bubble"><b>Bea:</b> '+esc(beaLine('comfort'))+'</div></div><div class="row"><button class="btn ghost" data-a="ooh-unl">Turn on unlimited hearts</button><button class="btn ghost" data-a="ooh-practice">Practice to earn hearts</button><button class="linkbtn" data-a="ooh-end">End lesson</button></div>')}
+ modal('<div class="cq-duo">'+ruckus('comfort',104)+bison('comfort',100)+'</div><h2>You ran out of hearts</h2><p class="muted" style="font-weight:700">Practice to earn a heart back, or turn on unlimited hearts. Your next free heart arrives in '+nextHeartIn()+' minutes.</p><div class="beacameo"><div class="bubble"><b>Bea:</b> '+esc(beaLine('comfort'))+'</div></div><div class="row"><button class="btn ghost" data-a="ooh-unl">Turn on unlimited hearts</button><button class="btn ghost" data-a="ooh-practice">Practice to earn hearts</button><button class="linkbtn" data-a="ooh-end">End lesson</button></div>')}
 function startLightTimer(){clearInterval(lightTimer);lightTimer=setInterval(()=>{if(!S||S.kind!=='lightning'){clearInterval(lightTimer);return}const left=S.endAt-Date.now();const b=$('#pbar');if(b)b.style.width=Math.max(0,left/600)+'%';if(left<=0){clearInterval(lightTimer);finish()}},100)}
 function lightAnswer(i){const q=S.queue[S.idx];if(S.checked)return;S.v.sel=S.v.opts[i];const ok=S.v.sel===q.a;S.checked=true;S.result=ok;st.stats.answered++;
  if(ok){S.correct++;S.bump=true;S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);st.stats.correct++;st.daily.correct++;st.daily.combo=Math.max(st.daily.combo,S.combo);sfx('ok')}else{S.wrong++;S.combo=0;sfx('bad')}
@@ -4422,11 +4711,11 @@ function renderResult(){const sc=R.screens[R.i];const d=R.d;const ov=$('#overlay
   else if(d.k==='missed'){title='Mistakes reviewed!';sub='Each one also stays in Weak spots, and comes back on a schedule until it sticks.'}
   else{title='Practice complete!';sub=d.heart?'You earned back a heart.':'Keep that brain sharp.'}
   const mm=Math.floor(d.secs/60)+':'+pad(d.secs%60);
-  body='<div class="result"><div class="hero">'+(good?'<div class="burst"></div>':'')+ruckus(good?'dance':'sad',150)+'</div>'+'<h1 class="'+(good?'':'fail')+'">'+title+'</h1><p class="muted" style="font-weight:700;max-width:420px">'+sub+'</p><div class="tiles">'+
+  body='<div class="result"><div class="hero">'+(good?'<div class="burst"></div>':'')+(good?ruckus('dance',150):'<div class="cq-duo">'+ruckus('comfort',128)+bison('comfort',122)+'</div>')+'</div>'+'<h1 class="'+(good?'':'fail')+'">'+title+'</h1><p class="muted" style="font-weight:700;max-width:420px">'+sub+'</p><div class="tiles">'+
    tile('Total XP'+(d.boost>1?' ×2':''),'var(--gold)',ic('bolt',22),d.xp)+(d.k==='lightning'?'':tile(good?(d.acc>=90?'Amazing':'Accuracy'):'Accuracy','var(--green)',ic('target',22),d.acc,'%'))+tile('Time','var(--blue)',ic('clock',22),mm,'',true)+'</div>'+(d.bea?'<div class="beacameo">'+bison(good?'cheer':'smirk',64)+'<div class="bubble"><b>Bea:</b> '+esc(d.bea)+'</div></div>':'')+recapHTML(d.recap)+(d.k==='lesson'&&d.unitId?srcLinks(UNITS.find(x=>x.id===d.unitId)||{}):'')+'</div>'}
  else if(sc.t==='streak'){const ws=weekStart();body='<div class="result"><div class="hero"><div class="burst flame"></div><div class="bigflame" style="color:var(--flame)">'+ic('flame',120)+'</div></div><div class="bignum num">'+st.streak+'</div><h1 style="color:var(--flame)">day streak!</h1>'+weekRow(ws,['M','T','W','T','F','S','S'])+'<p class="muted" style="font-weight:700;max-width:380px">'+(st.streak===1?'Day one. Come back tomorrow to build it.':'Come back tomorrow so your streak doesn\'t reset.')+'</p>'+(sc.bea===undefined?(sc.bea=Math.random()<.5?beaLine('streak'):''):'',sc.bea?'<div class="beacameo">'+bison('cheer',60)+'<div class="bubble"><b>Bea:</b> '+esc(sc.bea)+'</div></div>':'')+'</div>'}
  else if(sc.t==='goal'){body='<div class="result"><div class="hero"><div class="burst"></div>'+goalRing(150)+'</div>'+'<h1>Daily goal reached!</h1><p class="muted" style="font-weight:700">You earned '+st.daily.xp+' XP today. Ruckus approves.</p></div>'}
- else if(sc.t==='unlock'&&sc.u.stamp){body='<div class="result"><div class="hero"><div class="bill"><small>'+esc(sc.u.no)+'</small><b>'+esc(sc.u.doc)+'</b><i></i><i></i><i class="short"></i><span class="stamp">'+esc(sc.u.stamp)+'</span></div></div><h1>'+esc(sc.u.t)+'</h1><p class="muted" style="font-weight:700;max-width:420px">'+esc(sc.u.p)+'</p></div>'}
+ else if(sc.t==='unlock'&&sc.u.stamp){body='<div class="result"><div class="hero"><div class="bill"><small>'+esc(sc.u.no)+'</small><b>'+esc(sc.u.doc)+'</b><i></i><i></i><i class="short"></i><span class="stamp">'+esc(sc.u.stamp)+'</span></div></div><div class="cq-duo">'+ruckus('party',110)+bison('party',104)+'</div><h1>'+esc(sc.u.t)+'</h1><p class="muted" style="font-weight:700;max-width:420px">'+esc(sc.u.p)+'</p></div>'}
  else if(sc.t==='unlock'){body='<div class="result"><div class="hero"><div class="burst"></div><div style="color:var(--gold)" class="bigflame">'+ic(sc.u.icon,120)+'</div></div><h1>'+esc(sc.u.t)+'</h1><p class="muted" style="font-weight:700;max-width:420px">'+esc(sc.u.p)+'</p></div>'}
  else if(sc.t==='ach'){const a=sc.a.a;body='<div class="result"><div class="hero"><div class="burst"></div><span class="pc-ic" style="width:120px;height:120px;border-radius:32px;background:'+a.col+'">'+ic(a.icon,64)+'</span></div><h1>Achievement unlocked</h1><h2>'+a.name+' · Level '+sc.a.l+'</h2><p class="muted" style="font-weight:700">'+a.d.replace('{n}',a.lv[sc.a.l-1])+'</p></div>'}
  const retry=sc.t==='result'&&(d.k==='test'||d.k==='cp')&&!good;
@@ -4689,8 +4978,66 @@ function cqProp(k,x,y){const t='translate('+x.toFixed(1)+' '+y.toFixed(1)+')';co
  return '<g class="cq-prop" transform="'+t+'">'+sh+'<rect x="-16" y="-30" width="32" height="22" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="2"/><path d="M-9 -22h18M-9 -16h12" stroke="var(--punk)" stroke-width="3" stroke-linecap="round"/><rect x="-2" y="-9" width="4" height="10" fill="var(--trunk)"/></g>'}
 function cqAfterRender(){cqRoads();setTimeout(cqRoads,700)}
 window.addEventListener('resize',()=>{clearTimeout(window._cqr);window._cqr=setTimeout(cqRoads,150)});
+
+/* ---------- Hook the mascot rig into the app. Loaded after app.js, mascots.js and rig.js. ---------- */
+function cqS(){const c=window.__cq;return c&&c.S}
+function cqTab(){const c=window.__cq;return c&&c.tab}
+function cqKey(kind,mood,size){const S=cqS();return kind+'|'+mood+'|'+size+'|'+(S?('s'+S.idx+(S.checked?'c':'')):(cqTab()||''))}
+function ruckus(mood,size){mood=mood||'smirk';size=size||120;return CQR.ruckus(Math.round(size*1.2),cqKey('rk',mood,size),mood)}
+function bison(mood,size){mood=mood||'smirk';size=size||120;return CQR.bea(Math.round(size*1.2),cqKey('bea',mood,size),mood)}
+const CQ_TAP={ruckus:['Hands off the mohawk.','I\'m not cute. I\'m a symbol of liberty.','Poke me again and I filibuster.','Go read Article I. I\'ll wait.','Yes, the vest is real. No, I won\'t say where I got it.','I\'m on break. Constitutionally.'],
+ bea:['Hi friend. Proud of you for showing up.','Public libraries are a little socialism, and they rule. (Just my opinion!)','Drink some water and keep going.','Organizing starts with one conversation.','You\'re doing better than you think.']};
+function cqThinking(svg){const S=cqS();return !!S&&!S.checked&&!!svg.closest('#overlay .speak')}
+CQR.onBind=function(r,svg,fresh){const mood=svg.getAttribute('data-mood')||'smirk',inSheet=!!svg.closest('.lfoot'),combo=(cqS()&&cqS().combo)||1;
+ if(!fresh){if(cqThinking(svg)&&r.state!=='think')r.act('think');else if(!cqThinking(svg)&&r.state==='think')r.act('idle');return}
+ r.rest(true);
+ const go=a=>r.at(inSheet?120:60,a);
+ if(mood==='smirk'||mood==='idle'){if(cqThinking(svg))r.act('think');return}
+ if(mood==='cheer'||mood==='hyped')go(()=>r.act('right',inSheet?combo:(mood==='hyped'?4:1)));
+ else if(mood==='sad')go(()=>r.act('wrong'));
+ else if(mood==='wow')go(()=>r.act('wow'));
+ else if(mood==='dance')go(()=>r.act('dance',3200));
+ else if(mood==='party')go(()=>r.act('party'));
+ else if(mood==='comfort')go(()=>r.act('comfort',r.kind==='bea'&&!svg.closest('.modal')?110:0));
+ if(r.kind==='bea'&&mood==='sad'&&inSheet)r.at(380,()=>r.act('wrong'))};
+(function(){
+ const run=()=>CQR.scan(document);
+ try{new MutationObserver(ms=>{for(const m of ms)if(m.addedNodes.length){run();return}}).observe(document.body,{childList:true,subtree:true})}catch(e){}
+ run();
+ /* thinking: the question mascot leans in and its eyes follow your finger and the option you tap */
+ const follow=e=>{const S=cqS();if(!S||S.checked)return;const s=document.querySelector('#overlay .speak svg[data-rig]');if(s&&s.__rig&&s.__rig.state==='think')s.__rig.lookAt(e.clientX,e.clientY)};
+ document.addEventListener('pointermove',follow,{passive:true});document.addEventListener('pointerdown',follow,{passive:true});
+ document.addEventListener('click',e=>{const t=e.target;if(!t||!t.closest)return;
+  const opt=t.closest('#overlay .opt,#overlay .chipb,#overlay .mt,#overlay .ostep');if(opt){requestAnimationFrame(()=>{const s=document.querySelector('#overlay .speak svg[data-rig]');if(s&&s.__rig&&s.__rig.state==='think'){const b=opt.getBoundingClientRect();s.__rig.lookAt(b.left+b.width/2,b.top+b.height/2);s.__rig.kick('head','r',-40)}})}
+  const svg=t.closest('svg[data-rig]');if(!svg||!svg.__rig)return;const r=svg.__rig;if(r.state==='think'||r.q.length&&r.state!=='idle')return;r.act('tap');
+  if(!svg.closest('[data-a]'))cqSay(svg,CQ_TAP[r.kind][Math.floor(Math.random()*CQ_TAP[r.kind].length)])},true);
+})();
+function cqSay(svg,text){const b=svg.getBoundingClientRect();const d=document.createElement('div');d.className='cq-say';d.textContent=text;document.body.appendChild(d);
+ const w=Math.min(240,innerWidth-24);d.style.maxWidth=w+'px';const x=Math.max(12,Math.min(innerWidth-w-12,b.left+b.width/2-w/2));d.style.left=x+'px';d.style.top=Math.max(12,b.top-12)+'px';setTimeout(()=>d.remove(),2400)}
+
+/* Home: Ruckus stands at your current lesson and hops there after you finish one */
+let cqLastCur=null,cqWalk=[];
+function cqWalker(){cqWalk.forEach(s=>s.stop());cqWalk=[];
+ const node=document.querySelector('.path .node.cur');const pm=node&&node.closest('.path').querySelector(':scope>.path-mascot.talk:not(.bea)');if(!node||!pm)return;
+ const pa=node.closest('.path'),cur=node.getAttribute('data-i');
+ const sv=pm.querySelector('svg[data-rig]');pm.style.top='0px';pm.style.left='0px';const pr=pm.getBoundingClientRect(),vr=sv?sv.getBoundingClientRect():pr;const offY=vr.bottom-pr.top,offL=vr.left-pr.left,w=vr.width||120;
+ const pos=n=>{const nw=n.parentElement,m=/translateX\((-?[\d.]+)px/.exec(nw.style.transform||''),dx=m?parseFloat(m[1]):0,cx=nw.offsetLeft+nw.offsetWidth/2+dx,right=cx<pa.clientWidth/2,half=n.offsetWidth/2;
+  return {x:(right?cx+half-4:cx-half+4-w)-offL,y:nw.offsetTop+n.offsetTop+n.offsetHeight-offY+w*.06}};
+ pm.classList.add('cq-walker');pm.classList.remove('mascot-bob');const to=pos(node);
+ const prev=cqLastCur!=null&&cqLastCur!==cur?pa.querySelector('.node[data-i="'+cqLastCur+'"]'):null;cqLastCur=cur;
+ const place=(x,y)=>{pm.style.left=x+'px';pm.style.top=y+'px'};
+ if(!prev||CQR.reduced()){place(to.x,to.y);return}
+ const from=pos(prev);place(from.x,from.y);const svg=pm.querySelector('svg[data-rig]');const r=svg&&svg.__rig;if(!r){place(to.x,to.y);return}
+ const sx=CQR.spring(from.x,from.x,120,16,v=>pm.style.left=v+'px'),sy=CQR.spring(from.y,from.y,120,16,v=>pm.style.top=v+'px');cqWalk=[sx,sy];
+ const hops=3;for(let i=1;i<=hops;i++){const f=i/hops;r.at(300+(i-1)*420,()=>{r.to({root:{sy:.82,sx:1.14}});r.to({root:{ty:-22,sy:1.12,sx:.9}},90);r.to({root:{ty:0,sy:1,sx:1}},260);r.to({root:{sy:.85,sx:1.12}},350);r.to({root:{sy:1,sx:1}},420);
+  r.at(90,()=>{sx.t=from.x+(to.x-from.x)*f;sy.t=from.y+(to.y-from.y)*f})})}
+ r.at(300+hops*420+80,()=>r.act('right',1));setTimeout(()=>{sx.stop();sy.stop()},4000)}
+const cqAfterRenderBase=cqAfterRender;
+cqAfterRender=function(){cqAfterRenderBase();CQR.scan(document);if(cqTab()==='learn')requestAnimationFrame(cqWalker)};
+
+if(cqTab()==='learn')requestAnimationFrame(cqWalker);
 </script>
-<script>window.CQ_BUILD='1795674287';</script>
+<script>window.CQ_BUILD='1795677017';</script>
 <script>
 (function(){
  var reloaded=false;
