@@ -788,6 +788,17 @@ select,.textin{border-width:1px;font-weight:600}
 .vsides>div,.gsrc,.gex{border-width:1px}
 
 @media (prefers-reduced-motion:reduce){.rk-eyes,.rk-hawk,.path-mascot .rk-hawk,.hot .rk-hawk,.bar.fire,.lhead .bar.fire>i{animation:none!important}.hot .rk-hawk{transform:scaleY(1.3)}}
+
+/* keep today's goal and streak in view while the path is scrolled */
+.topbar{flex-wrap:wrap;row-gap:0}
+.goalchip{color:var(--ink);gap:4px}
+.goalchip small{font-size:11px;font-weight:600;color:var(--ink-2);margin-left:1px}
+.goalchip svg circle:last-child{transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.2,1)}
+.tstrip{flex-basis:100%;display:flex;align-items:center;justify-content:center;gap:6px;max-height:0;overflow:hidden;opacity:0;margin:0 -4px;padding:0 10px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:14px;font-weight:600;text-align:center;transition:max-height .25s ease,opacity .2s ease,margin .25s ease,padding .25s ease}
+.tstrip .ic{transform:rotate(180deg);flex:none;color:var(--punk)}
+.tstrip span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.today-off .tstrip{max-height:44px;opacity:1;margin:8px -4px 0;padding:9px 12px}
+@media (min-width:1000px){.tstrip{display:none}}
 #modal{position:fixed;inset:0;z-index:75;pointer-events:none}#modal>*{pointer-events:auto}</style>
 <div id="app"><aside class="side" id="side"></aside><div class="mainwrap"><header class="topbar" id="top"></header><main class="view" id="view"></main></div><aside class="rail" id="rail"></aside><nav class="tabs" id="tabs"></nav></div>
 <div id="overlay"></div><div id="modal"></div><div id="toast"></div><canvas id="confetti"></canvas>
@@ -2675,11 +2686,11 @@ function statsHTML(){heartsTick();const done=st.lastDay===today();
  '<button class="stat heart" data-a="hearts" aria-label="Hearts">'+ic('heart',24)+'<span class="num">'+(st.unlimited?'∞':st.hearts)+'</span></button>'}
 function navHTML(){return TABS.map(t=>'<button class="tab '+(tab===t[0]?'on':'')+'" data-a="tab" data-t="'+t[0]+'">'+ic(t[2],26)+'<span>'+t[1]+'</span></button>').join('')}
 function renderChrome(){computeCur();const s=SECTIONS[curSection()];
- $('#top').innerHTML='<button class="chip-level" data-a="levels" style="'+scol(s.id)+'">'+ic('capitol',18)+s.level+ic('chevron',14)+'</button><div class="stats-m">'+statsHTML()+'</div>';
+ $('#top').innerHTML='<button class="chip-level" data-a="levels" style="'+scol(s.id)+'">'+ic('capitol',18)+s.level+ic('chevron',14)+'</button><div class="stats-m">'+goalChip()+statsHTML()+'</div>'+(tab==='learn'?'<button class="tstrip" data-a="totop"><span>'+esc(todayMsg())+'</span>'+ic('chevron',14)+'</button>':'');
  $('#side').innerHTML='<div class="brand">'+ruckus('smirk',44)+'<b>Capitol Quest</b></div>'+navHTML();
  $('#tabs').innerHTML=navHTML();
  $('#rail').innerHTML=railHTML()}
-function render(){ensureDaily();renderChrome();const v=VIEWS[tab]||VIEWS.learn;const vw=$('#view');vw.innerHTML=v();if(enterAnim&&!reduceMotion()){enterAnim=false;vw.classList.remove('enter');void vw.offsetWidth;vw.classList.add('enter');clearTimeout(vw._t);vw._t=setTimeout(()=>vw.classList.remove('enter'),1400)}
+function render(){ensureDaily();renderChrome();const v=VIEWS[tab]||VIEWS.learn;const vw=$('#view');vw.innerHTML=v();watchToday();if(enterAnim&&!reduceMotion()){enterAnim=false;vw.classList.remove('enter');void vw.offsetWidth;vw.classList.add('enter');clearTimeout(vw._t);vw._t=setTimeout(()=>vw.classList.remove('enter'),1400)}
  if(tab==='learn'&&scrollPending){scrollPending=false;setTimeout(()=>{const el=document.querySelector('.node.cur');if(el)el.scrollIntoView({block:'center',behavior:reduceMotion()?'auto':'smooth'})},60)}}
 function goalRing(size){const p=Math.min(1,st.daily.xp/st.goal);const r=26,c=2*Math.PI*r;
  return '<div class="ring-goal" style="width:'+size+'px;height:'+size+'px"><svg viewBox="0 0 64 64" width="'+size+'" height="'+size+'"><circle cx="32" cy="32" r="'+r+'" fill="none" stroke="var(--surface-2)" stroke-width="8"/><circle cx="32" cy="32" r="'+r+'" fill="none" stroke="var(--punk)" stroke-width="8" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+(c*(1-p))+'"/></svg><b class="num">'+Math.round(p*100)+'%</b></div>'}
@@ -2712,8 +2723,12 @@ VIEWS.learn=function(){computeCur();let h=todayHTML()+'<div class="lvlchips">'+S
   if(!openSec(s.id)){const i=NODES.findIndex(n=>n.type==='cp'&&n.s===s.id);h+='<div class="path">'+nodeHTML(i,0,null)+'</div>'}
   h+='</section>'});
  return h};
+function todayMsg(){const done=st.lastDay===today();if(st.daily.xp>=st.goal)return 'Goal met. Ruckus is begrudgingly impressed.';if(st.streak>0&&!done)return 'One lesson keeps your '+st.streak+'-day streak alive.';if(st.streak>0)return 'Streak safe. '+(st.goal-st.daily.xp)+' XP to go for today.';return 'One lesson starts your streak.'}
+function goalChip(){const p=Math.min(1,st.daily.xp/st.goal);const r=9,c=2*Math.PI*r;return '<button class="stat goalchip" data-a="totop" aria-label="Daily goal: '+Math.min(st.daily.xp,st.goal)+' of '+st.goal+' XP"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="'+r+'" fill="none" stroke="var(--track)" stroke-width="4"/><circle cx="12" cy="12" r="'+r+'" fill="none" stroke="var(--punk)" stroke-width="4" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+(c*(1-p))+'" transform="rotate(-90 12 12)"/></svg><span class="num">'+Math.min(st.daily.xp,st.goal)+'<small>/'+st.goal+'</small></span></button>'}
+let todayObs=null;
+function watchToday(){try{if(todayObs)todayObs.disconnect();const el=document.querySelector('.today');document.body.classList.remove('today-off');if(!el||!window.IntersectionObserver)return;const top=$('#top');todayObs=new IntersectionObserver(es=>{es.forEach(e=>document.body.classList.toggle('today-off',!e.isIntersecting))},{rootMargin:'-'+((top&&top.offsetHeight)||56)+'px 0px 0px 0px'});todayObs.observe(el)}catch(e){}}
 function todayHTML(){const j=CUR['s'+curSection()];const n=j>=0?NODES[j]:null;const p=Math.min(1,st.daily.xp/st.goal);const r=28,c=2*Math.PI*r;const done=st.lastDay===today();
- let msg;if(st.daily.xp>=st.goal)msg='Goal met. Ruckus is begrudgingly impressed.';else if(st.streak>0&&!done)msg='One lesson keeps your '+st.streak+'-day streak alive.';else if(st.streak>0)msg='Streak safe. '+(st.goal-st.daily.xp)+' XP to go for today.';else msg='One lesson starts your streak.';
+ const msg=todayMsg();
  let go='';if(n){const lab=n.type==='lesson'?esc(n.u.title)+' · Lesson '+(n.k+1):n.type==='test'?'Unit test: '+esc(n.u.title):'Checkpoint: '+esc(SECTIONS[n.s].level);go='<button class="todaygo" data-a="start" data-i="'+j+'"><span><small>'+(st.daily.lessons?'Keep going':'Continue')+'</small>'+lab+'</span>'+ic('arrow',22)+'</button>'}
  return '<section class="today" aria-label="Today"><div class="today-top"><div class="tring"><svg viewBox="0 0 72 72" width="72" height="72" aria-hidden="true"><circle cx="36" cy="36" r="'+r+'" fill="none" stroke="var(--track)" stroke-width="8"/><circle cx="36" cy="36" r="'+r+'" fill="none" stroke="var(--punk)" stroke-width="8" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+(c*(1-p))+'" transform="rotate(-90 36 36)"/></svg><b class="num">'+Math.min(st.daily.xp,st.goal)+'<small>/ '+st.goal+' XP</small></b></div><h2>'+esc(msg)+'</h2></div>'+go+'</section>'}
 function nodeHTML(i,x,u){const n=NODES[i];const stt=nodeState(i);const col=u?ucol(u):scol(n.s);
@@ -3313,6 +3328,7 @@ function finishOB(mode){st.name=(OB.name||'').trim().slice(0,24);st.goal=OB.goal
 
 /* ---------- actions ---------- */
 const A={
+ totop:()=>{sfx('tap');window.scrollTo({top:0,behavior:reduceMotion()?'auto':'smooth'})},
  tab:el=>{const t=el.dataset.t;if(location.hash!=='#'+t){try{location.hash=t}catch(e){}}setTab(t)},
  node:el=>{const i=+el.dataset.i;sfx('tap');openNode=openNode===i?-1:i;$('#view').innerHTML=VIEWS.learn()},
  start:el=>{const i=+el.dataset.i;openNode=-1;startNode(i)},
