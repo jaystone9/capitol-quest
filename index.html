@@ -2725,8 +2725,9 @@ VIEWS.learn=function(){computeCur();let h=todayHTML()+'<div class="lvlchips">'+S
  return h};
 function todayMsg(){const done=st.lastDay===today();if(st.daily.xp>=st.goal)return 'Goal met. Ruckus is begrudgingly impressed.';if(st.streak>0&&!done)return 'One lesson keeps your '+st.streak+'-day streak alive.';if(st.streak>0)return 'Streak safe. '+(st.goal-st.daily.xp)+' XP to go for today.';return 'One lesson starts your streak.'}
 function goalChip(){const p=Math.min(1,st.daily.xp/st.goal);const r=9,c=2*Math.PI*r;return '<button class="stat goalchip" data-a="totop" aria-label="Daily goal: '+Math.min(st.daily.xp,st.goal)+' of '+st.goal+' XP"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="'+r+'" fill="none" stroke="var(--track)" stroke-width="4"/><circle cx="12" cy="12" r="'+r+'" fill="none" stroke="var(--punk)" stroke-width="4" stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+(c*(1-p))+'" transform="rotate(-90 12 12)"/></svg><span class="num">'+Math.min(st.daily.xp,st.goal)+'<small>/'+st.goal+'</small></span></button>'}
-let todayObs=null;
-function watchToday(){try{if(todayObs)todayObs.disconnect();const el=document.querySelector('.today');document.body.classList.remove('today-off');if(!el||!window.IntersectionObserver)return;const top=$('#top');todayObs=new IntersectionObserver(es=>{es.forEach(e=>document.body.classList.toggle('today-off',!e.isIntersecting))},{rootMargin:'-'+((top&&top.offsetHeight)||56)+'px 0px 0px 0px'});todayObs.observe(el)}catch(e){}}
+let todayOn=false;
+function todayCheck(){const el=document.querySelector('.today');let off=false;if(el&&tab==='learn'){const top=$('#top');const tb=top?top.getBoundingClientRect().bottom:56;off=el.getBoundingClientRect().bottom<tb+4}document.body.classList.toggle('today-off',off)}
+function watchToday(){if(!todayOn){todayOn=true;window.addEventListener('scroll',todayCheck,{passive:true});window.addEventListener('resize',todayCheck)}todayCheck();setTimeout(todayCheck,400);setTimeout(todayCheck,1200)}
 function todayHTML(){const j=CUR['s'+curSection()];const n=j>=0?NODES[j]:null;const p=Math.min(1,st.daily.xp/st.goal);const r=28,c=2*Math.PI*r;const done=st.lastDay===today();
  const msg=todayMsg();
  let go='';if(n){const lab=n.type==='lesson'?esc(n.u.title)+' · Lesson '+(n.k+1):n.type==='test'?'Unit test: '+esc(n.u.title):'Checkpoint: '+esc(SECTIONS[n.s].level);go='<button class="todaygo" data-a="start" data-i="'+j+'"><span><small>'+(st.daily.lessons?'Keep going':'Continue')+'</small>'+lab+'</span>'+ic('arrow',22)+'</button>'}
@@ -3437,5 +3438,16 @@ render();
 if(!st.onboarded)onboarding();else if(!st.region)regionModal();else showNotices();
 })();
 </script>
-<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){})</script>
+<script>window.CQ_BUILD='1795666819';</script>
+<script>
+(function(){
+ var reloaded=false;
+ function inSession(){var o=document.getElementById('overlay');return o&&o.classList.contains('on')}
+ function check(){if(reloaded||!window.fetch)return;fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){t=(t||'').trim();if(t&&t!==window.CQ_BUILD&&!inSession()){reloaded=true;location.reload()}}).catch(function(){})}
+ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(function(reg){document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')reg.update().catch(function(){})})}).catch(function(){})}
+ document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')check()});
+ window.addEventListener('pageshow',check);
+ setTimeout(check,1500);
+})();
+</script>
 </body></html>
