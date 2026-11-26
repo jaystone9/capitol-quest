@@ -1,4 +1,4 @@
-const C='cq-1795666819';
+const C='cq-1795667884';
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['./','index.html','manifest.webmanifest','icons/capitol-quest-icon-192.png','icons/capitol-quest-icon-512.png'])));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim()});
 self.addEventListener('push',e=>{let d={};try{d=e.data?e.data.json():{}}catch(x){}
