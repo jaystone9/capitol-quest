@@ -2637,8 +2637,10 @@ function remPush(){if(!lbOn()||!st.rem.on||!remSub)return;clearTimeout(remTimer)
  const mask=Object.keys(body).map(k=>'updateMask.fieldPaths='+k).join('&');
  fetch(remURL(st.rem.id)+'&'+mask,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(fsEnc(body))}).catch(()=>{})}catch(e){}},1200)}
 function b64u(s){const p='='.repeat((4-s.length%4)%4);const b=atob((s+p).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(b,c=>c.charCodeAt(0))}
+function remKeyOk(sub){if(st.rem.key!==VAPID_PUBLIC)return false;try{const k=sub.options&&sub.options.applicationServerKey;if(!k)return true;const a=new Uint8Array(k),b=b64u(VAPID_PUBLIC);return a.length===b.length&&a.every((x,i)=>x===b[i])}catch(e){return true}}
 async function remSubscribe(){const reg=await navigator.serviceWorker.ready;let sub=await reg.pushManager.getSubscription();
- if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID_PUBLIC)});remSub=sub.toJSON();return remSub}
+ if(sub&&!remKeyOk(sub)){try{await sub.unsubscribe()}catch(e){}sub=null} // made with an older key: the push service rejects it
+ if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID_PUBLIC)});st.rem.key=VAPID_PUBLIC;save();remSub=sub.toJSON();return remSub}
 async function remEnable(freq){if(!remSupported())return;
  if(isIOS()&&!isStandalone()){toast('<b>On iPhone, add Capitol Quest to your Home Screen first</b>');render();return}
  let perm=Notification.permission;if(perm==='default'){try{perm=await Notification.requestPermission()}catch(e){perm='denied'}}
@@ -2647,7 +2649,10 @@ async function remEnable(freq){if(!remSupported())return;
  if(!st.rem.id)st.rem.id=newId();st.rem.freq=freq;st.rem.on=true;save();remPush();render();toast('<b>Reminders on</b>')}
 function remDisable(){st.rem.on=false;st.rem.freq='off';save();if(lbOn()&&st.rem.id){try{fetch(remURL(st.rem.id),{method:'DELETE'}).catch(()=>{})}catch(e){}}
  navigator.serviceWorker&&navigator.serviceWorker.ready.then(r=>r.pushManager.getSubscription()).then(s=>s&&s.unsubscribe()).catch(()=>{});render()}
-function remInit(){if(!remSupported()||!st.rem.on)return;navigator.serviceWorker.ready.then(r=>r.pushManager.getSubscription()).then(s=>{if(s){remSub=s.toJSON();remPush()}else{st.rem.on=false;save();render()}}).catch(()=>{})}
+function remInit(){if(!remSupported()||!st.rem.on)return;
+ const off=()=>{st.rem.on=false;save();render();toast('<b>Reminders need a quick reset. Open Settings and tap Turn on.</b>')};
+ if(Notification.permission!=='granted'){off();return}
+ remSubscribe().then(()=>remPush()).catch(off)}
 function hourLabel(h){return (h%12||12)+':00 '+(h<12?'AM':'PM')}
 function remRow(){
  if(!remSupported())return '<div class="setrow"><span>Play reminders<br><small class="muted">Available in the installed app at jaystone9.github.io/capitol-quest</small></span></div>';
